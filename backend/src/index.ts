@@ -1,6 +1,8 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import articleRoutes from './routes/article.routes'
+import categoryRoutes from './routes/category.routes'
 
 dotenv.config()
 
@@ -13,6 +15,10 @@ app.use(express.json())
 app.get('/', (req, res) => {
   res.json({ message: 'Labandera API funcionando 🚀' })
 })
+
+// Montar rutas
+app.use('/api/articles', articleRoutes)
+app.use('/api/categories', categoryRoutes)
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`)

@@ -1,0 +1,16 @@
+import { Router } from 'express'
+import * as ArticleController from '../controllers/article.controller'
+import { requireRole } from '../middleware/auth.middleware'
+
+const router = Router()
+
+// Lectura pública
+router.get('/', ArticleController.getArticles)
+router.get('/:id', ArticleController.getArticleById)
+
+// Escritura protegida (ADMIN o EDITOR)
+router.post('/', requireRole(['ADMIN', 'EDITOR']), ArticleController.createArticle)
+router.put('/:id', requireRole(['ADMIN', 'EDITOR']), ArticleController.updateArticle)
+router.delete('/:id', requireRole(['ADMIN', 'EDITOR']), ArticleController.deleteArticle)
+
+export default router

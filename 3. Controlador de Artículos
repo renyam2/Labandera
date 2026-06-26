@@ -1,0 +1,83 @@
+import { Request, Response } from 'express'
+import prisma from '../lib/prisma'
+
+export const getArticles = async (req: Request, res: Response) => {
+  try {
+    const articles = await prisma.article.findMany({
+      where: { published: true },
+      include: { author: true, category: true },
+      orderBy: { createdAt: 'desc' }
+    })
+    res.json(articles)
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener artículos' })
+  }
+}
+
+export const getArticleById = async (req: Request, res: Response) => {
+  const { id } = req.params
+  try {
+    const article = await prisma.article.findUnique({
+      where: { id: parseInt(id) },
+      include: { author: true, category: true }
+    })
+    if (!article) return res.status(404).json({ error: 'Artículo no encontrado' })
+    res.json(article)
+  } catch (error) {
+    res.status(500).json({ error: 'Error al obtener el artículo' })
+  }
+}
+
+export const createArticle = async (req: Request, res: Response) => {
+  const { title, slug, summary, content, image, published, authorId, categoryId } = req.body
+  try {
+    const article = await prisma.article.create({
+      data: {
+        title,
+        slug: slug || title.toLowerCase().replace(/\s+/g, '-'),
+        summary,
+        content,
+        image,
+        published: published ?? false,
+        authorId,
+        categoryId
+      }
+    })
+    res.status(201).json(article)
+  } catch (error) {
+    res.status(500).json({ error: 'Error al crear el artículo' })
+  }
+}
+
+export const updateArticle = async (req: Request, res: Response) => {
+  const { id } = req.params
+  const { title, slug, summary, content, image, published, authorId, categoryId } = req.body
+  try {
+    const article = await prisma.article.update({
+      where: { id: parseInt(id) },
+      data: {
+        title,
+        slug: slug || title.toLowerCase().replace(/\s+/g, '-'),
+        summary,
+        content,
+        image,
+        published,
+        authorId,
+        categoryId
+      }
+    })
+    res.json(article)
+  } catch (error) {
+    res.status(500).json({ error: 'Error al actualizar el artículo' })
+  }
+}
+
+export const deleteArticle = async (req: Request, res: Response) => {
+  const { id } = req.params
+  try {
+    await prisma.article.delete({ where: { id: parseInt(id) } })
+    res.status(204).send()
+  } catch (error) {
+    res.status(500).json({ error: 'Error al eliminar el artículo' })
+  }
+}
