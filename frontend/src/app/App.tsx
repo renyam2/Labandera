@@ -205,7 +205,7 @@ function Navbar({
           >
             LA<span className="text-accent">BANDERA</span>
           </span>
-        </button>
+        </Link>
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6">
