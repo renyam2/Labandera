@@ -193,6 +193,18 @@ function Navbar({
 }) {
   const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
     <header className="border-b-2 border-foreground bg-card sticky top-0 z-50">
@@ -219,6 +231,33 @@ function Navbar({
               {t}
             </button>
           ))}
+          <div className="relative" ref={dropdownRef}>
+            <button
+              onClick={() => setDropdownOpen(!dropdownOpen)}
+              className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+            >
+              SECCIONES ▾
+            </button>
+            {dropdownOpen && (
+              <div className="absolute top-full left-0 mt-2 w-48 bg-card border border-border shadow-lg py-2 z-50">
+                <button onClick={() => { navigate("/"); setDropdownOpen(false); }} className="block w-full text-left px-4 py-2 font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
+                  ACERCA DE LABANDERA
+                </button>
+                <button onClick={() => { navigate("/"); setDropdownOpen(false); }} className="block w-full text-left px-4 py-2 font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
+                  EQUIPO EDITORIAL
+                </button>
+                <button onClick={() => { navigate("/"); setDropdownOpen(false); }} className="block w-full text-left px-4 py-2 font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
+                  METODOLOGÍA
+                </button>
+                <Link to="/contacto" onClick={() => setDropdownOpen(false)} className="block w-full text-left px-4 py-2 font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
+                  CONTACTO
+                </Link>
+                <Link to="/fuentes" onClick={() => setDropdownOpen(false)} className="block w-full text-left px-4 py-2 font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
+                  FUENTES
+                </Link>
+              </div>
+            )}
+          </div>
           <button
             onClick={() => navigate("/fuentes")}
             className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors"
