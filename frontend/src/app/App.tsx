@@ -624,8 +624,6 @@ function ArticleCard({ article, onClick }: { article: Article; onClick: () => vo
 
 // ─── Screen 3: Article detail ─────────────────────────────────────────────────
 
-const ArticleScreen = lazy(() => import('./App.tsx').then(m => ({ default: m.ArticleScreenLazy })));
-
 function ArticleScreenLazy({
   article,
   onBack,
@@ -1217,16 +1215,10 @@ export default function App() {
         <Route path="/" element={<HomeScreen onArticle={openArticle} loggedIn={loggedIn} />} />
         <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <LoginScreen onLogin={handleLogin} />} />
         <Route path="/article/:id" element={
-          <Suspense fallback={<div className="flex items-center justify-center h-screen"><p className="font-mono text-sm">Cargando nota...</p></div>}>
-            {currentArticle ? <ArticleScreen article={currentArticle} onBack={() => navigate("/")} onArticle={openArticle} /> : <Navigate to="/" />}
-          </Suspense>
+          currentArticle ? <ArticleScreenLazy article={currentArticle} onBack={() => navigate("/")} onArticle={openArticle} /> : <Navigate to="/" />
         } />
         <Route path="/upload" element={
-          loggedIn ? (
-            <Suspense fallback={<div className="flex items-center justify-center h-screen"><p className="font-mono text-sm">Cargando editor...</p></div>}>
-              <UploadScreen onBack={() => navigate("/")} onPublish={() => navigate("/")} />
-            </Suspense>
-          ) : <Navigate to="/login" />
+          loggedIn ? <UploadScreenLazy onBack={() => navigate("/")} onPublish={() => navigate("/")} /> : <Navigate to="/login" />
         } />
         <Route path="/privacidad" element={<PrivacidadScreen />} />
         <Route path="/terminos" element={<TerminosScreen />} />
