@@ -798,8 +798,6 @@ function ArticleScreenLazy({
 
 // ─── Screen 4: Upload ─────────────────────────────────────────────────────────
 
-const UploadScreen = lazy(() => import('./App.tsx').then(m => ({ default: m.UploadScreenLazy })));
-
 function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish: () => void }) {
   const navigate = useNavigate();
   const [form, setForm] = useState({
