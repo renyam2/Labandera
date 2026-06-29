@@ -1,5 +1,5 @@
 
-import { useState, useRef } from "react";
+import { useState, useRef, Suspense, lazy } from "react";
 import {
   LogIn,
   LogOut,
@@ -17,8 +17,15 @@ import {
   Search,
   Droplets,
   Newspaper,
+  Mail,
+  Phone,
+  Facebook,
+  Twitter,
+  Instagram,
+  Linkedin,
 } from "lucide-react";
 import api from "./services/api";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link } from "react-router-dom";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -130,27 +137,67 @@ function TagBadge({ tag, accent = false }: { tag: string; accent?: boolean }) {
   );
 }
 
+// ─── Footer Component ─────────────────────────────────────────────────────────
+
+function Footer() {
+  return (
+    <footer className="border-t-2 border-foreground bg-foreground text-background mt-16 py-10">
+      <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between gap-6">
+        <div>
+          <div className="flex items-center gap-2 mb-3">
+            <Droplets className="w-4 h-4 text-accent" />
+            <span
+              className="text-xl font-black"
+              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
+            >
+              LA<span className="text-accent">BANDERA</span>
+            </span>
+          </div>
+          <p className="font-mono text-xs text-muted-foreground max-w-xs mb-3">
+            Periodismo de investigación política para México. Filtramos el agua sucia.
+          </p>
+          <div className="flex flex-col gap-1 font-mono text-xs text-muted-foreground">
+            <span className="flex items-center gap-2"><Mail className="w-3 h-3" /> contacto@labandera.mx</span>
+            <span className="flex items-center gap-2"><Phone className="w-3 h-3" /> +52 55 1234 5678</span>
+          </div>
+        </div>
+        <div className="flex flex-col gap-3 font-mono text-xs text-muted-foreground">
+          <div className="flex gap-4 mb-2">
+            <Link to="/privacidad" className="hover:text-accent transition-colors">Política de Privacidad</Link>
+            <Link to="/terminos" className="hover:text-accent transition-colors">Términos de Uso</Link>
+            <Link to="/contacto" className="hover:text-accent transition-colors">Contacto</Link>
+          </div>
+          <div className="flex gap-4 mb-2">
+            <a href="https://twitter.com/labandera" target="_blank" rel="noopener noreferrer" aria-label="Twitter" className="hover:text-accent transition-colors"><Twitter className="w-4 h-4" /></a>
+            <a href="https://facebook.com/labandera" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:text-accent transition-colors"><Facebook className="w-4 h-4" /></a>
+            <a href="https://instagram.com/labandera" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hover:text-accent transition-colors"><Instagram className="w-4 h-4" /></a>
+            <a href="https://linkedin.com/company/labandera" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:text-accent transition-colors"><Linkedin className="w-4 h-4" /></a>
+          </div>
+          <p>© 2026 LABANDERA</p>
+          <p className="mt-1">Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
 // ─── Nav bar ──────────────────────────────────────────────────────────────────
 
 function Navbar({
-  onNavigate,
   loggedIn,
   onLogout,
 }: {
-  onNavigate: (s: Screen) => void;
   loggedIn: boolean;
   onLogout: () => void;
 }) {
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <header className="border-b-2 border-foreground bg-card sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-14">
         {/* Logo */}
-        <button
-          onClick={() => onNavigate("home")}
-          className="flex items-center gap-2 group"
-        >
+        <Link to="/" className="flex items-center gap-2 group">
           <Droplets className="w-5 h-5 text-accent group-hover:text-primary transition-colors" />
           <span
             className="text-2xl font-black tracking-tight leading-none"
@@ -165,7 +212,7 @@ function Navbar({
           {["SALUD", "PATRIMONIO", "LEGISLATIVO", "CORRUPCIÓN"].map((t) => (
             <button
               key={t}
-              onClick={() => onNavigate("home")}
+              onClick={() => navigate("/")}
               className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors"
             >
               {t}
@@ -178,8 +225,9 @@ function Navbar({
           {loggedIn && (
             <>
               <button
-                onClick={() => onNavigate("upload")}
+                onClick={() => navigate("/upload")}
                 className="hidden md:flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-1.5 font-mono text-xs tracking-widest hover:bg-accent transition-colors"
+                aria-label="Publicar nota"
               >
                 <Upload className="w-3.5 h-3.5" />
                 PUBLICAR
@@ -187,7 +235,7 @@ function Navbar({
               <button
                 onClick={onLogout}
                 className="text-muted-foreground hover:text-foreground transition-colors"
-                title="Cerrar sesión"
+                aria-label="Cerrar sesión"
               >
                 <LogOut className="w-4 h-4" />
               </button>
@@ -195,8 +243,9 @@ function Navbar({
           )}
           {!loggedIn && (
             <button
-              onClick={() => onNavigate("login")}
+              onClick={() => navigate("/login")}
               className="flex items-center gap-1.5 border border-foreground px-3 py-1.5 font-mono text-xs tracking-widest hover:bg-foreground hover:text-background transition-colors"
+              aria-label="Acceso periodistas"
             >
               <LogIn className="w-3.5 h-3.5" />
               PERIODISTAS
@@ -205,6 +254,7 @@ function Navbar({
           <button
             className="md:hidden"
             onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Abrir menú de navegación"
           >
             {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -217,7 +267,7 @@ function Navbar({
           {TAGS.slice(1).map((t) => (
             <button
               key={t}
-              onClick={() => { onNavigate("home"); setMobileOpen(false); }}
+              onClick={() => { navigate("/"); setMobileOpen(false); }}
               className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground"
             >
               {t}
@@ -225,8 +275,9 @@ function Navbar({
           ))}
           {loggedIn && (
             <button
-              onClick={() => { onNavigate("upload"); setMobileOpen(false); }}
+              onClick={() => { navigate("/upload"); setMobileOpen(false); }}
               className="flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-2 font-mono text-xs tracking-widest w-fit"
+              aria-label="Publicar nota"
             >
               <Upload className="w-3.5 h-3.5" />
               PUBLICAR NOTA
@@ -241,12 +292,13 @@ function Navbar({
 // ─── Screen 1: Login ──────────────────────────────────────────────────────────
 
 function LoginScreen({ onLogin }: { onLogin: () => void }) {
+  const navigate = useNavigate();
   const [user, setUser] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   setError("");
   if (!user || !pass) { setError("Completa ambos campos."); return; }
@@ -256,6 +308,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     localStorage.setItem('token', res.data.token);
     localStorage.setItem('user', JSON.stringify(res.data.user));
     onLogin();
+    navigate("/");
   } catch {
     setError("Credenciales incorrectas. Intenta de nuevo.");
   } finally {
@@ -327,16 +380,17 @@ const handleSubmit = async (e: React.FormEvent) => {
             SALA DE REDACCIÓN
           </p>
 
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
             <div>
               <label className="font-mono text-xs tracking-widest block mb-1.5">
                 USUARIO
               </label>
               <input
-                type="text"
+                type="email"
+                required
                 value={user}
                 onChange={(e) => setUser(e.target.value)}
-                placeholder="tu.nombre"
+                placeholder="tu.nombre@labandera.mx"
                 className="w-full bg-input-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition"
               />
             </div>
@@ -346,6 +400,8 @@ const handleSubmit = async (e: React.FormEvent) => {
               </label>
               <input
                 type="password"
+                required
+                minLength={6}
                 value={pass}
                 onChange={(e) => setPass(e.target.value)}
                 placeholder="••••••••••"
@@ -354,7 +410,7 @@ const handleSubmit = async (e: React.FormEvent) => {
             </div>
 
             {error && (
-              <p className="font-mono text-xs text-accent">{error}</p>
+              <p className="font-mono text-xs text-accent" role="alert">{error}</p>
             )}
 
             <button
@@ -374,7 +430,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           </form>
 
           <p className="mt-8 font-mono text-xs text-muted-foreground text-center">
-            ¿Problemas de acceso? Contacta al editor.
+            ¿Problemas de acceso? <Link to="/contacto" className="text-primary hover:underline">Contacta al editor</Link>.
           </p>
         </div>
       </div>
@@ -391,6 +447,7 @@ function HomeScreen({
   onArticle: (a: Article) => void;
   loggedIn: boolean;
 }) {
+  const navigate = useNavigate();
   const [activeTag, setActiveTag] = useState("TODOS");
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
@@ -429,6 +486,7 @@ function HomeScreen({
           <button
             onClick={() => setSearchOpen(!searchOpen)}
             className="ml-4 text-muted-foreground hover:text-foreground transition-colors shrink-0"
+            aria-label="Buscar notas"
           >
             <Search className="w-4 h-4" />
           </button>
@@ -437,7 +495,7 @@ function HomeScreen({
           <div className="border-t border-border px-4 py-2 max-w-7xl mx-auto">
             <input
               autoFocus
-              type="text"
+              type="search"
               placeholder="Buscar notas..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
@@ -460,6 +518,7 @@ function HomeScreen({
                 src={featured.imageUrl}
                 alt={featured.title}
                 className="w-full h-64 lg:h-full object-cover group-hover:scale-102 transition-transform duration-500"
+                loading="lazy"
                 style={{ minHeight: "260px" }}
               />
               <div className="absolute inset-0 bg-foreground/10 group-hover:bg-foreground/0 transition-colors" />
@@ -515,30 +574,7 @@ function HomeScreen({
           </div>
         )}
       </main>
-
-      {/* Footer */}
-      <footer className="border-t-2 border-foreground bg-foreground text-background mt-16 py-10">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-2 mb-3">
-              <Droplets className="w-4 h-4 text-accent" />
-              <span
-                className="text-xl font-black"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-              >
-                LA<span className="text-accent">BANDERA</span>
-              </span>
-            </div>
-            <p className="font-mono text-xs text-muted-foreground max-w-xs">
-              Periodismo de investigación política para México. Filtramos el agua sucia.
-            </p>
-          </div>
-          <div className="font-mono text-xs text-muted-foreground">
-            <p>© 2026 LABANDERA</p>
-            <p className="mt-1">Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
@@ -548,12 +584,15 @@ function ArticleCard({ article, onClick }: { article: Article; onClick: () => vo
     <div
       onClick={onClick}
       className="bg-card p-6 cursor-pointer group hover:bg-secondary transition-colors flex flex-col gap-4"
+      role="article"
+      aria-label={`Ver nota: ${article.title}`}
     >
       <div className="overflow-hidden bg-muted aspect-video">
         <img
           src={article.imageUrl}
           alt={article.title}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          loading="lazy"
         />
       </div>
       <div className="flex items-center gap-2">
@@ -585,7 +624,9 @@ function ArticleCard({ article, onClick }: { article: Article; onClick: () => vo
 
 // ─── Screen 3: Article detail ─────────────────────────────────────────────────
 
-function ArticleScreen({
+const ArticleScreen = lazy(() => import('./App.tsx').then(m => ({ default: m.ArticleScreenLazy })));
+
+function ArticleScreenLazy({
   article,
   onBack,
   onArticle,
@@ -604,6 +645,7 @@ function ArticleScreen({
           src={article.imageUrl}
           alt={article.title}
           className="w-full h-full object-cover"
+          loading="lazy"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-foreground/70 via-foreground/20 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10 max-w-5xl mx-auto">
@@ -629,6 +671,7 @@ function ArticleScreen({
         <button
           onClick={onBack}
           className="flex items-center gap-1.5 font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors mb-8"
+          aria-label="Volver al inicio"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           VOLVER AL INICIO
@@ -728,6 +771,7 @@ function ArticleScreen({
                             src={r.imageUrl}
                             alt={r.title}
                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                            loading="lazy"
                           />
                         </div>
                         <div>
@@ -756,7 +800,10 @@ function ArticleScreen({
 
 // ─── Screen 4: Upload ─────────────────────────────────────────────────────────
 
-function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: () => void }) {
+const UploadScreen = lazy(() => import('./App.tsx').then(m => ({ default: m.UploadScreenLazy })));
+
+function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish: () => void }) {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     title: "",
     summary: "",
@@ -790,6 +837,7 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
     setSubmitted(true);
     setTimeout(() => {
       onPublish();
+      navigate("/");
     }, 2000);
   };
 
@@ -843,7 +891,7 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto px-4 py-8">
+      <form onSubmit={handleSubmit} className="max-w-4xl mx-auto px-4 py-8" noValidate>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main form */}
           <div className="lg:col-span-2 space-y-6">
@@ -854,6 +902,7 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
               </label>
               <input
                 type="text"
+                required
                 value={form.title}
                 onChange={(e) => set("title", e.target.value)}
                 placeholder="El titular que nadie quiere publicar..."
@@ -868,6 +917,7 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
                 RESUMEN / LEAD *
               </label>
               <textarea
+                required
                 value={form.summary}
                 onChange={(e) => set("summary", e.target.value)}
                 placeholder="El párrafo de entrada que resume el escándalo..."
@@ -883,6 +933,7 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
                 CUERPO DE LA NOTA *
               </label>
               <textarea
+                required
                 value={form.body}
                 onChange={(e) => set("body", e.target.value)}
                 placeholder="Desarrolla la investigación. Sé específico con fechas, nombres y cantidades..."
@@ -913,6 +964,7 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
                   type="button"
                   onClick={() => fileRef.current?.click()}
                   className="w-full border-2 border-dashed border-border py-8 flex flex-col items-center gap-2 hover:border-primary hover:bg-secondary transition-colors"
+                  aria-label="Seleccionar archivos"
                 >
                   <ImagePlus className="w-6 h-6 text-muted-foreground" />
                   <span className="font-mono text-xs text-muted-foreground">
@@ -924,11 +976,12 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
                 <div className="grid grid-cols-3 gap-2 mt-3">
                   {previews.map((src, i) => (
                     <div key={i} className="relative group aspect-video bg-muted overflow-hidden">
-                      <img src={src} alt="" className="w-full h-full object-cover" />
+                      <img src={src} alt="" className="w-full h-full object-cover" loading="lazy" />
                       <button
                         type="button"
                         onClick={() => removeImage(i)}
                         className="absolute top-1 right-1 bg-accent text-accent-foreground w-5 h-5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                        aria-label={`Eliminar imagen ${i + 1}`}
                       >
                         <X className="w-3 h-3" />
                       </button>
@@ -952,6 +1005,7 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
                 </label>
                 <input
                   type="text"
+                  required
                   value={form.author}
                   onChange={(e) => set("author", e.target.value)}
                   placeholder="Nombre completo"
@@ -981,6 +1035,7 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
                 </label>
                 <input
                   type="text"
+                  required
                   value={form.state}
                   onChange={(e) => set("state", e.target.value)}
                   placeholder="Ciudad de México"
@@ -1014,6 +1069,7 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
               type="submit"
               disabled={incomplete}
               className="w-full bg-accent text-accent-foreground py-4 font-mono text-sm tracking-widest hover:bg-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+              aria-label="Publicar nota"
             >
               <Send className="w-4 h-4" />
               PUBLICAR NOTA
@@ -1023,6 +1079,7 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
               type="button"
               onClick={onBack}
               className="w-full border border-border py-3 font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground hover:border-foreground transition-colors"
+              aria-label="Cancelar"
             >
               CANCELAR
             </button>
@@ -1033,68 +1090,149 @@ function UploadScreen({ onBack, onPublish }: { onBack: () => void; onPublish: ()
   );
 }
 
+// ─── Legal & Contact Pages ────────────────────────────────────────────────────
+function PrivacidadScreen() {
+  return (
+    <div className="min-h-screen bg-background py-12 px-4">
+      <div className="max-w-3xl mx-auto">
+        <button onClick={() => window.history.back()} className="flex items-center gap-1.5 font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors mb-8" aria-label="Volver">
+          <ArrowLeft className="w-3.5 h-3.5" /> VOLVER
+        </button>
+        <h1 className="text-4xl font-black mb-6" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>Política de Privacidad</h1>
+        <div className="prose max-w-none font-mono text-sm text-foreground/90 space-y-4">
+          <p>Última actualización: Junio 2026</p>
+          <p>En LABANDERA nos comprometemos a proteger tu información personal. Esta política describe cómo recopilamos, usamos y protegemos tus datos cuando utilizamos nuestra plataforma.</p>
+          <h3 className="text-xl font-bold mt-4">1. Información que Recopilamos</h3>
+          <p>Recopilamos información que nos proporcionas directamente al registrarte, publicar notas o contactarnos. Esto incluye nombre, correo electrónico, credenciales de acceso y contenido de tus publicaciones.</p>
+          <h3 className="text-xl font-bold mt-4">2. Uso de la Información</h3>
+          <p>Utilizamos tus datos para gestionar tu cuenta, publicar contenido, mejorar nuestros servicios y cumplir con obligaciones legales. No vendemos ni compartimos tu información con terceros sin tu consentimiento, salvo requerimiento legal.</p>
+          <h3 className="text-xl font-bold mt-4">3. Seguridad</h3>
+          <p>Implementamos medidas técnicas y organizativas para proteger tus datos contra acceso no autorizado, alteración, divulgación o destrucción.</p>
+          <h3 className="text-xl font-bold mt-4">4. Tus Derechos</h3>
+          <p>Puedes solicitar el acceso, rectificación, cancelación u oposición al tratamiento de tus datos contactándonos a contacto@labandera.mx.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TerminosScreen() {
+  return (
+    <div className="min-h-screen bg-background py-12 px-4">
+      <div className="max-w-3xl mx-auto">
+        <button onClick={() => window.history.back()} className="flex items-center gap-1.5 font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors mb-8" aria-label="Volver">
+          <ArrowLeft className="w-3.5 h-3.5" /> VOLVER
+        </button>
+        <h1 className="text-4xl font-black mb-6" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>Términos de Uso</h1>
+        <div className="prose max-w-none font-mono text-sm text-foreground/90 space-y-4">
+          <p>Última actualización: Junio 2026</p>
+          <p>Al acceder y utilizar LABANDERA, aceptas cumplir con los siguientes términos y condiciones. Si no estás de acuerdo, te pedimos que no utilices nuestra plataforma.</p>
+          <h3 className="text-xl font-bold mt-4">1. Acceso y Cuenta</h3>
+          <p>El acceso está restringido a periodistas acreditados. Debes mantener la confidencialidad de tus credenciales y eres responsable de todas las actividades realizadas bajo tu cuenta.</p>
+          <h3 className="text-xl font-bold mt-4">2. Contenido</h3>
+          <p>Los usuarios son responsables de la veracidad y legalidad del contenido que publiquen. LABANDERA se reserva el derecho de moderar, editar o eliminar contenido que viole nuestras políticas o la ley.</p>
+          <h3 className="text-xl font-bold mt-4">3. Propiedad Intelectual</h3>
+          <p>Todo el contenido original publicado en LABANDERA está protegido por derechos de autor. Su reproducción total o parcial requiere autorización expresa.</p>
+          <h3 className="text-xl font-bold mt-4">4. Limitación de Responsabilidad</h3>
+          <p>LABANDERA no garantiza la disponibilidad ininterrumpida del servicio ni se hace responsable de daños indirectos derivados del uso de la plataforma.</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ContactoScreen() {
+  const [sent, setSent] = useState(false);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setSent(true);
+    setTimeout(() => setSent(false), 3000);
+  };
+
+  return (
+    <div className="min-h-screen bg-background py-12 px-4">
+      <div className="max-w-2xl mx-auto">
+        <button onClick={() => window.history.back()} className="flex items-center gap-1.5 font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors mb-8" aria-label="Volver">
+          <ArrowLeft className="w-3.5 h-3.5" /> VOLVER
+        </button>
+        <h1 className="text-4xl font-black mb-6" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>Contacto</h1>
+        <p className="font-mono text-sm text-muted-foreground mb-8">¿Tienes una pista, documento o sugerencia? Escríbenos de forma segura.</p>
+        
+        {sent ? (
+          <div className="bg-primary/10 border border-primary p-6 text-center">
+            <p className="font-mono text-sm text-primary font-bold">Mensaje enviado correctamente. Te responderemos a la brevedad.</p>
+          </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+            <div>
+              <label className="font-mono text-xs tracking-widest block mb-1.5">NOMBRE</label>
+              <input type="text" required className="w-full bg-input-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" />
+            </div>
+            <div>
+              <label className="font-mono text-xs tracking-widest block mb-1.5">CORREO ELECTRÓNICO</label>
+              <input type="email" required className="w-full bg-input-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" />
+            </div>
+            <div>
+              <label className="font-mono text-xs tracking-widest block mb-1.5">MENSAJE</label>
+              <textarea required rows={5} className="w-full bg-input-background border border-border px-4 py-3 text-sm resize-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition" style={{ fontFamily: "'Lora', serif" }}></textarea>
+            </div>
+            <button type="submit" className="w-full bg-accent text-accent-foreground py-3 font-mono text-sm tracking-widest hover:bg-primary transition-colors flex items-center justify-center gap-2">
+              <Send className="w-4 h-4" /> ENVIAR MENSAJE
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}
+
 // ─── Root App ─────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [screen, setScreen] = useState<Screen>("home");
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'));
   const [currentArticle, setCurrentArticle] = useState<Article | null>(null);
+  const navigate = useNavigate();
 
-  const navigate = (s: Screen) => {
-    if (s === "upload" && !loggedIn) { setScreen("login"); return; }
-    setScreen(s);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const handleLogin = () => {
+    setLoggedIn(true);
+    navigate("/");
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    setLoggedIn(false);
+    navigate("/");
   };
 
   const openArticle = (a: Article) => {
     setCurrentArticle(a);
-    setScreen("article");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    navigate(`/article/${a.id}`);
   };
-
-  const handleLogin = () => {
-    setLoggedIn(true);
-    setScreen("home");
-  };
-
-const handleLogout = () => {
-  localStorage.removeItem('token');
-  localStorage.removeItem('user');
-  setLoggedIn(false);
-  setScreen("home");
-};
-
-
-  if (screen === "login") {
-    return <LoginScreen onLogin={handleLogin} />;
-  }
 
   return (
     <div className="min-h-screen bg-background">
-      <Navbar
-        onNavigate={navigate}
-        loggedIn={loggedIn}
-        onLogout={handleLogout}
-      />
-
-      {screen === "home" && (
-        <HomeScreen onArticle={openArticle} loggedIn={loggedIn} />
-      )}
-
-      {screen === "article" && currentArticle && (
-        <ArticleScreen
-          article={currentArticle}
-          onBack={() => navigate("home")}
-          onArticle={openArticle}
-        />
-      )}
-
-      {screen === "upload" && loggedIn && (
-        <UploadScreen
-          onBack={() => navigate("home")}
-          onPublish={() => navigate("home")}
-        />
-      )}
+      <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
+      <Routes>
+        <Route path="/" element={<HomeScreen onArticle={openArticle} loggedIn={loggedIn} />} />
+        <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <LoginScreen onLogin={handleLogin} />} />
+        <Route path="/article/:id" element={
+          <Suspense fallback={<div className="flex items-center justify-center h-screen"><p className="font-mono text-sm">Cargando nota...</p></div>}>
+            {currentArticle ? <ArticleScreen article={currentArticle} onBack={() => navigate("/")} onArticle={openArticle} /> : <Navigate to="/" />}
+          </Suspense>
+        } />
+        <Route path="/upload" element={
+          loggedIn ? (
+            <Suspense fallback={<div className="flex items-center justify-center h-screen"><p className="font-mono text-sm">Cargando editor...</p></div>}>
+              <UploadScreen onBack={() => navigate("/")} onPublish={() => navigate("/")} />
+            </Suspense>
+          ) : <Navigate to="/login" />
+        } />
+        <Route path="/privacidad" element={<PrivacidadScreen />} />
+        <Route path="/terminos" element={<TerminosScreen />} />
+        <Route path="/contacto" element={<ContactoScreen />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </div>
   );
 }
