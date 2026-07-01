@@ -1,5 +1,6 @@
 
 import { useState, useRef, Suspense, lazy, useEffect } from "react";
+import { useClickOutside } from "./hooks/useClickOutside";
 import {
   LogIn,
   LogOut,
@@ -196,15 +197,7 @@ function Navbar({
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setDropdownOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  useClickOutside(dropdownRef, () => setDropdownOpen(false));
 
   return (
     <header className="border-b-2 border-foreground bg-card sticky top-0 z-50">
