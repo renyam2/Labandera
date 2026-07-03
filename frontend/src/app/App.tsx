@@ -1,6 +1,7 @@
 
 import { useState, useRef, Suspense, lazy, useEffect } from "react";
 import { useClickOutside } from "./hooks/useClickOutside";
+import { useCalendarEvent } from "./hooks/useCalendarEvent";
 import {
   LogIn,
   LogOut,
@@ -1306,8 +1307,14 @@ export default function App() {
     navigate(`/article/${a.id}`);
   };
 
+  const activeEvent = useCalendarEvent();
   return (
-    <div className="min-h-screen bg-background">
+    <div className={`min-h-screen ${activeEvent?.theme.bgClass || "bg-background"} transition-colors duration-500`}>
+      {activeEvent && (
+        <div className={`w-full py-2 text-center font-mono text-sm tracking-widest ${activeEvent.theme.bannerBg}`}>
+          {activeEvent.theme.bannerText}
+        </div>
+      )}
       <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<HomeScreen onArticle={openArticle} loggedIn={loggedIn} />} />
