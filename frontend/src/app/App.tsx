@@ -2,6 +2,7 @@
 import { useState, useRef, Suspense, lazy, useEffect } from "react";
 import { useClickOutside } from "./hooks/useClickOutside";
 import { useCalendarEvent } from "./hooks/useCalendarEvent";
+import { useSeasonalUpdate } from "./hooks/useSeasonalUpdate";
 import {
   LogIn,
   LogOut,
@@ -497,6 +498,7 @@ function HomeScreen({
   const [activeTag, setActiveTag] = useState("TODOS");
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [highlightedId, setHighlightedId] = useState<number | null>(null);
 
   const featured = ARTICLES.find((a) => a.featured)!;
   const filtered = ARTICLES.filter((a) => {
@@ -608,7 +610,14 @@ function HomeScreen({
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
           {rest.map((article) => (
-            <ArticleCard key={article.id} article={article} onClick={() => onArticle(article)} />
+            <ArticleCard 
+              key={article.id} 
+              article={article} 
+              onClick={() => onArticle(article)}
+              isHighlighted={highlightedId === article.id}
+              onPointerEnter={() => setHighlightedId(article.id)}
+              onPointerLeave={() => setHighlightedId(null)}
+            />
           ))}
         </div>
 
@@ -625,11 +634,29 @@ function HomeScreen({
   );
 }
 
-function ArticleCard({ article, onClick }: { article: Article; onClick: () => void }) {
+function ArticleCard({ 
+  article, 
+  onClick, 
+  isHighlighted,
+  onPointerEnter,
+  onPointerLeave
+}: { 
+  article: Article; 
+  onClick: () => void;
+  isHighlighted: boolean;
+  onPointerEnter: () => void;
+  onPointerLeave: () => void;
+}) {
   return (
     <div
       onClick={onClick}
-      className="bg-card p-6 cursor-pointer group hover:bg-secondary transition-colors flex flex-col gap-4"
+      onPointerEnter={onPointerEnter}
+      onPointerLeave={onPointerLeave}
+      className={`bg-card p-6 cursor-pointer group flex flex-col gap-4 transition-all duration-300 ${
+        isHighlighted 
+          ? "bg-secondary border-2 border-accent shadow-xl scale-[1.02] z-10" 
+          : "hover:bg-secondary"
+      }`}
       role="article"
       aria-label={`Ver nota: ${article.title}`}
     >
@@ -1308,11 +1335,16 @@ export default function App() {
   };
 
   const activeEvent = useCalendarEvent();
+  const activeSeason = useSeasonalUpdate();
+  
+  const currentBg = activeSeason?.bgClass || activeEvent?.theme.bgClass || "bg-background";
+  const currentBanner = activeSeason || activeEvent;
+
   return (
-    <div className={`min-h-screen ${activeEvent?.theme.bgClass || "bg-background"} transition-colors duration-500`}>
-      {activeEvent && (
-        <div className={`w-full py-2 text-center font-mono text-sm tracking-widest ${activeEvent.theme.bannerBg}`}>
-          {activeEvent.theme.bannerText}
+    <div className={`min-h-screen ${currentBg} transition-colors duration-500`}>
+      {currentBanner && (
+        <div className={`w-full py-2 text-center font-mono text-sm tracking-widest ${currentBanner.bannerBg}`}>
+          {currentBanner.bannerText}
         </div>
       )}
       <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
