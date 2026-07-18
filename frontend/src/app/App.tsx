@@ -680,6 +680,8 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
@@ -696,14 +698,43 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
     setPreviews((prev) => prev.filter((_, idx) => idx !== i));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!form.title || !form.summary || !form.body || !form.author) return;
-    setSubmitted(true);
-    setTimeout(() => {
-      onPublish();
-      navigate("/");
-    }, 2000);
+
+    let user: { id: string } | null = null;
+    try {
+      const raw = localStorage.getItem('user');
+      if (!raw) throw new Error('No hay usuario logueado');
+      user = JSON.parse(raw);
+      if (!user?.id) throw new Error('El usuario no tiene un id válido');
+    } catch (err) {
+      setError('Error de autenticación: no se pudo obtener el usuario actual.');
+      return;
+    }
+
+    setSending(true);
+    setError(null);
+
+    try {
+      await createArticle({
+        title: form.title,
+        summary: form.summary,
+        body: form.body,
+        authorId: user.id,
+        categoryId: "ed571bb9-a529-4833-b1c4-65ce74443e16",
+      });
+      setSubmitted(true);
+      setTimeout(() => {
+        onPublish();
+        navigate("/");
+      }, 2000);
+    } catch (err) {
+      console.error('Error al publicar nota:', err);
+      setError('No se pudo publicar la nota. Inténtalo de nuevo más tarde.');
+    } finally {
+      setSending(false);
+    }
   };
 
   const incomplete = !form.title || !form.summary || !form.body || !form.author;
@@ -929,15 +960,32 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
               </p>
             )}
 
+            {error && (
+              <div className="bg-destructive/10 border border-destructive p-3">
+                <p className="font-mono text-xs text-destructive text-center">
+                  {error}
+                </p>
+              </div>
+            )}
+
             {/* Submit */}
             <button
               type="submit"
-              disabled={incomplete}
+              disabled={incomplete || sending}
               className="w-full bg-accent text-accent-foreground py-4 font-mono text-sm tracking-widest hover:bg-primary transition-colors disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
               aria-label="Publicar nota"
             >
-              <Send className="w-4 h-4" />
-              PUBLICAR NOTA
+              {sending ? (
+                <>
+                  <span className="w-4 h-4 border-2 border-accent-foreground/30 border-t-accent-foreground rounded-full animate-spin" />
+                  PUBLICANDO...
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  PUBLICAR NOTA
+                </>
+              )}
             </button>
 
             <button
