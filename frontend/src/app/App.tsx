@@ -29,6 +29,8 @@ import {
 } from "lucide-react";
 import api from "./services/api";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link } from "react-router-dom";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -333,155 +335,6 @@ function Navbar({
         </div>
       )}
     </header>
-  );
-}
-
-// ─── Screen 1: Login ──────────────────────────────────────────────────────────
-
-function LoginScreen({ onLogin }: { onLogin: () => void }) {
-  const navigate = useNavigate();
-  const [user, setUser] = useState("");
-  const [pass, setPass] = useState("");
-  const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false);
-
-const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  setError("");
-  if (!user || !pass) { setError("Completa ambos campos."); return; }
-  setLoading(true);
-  try {
-    const res = await api.post('/auth/login', { email: user, password: pass });
-    localStorage.setItem('token', res.data.token);
-    localStorage.setItem('user', JSON.stringify(res.data.user));
-    onLogin();
-    navigate("/");
-  } catch {
-    setError("Credenciales incorrectas. Intenta de nuevo.");
-  } finally {
-    setLoading(false);
-  }
-};
-
-  return (
-    <div className="min-h-screen bg-background flex">
-      {/* Left panel */}
-      <div className="hidden lg:flex flex-col justify-between w-1/2 bg-foreground text-background p-12">
-        <div className="flex items-center gap-2">
-          <Droplets className="w-6 h-6 text-accent" />
-          <span
-            className="text-3xl font-black tracking-tight"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-          >
-            LA<span className="text-accent">BANDERA</span>
-          </span>
-        </div>
-        <div>
-          <p className="font-mono text-xs text-muted-foreground tracking-widest mb-6">
-            PERIODISMO · TRANSPARENCIA · MÉXICO
-          </p>
-          <h2
-            className="text-5xl font-black leading-tight mb-6"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-          >
-            FILTRAMOS
-            <br />
-            <span className="text-accent">EL AGUA</span>
-            <br />
-            SUCIA
-          </h2>
-          <p className="text-muted-foreground text-sm leading-relaxed max-w-xs"
-             style={{ fontFamily: "'Lora', serif" }}>
-            Acceso exclusivo para periodistas acreditados del equipo LABANDERA.
-            Si eres colaborador, solicita tus credenciales al editor jefe.
-          </p>
-        </div>
-        <div className="border-t border-muted pt-6">
-          <p className="font-mono text-xs text-muted-foreground">
-            DEMO: usuario <span className="text-background">periodista</span> / contraseña <span className="text-background">labandera2026</span>
-          </p>
-        </div>
-      </div>
-
-      {/* Right panel */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <div className="w-full max-w-sm">
-          {/* Mobile logo */}
-          <div className="lg:hidden flex items-center gap-2 mb-10">
-            <Droplets className="w-5 h-5 text-accent" />
-            <span
-              className="text-2xl font-black"
-              style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-            >
-              LA<span className="text-accent">BANDERA</span>
-            </span>
-          </div>
-
-          <h1
-            className="text-4xl font-black mb-1"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-          >
-            ACCESO
-          </h1>
-          <p className="font-mono text-xs text-muted-foreground tracking-widest mb-8">
-            SALA DE REDACCIÓN
-          </p>
-
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-            <div>
-              <label className="font-mono text-xs tracking-widest block mb-1.5">
-                USUARIO
-              </label>
-              <input
-                type="email"
-                required
-                value={user}
-                onChange={(e) => setUser(e.target.value)}
-                placeholder="tu.nombre@labandera.mx"
-                className="w-full bg-input-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition"
-              />
-            </div>
-            <div>
-              <label className="font-mono text-xs tracking-widest block mb-1.5">
-                CONTRASEÑA
-              </label>
-              <input
-                type="password"
-                required
-                minLength={6}
-                value={pass}
-                onChange={(e) => setPass(e.target.value)}
-                placeholder="••••••••••"
-                className="w-full bg-input-background border border-border px-4 py-3 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition"
-              />
-            </div>
-
-            {error && (
-              <p className="font-mono text-xs text-accent" role="alert">{error}</p>
-            )}
-
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-foreground text-background py-3 font-mono text-sm tracking-widest hover:bg-primary transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
-            >
-              {loading ? (
-                <span className="animate-pulse">VERIFICANDO...</span>
-              ) : (
-                <>
-                  <LogIn className="w-4 h-4" />
-                  ENTRAR
-                </>
-              )}
-            </button>
-          </form>
-
-          <p className="mt-8 font-mono text-xs text-muted-foreground text-center">
-            ¿Problemas de acceso? <Link to="/contacto" className="text-primary hover:underline">Contacta al editor</Link>.
-          </p>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -1350,7 +1203,8 @@ export default function App() {
       <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
       <Routes>
         <Route path="/" element={<HomeScreen onArticle={openArticle} loggedIn={loggedIn} />} />
-        <Route path="/login" element={loggedIn ? <Navigate to="/" /> : <LoginScreen onLogin={handleLogin} />} />
+	<Route path="/login" element={loggedIn ? <Navigate to="/" /> : <LoginPage onLogin={handleLogin} />} />
+        <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <RegisterPage onLogin={handleLogin} />} />
         <Route path="/article/:id" element={
           currentArticle ? <ArticleScreenLazy article={currentArticle} onBack={() => navigate("/")} onArticle={openArticle} /> : <Navigate to="/" />
         } />
