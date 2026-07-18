@@ -31,7 +31,7 @@ import api from "./services/api";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { getArticles } from "./services/articles";
+import { getArticles, createArticle } from "./services/articles";
 import { FrontendArticle } from "./services/articles";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
