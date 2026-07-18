@@ -31,6 +31,8 @@ import api from "./services/api";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
+import { getArticles } from "./services/articles";
+import { FrontendArticle } from "./services/articles";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -1168,7 +1170,28 @@ function FuentesScreen() {
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'));
   const [currentArticle, setCurrentArticle] = useState<Article | null>(null);
+  const [articles, setArticles] = useState<FrontendArticle[]>([]);
+  const [loadingArticles, setLoadingArticles] = useState(true);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const data = await getArticles();
+        if (!cancelled) {
+          setArticles(data);
+        }
+      } catch (err) {
+        console.error('Error al cargar artículos:', err);
+      } finally {
+        if (!cancelled) {
+          setLoadingArticles(false);
+        }
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   const handleLogin = () => {
     setLoggedIn(true);
@@ -1202,7 +1225,7 @@ export default function App() {
       )}
       <Navbar loggedIn={loggedIn} onLogout={handleLogout} />
       <Routes>
-        <Route path="/" element={<HomeScreen onArticle={openArticle} loggedIn={loggedIn} />} />
+        <Route path="/" element={<HomeScreen onArticle={openArticle} loggedIn={loggedIn} articles={articles} loadingArticles={loadingArticles} />} />
 	<Route path="/login" element={loggedIn ? <Navigate to="/" /> : <LoginPage onLogin={handleLogin} />} />
         <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <RegisterPage onLogin={handleLogin} />} />
         <Route path="/article/:id" element={
