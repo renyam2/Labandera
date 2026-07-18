@@ -2,7 +2,7 @@ import { Request, Response, NextFunction, RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
 
 interface AuthRequest extends Request {
-  user?: { id: string; role: string }
+  user?: { id: string; roles: string[] }
 }
 
 // Solo valida que exista un token válido, sin exigir rol específico
@@ -13,7 +13,7 @@ export const verificarToken: RequestHandler = (req: AuthRequest, res: Response, 
     return
   }
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string; role: string }
+    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string; roles: string[] }
     req.user = decoded
     next()
   } catch {
@@ -21,7 +21,7 @@ export const verificarToken: RequestHandler = (req: AuthRequest, res: Response, 
   }
 }
 
-// Valida token Y que el rol esté en la lista permitida
+// Valida token Y que el usuario tenga al menos uno de los roles permitidos
 export const requireRole = (roles: string[]): RequestHandler => {
   return (req: AuthRequest, res: Response, next: NextFunction) => {
     const token = req.headers.authorization?.split(' ')[1]
@@ -30,9 +30,9 @@ export const requireRole = (roles: string[]): RequestHandler => {
       return
     }
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string; role: string }
+      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string; roles: string[] }
       req.user = decoded
-      if (!roles.includes(decoded.role)) {
+      if (!decoded.roles.some(r => roles.includes(r))) {
         res.status(403).json({ message: 'No tienes permiso' })
         return
       }
