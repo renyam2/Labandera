@@ -14,6 +14,17 @@ export const register = async (req: Request, res: Response) => {
       data: { name, email, password: hashed }
     })
 
+    // Asignar rol por defecto "Usuario"
+    const defaultRole = await prisma.role.findUnique({ where: { name: 'Usuario' } })
+    if (defaultRole) {
+      await prisma.userRole.create({
+        data: {
+          userId: user.id,
+          roleId: defaultRole.id,
+        }
+      })
+    }
+
     // Obtener roles del usuario recién creado
     const userWithRoles = await prisma.user.findUnique({
       where: { id: user.id },
