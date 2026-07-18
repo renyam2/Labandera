@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import * as ArticleController from '../controllers/article.controller'
-import { requireRole } from '../middleware/auth.middleware'
+import { requireRole } from '../middlewares/auth'
 
 const router = Router()
 
