@@ -67,6 +67,7 @@ export const createArticle = async (data: {
 
   const res = await api.post<BackendArticle>('/articles', {
     ...data,
+    content: data.body,
     slug,
     published: true,
   })
