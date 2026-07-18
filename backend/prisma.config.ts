@@ -14,5 +14,6 @@ export default defineConfig({
     async adapter() {
       return new PrismaPg({ connectionString: process.env.DATABASE_URL! })
     }
-  }
+  },
+  seed: "prisma/seed.ts"
 });
