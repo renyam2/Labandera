@@ -8,9 +8,9 @@ const router = Router()
 router.get('/', ArticleController.getArticles)
 router.get('/:id', ArticleController.getArticleById)
 
-// Escritura protegida (ADMIN o EDITOR)
-router.post('/', requireRole(['ADMIN', 'EDITOR']), ArticleController.createArticle)
-router.put('/:id', requireRole(['ADMIN', 'EDITOR']), ArticleController.updateArticle)
-router.delete('/:id', requireRole(['ADMIN', 'EDITOR']), ArticleController.deleteArticle)
+// Escritura protegida (Administrador o Editor)
+router.post('/', requireRole(['Administrador', 'Editor']), ArticleController.createArticle)
+router.put('/:id', requireRole(['Administrador', 'Editor']), ArticleController.updateArticle)
+router.delete('/:id', requireRole(['Administrador']), ArticleController.deleteArticle)
 
 export default router
