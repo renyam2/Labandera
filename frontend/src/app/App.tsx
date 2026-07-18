@@ -272,9 +272,13 @@ function Navbar({
 function HomeScreen({
   onArticle,
   loggedIn,
+  articles,
+  loadingArticles,
 }: {
   onArticle: (a: Article) => void;
   loggedIn: boolean;
+  articles: FrontendArticle[];
+  loadingArticles: boolean;
 }) {
   const navigate = useNavigate();
   const [activeTag, setActiveTag] = useState("TODOS");
@@ -282,8 +286,8 @@ function HomeScreen({
   const [searchTerm, setSearchTerm] = useState("");
   const [highlightedId, setHighlightedId] = useState<number | null>(null);
 
-  const featured = ARTICLES.find((a) => a.featured)!;
-  const filtered = ARTICLES.filter((a) => {
+  const featured = articles.length > 0 ? articles[0] : null;
+  const filtered = articles.filter((a) => {
     const matchTag = activeTag === "TODOS" || a.tag === activeTag;
     const matchSearch =
       !searchTerm ||
@@ -337,8 +341,16 @@ function HomeScreen({
       </div>
 
       <main className="max-w-7xl mx-auto px-4 py-8">
+        {loadingArticles ? (
+          <div className="text-center py-20">
+            <p className="font-mono text-muted-foreground text-sm">
+              Cargando notas...
+            </p>
+          </div>
+        ) : (
+          <>
         {/* Featured */}
-        {(activeTag === "TODOS" || activeTag === featured.tag) && !searchTerm && (
+        {featured !== null && (activeTag === "TODOS" || activeTag === featured.tag) && !searchTerm && (
           <div
             className="grid grid-cols-1 lg:grid-cols-2 border-2 border-foreground mb-8 cursor-pointer group"
             onClick={() => onArticle(featured)}
@@ -409,6 +421,8 @@ function HomeScreen({
               No se encontraron notas.
             </p>
           </div>
+        )}
+          </>
         )}
       </main>
       <Footer />
