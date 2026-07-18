@@ -49,7 +49,15 @@ async function main() {
     console.log(`  ✅ Rol creado: ${r.name}`)
   }
 
-  // ─── 3. Asignar permisos a roles ─────────────────────────────────────────────
+  // ─── 3. Crear categoría por defecto ──────────────────────────────────────────
+  await prisma.category.upsert({
+    where: { name: 'General' },
+    update: {},
+    create: { name: 'General' },
+  })
+  console.log('  ✅ Categoría creada: General')
+
+  // ─── 4. Asignar permisos a roles ─────────────────────────────────────────────
   const asignaciones = [
     // Administrador: todos los permisos
     { role: 'Administrador', permisos: Object.keys(permisosCreados) },
@@ -80,7 +88,7 @@ async function main() {
     console.log(`  ✅ Permisos asignados a ${a.role}: ${a.permisos.join(', ')}`)
   }
 
-  // ─── 4. Crear usuarios de prueba ─────────────────────────────────────────────
+  // ─── 5. Crear usuarios de prueba ─────────────────────────────────────────────
   const password = 'password123'
   const hashedPassword = await bcrypt.hash(password, 10)
 
