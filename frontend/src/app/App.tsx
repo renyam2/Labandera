@@ -1156,7 +1156,7 @@ function FuentesScreen() {
 
 // ─── Article Loader ───────────────────────────────────────────────────────────
 
-function ArticleLoader() {
+function ArticleLoader({ setCurrentArticle }: { setCurrentArticle: (article: Article) => void }) {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
@@ -1205,7 +1205,7 @@ function ArticleLoader() {
     })();
 
     return () => { cancelled = true; };
-  }, [id, navigate]);
+  }, [id, navigate, setCurrentArticle]);
 
   if (loading) {
     return (
@@ -1310,7 +1310,7 @@ export default function App() {
           currentArticle ? (
             <ArticleScreenLazy article={currentArticle} onBack={() => navigate("/")} onArticle={openArticle} />
           ) : (
-            <ArticleLoader />
+            <ArticleLoader setCurrentArticle={setCurrentArticle} />
           )
         } />
         <Route path="/upload" element={
