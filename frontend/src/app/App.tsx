@@ -497,12 +497,14 @@ function ArticleScreenLazy({
   article,
   onBack,
   onArticle,
+  allArticles,
 }: {
   article: Article;
   onBack: () => void;
   onArticle: (a: Article) => void;
+  allArticles: FrontendArticle[];
 }) {
-  const related = ARTICLES.filter((a) => a.id !== article.id && a.tag === article.tag).slice(0, 2);
+  const related = allArticles.filter((a) => a.id !== String(article.id) && a.tag === article.tag).slice(0, 2);
 
   return (
     <div className="min-h-screen bg-background">
@@ -1308,7 +1310,7 @@ export default function App() {
         <Route path="/register" element={loggedIn ? <Navigate to="/" /> : <RegisterPage onLogin={handleLogin} />} />
         <Route path="/article/:id" element={
           currentArticle ? (
-            <ArticleScreenLazy article={currentArticle} onBack={() => navigate("/")} onArticle={openArticle} />
+            <ArticleScreenLazy article={currentArticle} onBack={() => navigate("/")} onArticle={openArticle} allArticles={articles} />
           ) : (
             <ArticleLoader setCurrentArticle={setCurrentArticle} />
           )
