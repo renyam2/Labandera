@@ -719,13 +719,27 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
     setError(null);
 
     try {
-      await createArticle({
+      const created = await createArticle({
         title: form.title,
         summary: form.summary,
         body: form.body,
         authorId: user.id,
         categoryId: "ed571bb9-a529-4833-b1c4-65ce74443e16",
       });
+      const articleId = created.data.id;
+
+      for (const file of images) {
+        const formData = new FormData();
+        formData.append("image", file);
+        try {
+          await api.post(`/articles/${articleId}/images`, formData, {
+            headers: { "Content-Type": "multipart/form-data" },
+          });
+        } catch (uploadErr) {
+          console.error(`Error subiendo imagen "${file.name}":`, uploadErr);
+        }
+      }
+
       setSubmitted(true);
       setTimeout(() => {
         onPublish();
