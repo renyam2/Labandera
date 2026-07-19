@@ -726,7 +726,7 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
         authorId: user.id,
         categoryId: "ed571bb9-a529-4833-b1c4-65ce74443e16",
       });
-      const articleId = created.data.id;
+      const articleId = created.id;
 
       for (const file of images) {
         const formData = new FormData();

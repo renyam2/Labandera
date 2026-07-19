@@ -44,7 +44,7 @@ export const getArticles = async (): Promise<FrontendArticle[]> => {
     }).toUpperCase(),
     tag: a.category?.name || 'SIN CATEGORÍA',
     state: '',
-    imageUrl: a.image || '',
+    imageUrl: a.images?.[0]?.url || '',
     featured: false,
   }))
 }

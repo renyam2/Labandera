@@ -43,7 +43,7 @@ router.post(
       const articleImage = await prisma.articleImage.create({
         data: {
           url: `/uploads/${filename}`,
-          articleId: req.params.id,
+	articleId: String(req.params.id),
           order: 0,
         },
       })
