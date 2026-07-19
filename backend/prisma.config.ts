@@ -4,8 +4,9 @@ import { PrismaPg } from "@prisma/adapter-pg";
 
 export default defineConfig({
   schema: "prisma/schema.prisma",
-  migrations: {
+migrations: {
     path: "prisma/migrations",
+    seed: "tsx prisma/seed.ts",
   },
   datasource: {
     url: process.env.DATABASE_URL!,
@@ -15,5 +16,4 @@ export default defineConfig({
       return new PrismaPg({ connectionString: process.env.DATABASE_URL! })
     }
   },
-  seed: "prisma/seed.ts"
 });
