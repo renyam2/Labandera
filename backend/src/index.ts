@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
+import path from 'path'
 import authRoutes from './routes/auth.routes'
 import articleRoutes from './routes/article.routes'
 import categoryRoutes from './routes/category.routes'
@@ -17,6 +18,7 @@ app.get('/', (req, res) => {
   res.json({ message: 'Labandera API funcionando 🚀' })
 })
 
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 app.use('/api/auth', authRoutes)
 app.use('/api/articles', articleRoutes)
 app.use('/api/categories', categoryRoutes)
