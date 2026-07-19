@@ -688,56 +688,6 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
 
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
 
-  const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = Array.from(e.target.files || []);
-    setImages((prev) => [...prev, ...files].slice(0, 5));
-    const newPreviews = files.map((f) => URL.createObjectURL(f));
-    setPreviews((prev) => [...prev, ...newPreviews].slice(0, 5));
-  };
-
-  const removeImage = (i: number) => {
-    setImages((prev) => prev.filter((_, idx) => idx !== i));
-    setPreviews((prev) => prev.filter((_, idx) => idx !== i));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!form.title || !form.summary || !form.body || !form.author) return;
-
-    let user: { id: string } | null = null;
-    try {
-      const raw = localStorage.getItem('user');
-      if (!raw) throw new Error('No hay usuario logueado');
-      user = JSON.parse(raw);
-      if (!user?.id) throw new Error('El usuario no tiene un id válido');
-    } catch (err) {
-      setError('Error de autenticación: no se pudo obtener el usuario actual.');
-      return;
-    }
-
-    setSending(true);
-    setError(null);
-
-    try {
-      await createArticle({
-        title: form.title,
-        summary: form.summary,
-        body: form.body,
-        authorId: user.id,
-        categoryId: "ed571bb9-a529-4833-b1c4-65ce74443e16",
-      });
-      setSubmitted(true);
-      setTimeout(() => {
-        onPublish();
-        navigate("/");
-      }, 2000);
-    } catch (err) {
-      console.error('Error al publicar nota:', err);
-      setError('No se pudo publicar la nota. Inténtalo de nuevo más tarde.');
-    } finally {
-      setSending(false);
-    }
-  };
 
   const incomplete = !form.title || !form.summary || !form.body || !form.author;
 
