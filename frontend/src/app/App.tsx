@@ -1259,6 +1259,32 @@ function ArticleLoader({ setCurrentArticle }: { setCurrentArticle: (article: Art
   return null;
 }
 
+// ─── Upload Guard ─────────────────────────────────────────────────────────────
+
+function UploadGuard() {
+  const navigate = useNavigate();
+  const raw = localStorage.getItem('user');
+
+  if (raw) {
+    try {
+      const user = JSON.parse(raw);
+      const roles = user.roles || [];
+      if (!roles.includes("Administrador") && !roles.includes("Editor")) {
+        navigate("/");
+        return null;
+      }
+    } catch (e) {
+      navigate("/");
+      return null;
+    }
+  } else {
+    navigate("/login");
+    return null;
+  }
+
+  return <UploadScreenLazy onBack={() => navigate("/")} onPublish={() => navigate("/")} />;
+}
+
 // ─── Root App ─────────────────────────────────────────────────────────────────
 
 export default function App() {
@@ -1329,9 +1355,7 @@ export default function App() {
             <ArticleLoader setCurrentArticle={setCurrentArticle} />
           )
         } />
-        <Route path="/upload" element={
-          loggedIn ? <UploadScreenLazy onBack={() => navigate("/")} onPublish={() => navigate("/")} /> : <Navigate to="/login" />
-        } />
+        <Route path="/upload" element={<UploadGuard />} />
         <Route path="/privacidad" element={<PrivacidadScreen />} />
         <Route path="/terminos" element={<TerminosScreen />} />
         <Route path="/contacto" element={<ContactoScreen />} />
