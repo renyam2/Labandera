@@ -28,10 +28,14 @@ export default defineConfig({
   },
   assetsInclude: ['**/*.svg', '**/*.csv'],
   server: {
-	host:true,
+    host: true,
     proxy: {
       '/api': 'http://localhost:3000',
       '/uploads': 'http://localhost:3000'
     }
+  },
+  preview: {
+    host: true,
+    allowedHosts: ['labandera.lat', 'api.labandera.lat']
   }
 })

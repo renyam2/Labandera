@@ -1,5 +1,6 @@
 import { Request, Response, RequestHandler } from 'express'
 import { prisma } from '../prisma'
+import { AuthRequest } from '../middlewares/auth'
 
 export const getArticles: RequestHandler = async (req, res) => {
   try {
@@ -30,10 +31,17 @@ export const getArticleById: RequestHandler = async (req, res) => {
 }
 
 export const createArticle: RequestHandler = async (req, res) => {
-  const { title, slug, summary, content, image, published, categoryId, authorId } = req.body
+  const { title, slug, summary, content, image, published, categoryId, state } = req.body
+  const authorId = (req as AuthRequest).user?.id
+
+  if (!authorId) {
+    res.status(401).json({ message: 'No se pudo identificar al periodista autenticado' })
+    return
+  }
+
   try {
     const article = await prisma.article.create({
-      data: { title, slug, summary, content, image, published, categoryId, authorId }
+      data: { title, slug, summary, content, image, published, categoryId, authorId, state }
     })
     res.status(201).json(article)
   } catch (error) {
@@ -42,13 +50,14 @@ export const createArticle: RequestHandler = async (req, res) => {
   }
 }
 
+
 export const updateArticle: RequestHandler = async (req, res) => {
   const id = req.params.id as string
-  const { title, slug, summary, content, image, published, categoryId } = req.body
+  const { title, slug, summary, content, image, published, categoryId, state } = req.body
   try {
     const article = await prisma.article.update({
       where: { id },
-      data: { title, slug, summary, content, image, published, categoryId }
+      data: { title, slug, summary, content, image, published, categoryId, state }
     })
     res.json(article)
   } catch (error) {
