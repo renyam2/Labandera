@@ -43,7 +43,7 @@ import {
   Linkedin,
 } from "lucide-react";
 import api from "./services/api";
-import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link, useParams, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link, useParams, useLocation, useSearchParams } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AcercaDePage from "./pages/AcercaDePage";
@@ -168,7 +168,7 @@ function Navbar({
             {["SALUD", "PATRIMONIO", "LEGISLATIVO", "CORRUPCIÓN", "ELECTORAL", "SEGURIDAD"].map((t) => (
               <li key={t}>
                 <Link
-                  to="/"
+                  to={`/?tag=${encodeURIComponent(t)}`}
                   aria-current={isHome ? "page" : undefined}
                   className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                 >
@@ -264,7 +264,7 @@ function Navbar({
                   <li key={t}>
                     <SheetClose asChild>
                       <Link
-                        to="/"
+                        to={`/?tag=${encodeURIComponent(t)}`}
                         aria-current={isHome ? "page" : undefined}
                         className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                       >
@@ -320,7 +320,8 @@ function HomeScreen({
   loadingArticles: boolean;
 }) {
   const navigate = useNavigate();
-  const [activeTag, setActiveTag] = useState("TODOS");
+  const [searchParams] = useSearchParams();
+  const activeTag = searchParams.get("tag") || "TODOS";
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [highlightedId, setHighlightedId] = useState<number | null>(null);
@@ -346,7 +347,7 @@ function HomeScreen({
               {TAGS.map((t) => (
                 <li key={t}>
                   <button
-                    onClick={() => setActiveTag(t)}
+                    onClick={() => navigate(`/?tag=${encodeURIComponent(t)}`)}
                     aria-current={activeTag === t ? "page" : undefined}
                     className={`font-mono text-xs tracking-widest px-4 py-3 border-b-2 whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent ${
                       activeTag === t
