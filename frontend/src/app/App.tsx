@@ -43,7 +43,7 @@ import {
   Linkedin,
 } from "lucide-react";
 import api from "./services/api";
-import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link, useParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link, useParams, useLocation } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AcercaDePage from "./pages/AcercaDePage";
@@ -394,9 +394,10 @@ function HomeScreen({
           <>
         {/* Featured */}
         {featured !== null && (activeTag === "TODOS" || activeTag === featured.tag) && !searchTerm && (
-          <div
+
+<Link
+            to={`/article/${featured.id}`}
             className="grid grid-cols-1 lg:grid-cols-2 border-2 border-foreground mb-8 cursor-pointer group"
-            onClick={() => onArticle(featured)}
           >
             <div className="relative overflow-hidden bg-muted">
               <img
@@ -441,7 +442,7 @@ function HomeScreen({
                 <ChevronRight className="w-5 h-5 text-accent group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
-          </div>
+          </Link>
         )}
 
         {/* Grid */}
@@ -450,7 +451,6 @@ function HomeScreen({
             <ArticleCard 
               key={article.id} 
               article={article} 
-              onClick={() => onArticle(article)}
               isHighlighted={highlightedId === article.id}
               onPointerEnter={() => setHighlightedId(article.id)}
               onPointerLeave={() => setHighlightedId(null)}
@@ -473,30 +473,27 @@ function HomeScreen({
   );
 }
 
-function ArticleCard({ 
-  article, 
-  onClick, 
+function ArticleCard({
+  article,
   isHighlighted,
   onPointerEnter,
   onPointerLeave
-}: { 
-  article: Article; 
-  onClick: () => void;
+}: {
+  article: Article;
   isHighlighted: boolean;
   onPointerEnter: () => void;
   onPointerLeave: () => void;
 }) {
   return (
-    <div
-      onClick={onClick}
+    <Link
+      to={`/article/${article.id}`}
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
       className={`bg-card p-6 cursor-pointer group flex flex-col gap-4 transition-all duration-300 ${
-        isHighlighted 
-          ? "bg-secondary border-2 border-accent shadow-xl scale-[1.02] z-10" 
+        isHighlighted
+          ? "bg-secondary border-2 border-accent shadow-xl scale-[1.02] z-10"
           : "hover:bg-secondary"
       }`}
-      role="article"
       aria-label={`Ver nota: ${article.title}`}
     >
       <div className="overflow-hidden bg-muted aspect-video">
@@ -530,10 +527,9 @@ function ArticleCard({
         <span className="font-mono text-xs text-muted-foreground">{article.date}</span>
         <ChevronRight className="w-4 h-4 text-muted-foreground group-hover:text-accent group-hover:translate-x-0.5 transition-all" />
       </div>
-    </div>
+</Link>
   );
 }
-
 // ─── Screen 3: Article detail ─────────────────────────────────────────────────
 
 function ArticleScreenLazy({
@@ -673,32 +669,33 @@ function ArticleScreenLazy({
                   </p>
                   <div className="space-y-4">
                     {related.map((r) => (
-                      <div
-                        key={r.id}
-                        onClick={() => onArticle(r)}
-                        className="cursor-pointer group flex gap-3"
-                      >
-                        <div className="w-20 h-16 bg-muted shrink-0 overflow-hidden">
-                          <img
-                            src={r.imageUrl}
-                            alt={r.title}
-                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                            loading="lazy"
-                          />
-                        </div>
-                        <div>
-                          <p
-                            className="text-xs font-black leading-snug group-hover:text-accent transition-colors"
-                            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-                          >
-                            {r.title}
-                          </p>
-                          <p className="font-mono text-xs text-muted-foreground mt-1">
-                            {r.date}
-                          </p>
-                        </div>
-                      </div>
+
+
+<Link
+  key={r.id}
+  to={`/article/${r.id}`}
+  className="cursor-pointer group flex gap-3"
+>
+  <div className="w-20 h-16 bg-muted shrink-0 overflow-hidden">
+    <img
+      src={r.imageUrl}
+      alt={r.title}
+      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+      loading="lazy"
+    />
+  </div>                    {/* ← cierra el div de la imagen, está bien */}
+  <div>
+    <p className="text-xs font-black leading-snug group-hover:text-accent transition-colors" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>
+      {r.title}
+    </p>
+    <p className="font-mono text-xs text-muted-foreground mt-1">
+      {r.date}
+    </p>
+  </div>                    {/* ← cierra el div del texto, está bien */}
+</Link>
                     ))}
+
+
                   </div>
                 </div>
               )}
