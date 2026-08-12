@@ -188,14 +188,14 @@ function Navbar({
             <DropdownMenuContent align="start" className="w-48">
               <DropdownMenuLabel>Secciones</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem onClick={() => navigate("/acerca")}>
-                ACERCA DE LABANDERA
+              <DropdownMenuItem asChild>
+                <Link to="/acerca">ACERCA DE LABANDERA</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate("/equipo")}>
-                EQUIPO EDITORIAL
+              <DropdownMenuItem asChild>
+                <Link to="/equipo">EQUIPO EDITORIAL</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => navigate("/metodologia")}>
-                METODOLOGÍA
+              <DropdownMenuItem asChild>
+                <Link to="/metodologia">METODOLOGÍA</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem asChild>
