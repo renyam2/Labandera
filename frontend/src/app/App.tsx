@@ -148,6 +148,17 @@ function Navbar({
 }) {
   const navigate = useNavigate();
 
+  const isAdmin = (() => {
+    try {
+      const raw = localStorage.getItem('user');
+      if (!raw) return false;
+      const user = JSON.parse(raw);
+      return user.roles?.includes("Administrador");
+    } catch {
+      return false;
+    }
+  })();
+
   return (
     <header className="border-b-2 border-foreground bg-card sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-14">
@@ -185,7 +196,14 @@ function Navbar({
               <DropdownMenuItem asChild>
                 <Link to="/metodologia">METODOLOGÍA</Link>
               </DropdownMenuItem>
-              <DropdownMenuSeparator />
+              {isAdmin && (
+                <DropdownMenuSeparator />
+              )}
+              {isAdmin && (
+                <DropdownMenuItem asChild>
+                  <Link to="/estadisticas">ESTADÍSTICAS</Link>
+                </DropdownMenuItem>
+              )}
               <DropdownMenuItem asChild>
                 <Link to="/contacto">CONTACTO</Link>
               </DropdownMenuItem>
