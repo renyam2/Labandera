@@ -163,11 +163,10 @@ function Navbar({
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6" aria-label="Navegación principal">
           <ul className="flex items-center gap-6 list-none">
-            {["SALUD", "PATRIMONIO", "LEGISLATIVO", "CORRUPCIÓN", "ELECTORAL", "SEGURIDAD"].map((t, i) => (
+            {["SALUD", "PATRIMONIO", "LEGISLATIVO", "CORRUPCIÓN", "ELECTORAL", "SEGURIDAD"].map((t) => (
               <li key={t}>
                 <button
                   onClick={() => navigate("/")}
-                  aria-current={i === 0 ? "page" : undefined}
                   className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t}
@@ -252,7 +251,7 @@ function Navbar({
                 <Menu className="w-5 h-5" />
               </button>
             </SheetTrigger>
-            <SheetContent side="right" className="w-[80%] sm:w-[350px]">
+            <SheetContent side="right" className="w-[80%] sm:w-[350px]" aria-label="Menú de navegación móvil">
               <SheetHeader className="border-b border-border pb-4">
                 <SheetTitle className="font-mono text-xs tracking-widest">MENÚ</SheetTitle>
                 <SheetDescription className="sr-only">Navegación móvil</SheetDescription>
