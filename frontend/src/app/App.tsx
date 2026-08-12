@@ -206,12 +206,12 @@ function Navbar({
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <button
-            onClick={() => navigate("/fuentes")}
+          <Link
+            to="/fuentes"
             className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors"
           >
             FUENTES
-          </button>
+          </Link>
         </nav>
 
         {/* Actions */}
@@ -275,25 +275,25 @@ function Navbar({
                 ))}
                 <li>
                   <SheetClose asChild>
-                    <button
-                      onClick={() => navigate("/fuentes")}
+                    <Link
+                      to="/fuentes"
                       className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground"
                     >
                       FUENTES
-                    </button>
+                    </Link>
                   </SheetClose>
                 </li>
                 {loggedIn && (
                   <li>
                     <SheetClose asChild>
-                      <button
-                        onClick={() => navigate("/upload")}
+                      <Link
+                        to="/upload"
                         className="flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-2 font-mono text-xs tracking-widest w-fit"
                         aria-label="Publicar nota"
                       >
                         <Upload className="w-3.5 h-3.5" />
                         PUBLICAR NOTA
-                      </button>
+                      </Link>
                     </SheetClose>
                   </li>
                 )}
