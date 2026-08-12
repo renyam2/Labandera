@@ -180,7 +180,7 @@ function Navbar({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
-                className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1"
+                className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
               >
                 SECCIONES ▾
               </button>
@@ -220,7 +220,7 @@ function Navbar({
             <>
               <button
                 onClick={() => navigate("/upload")}
-                className="hidden md:flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-1.5 font-mono text-xs tracking-widest hover:bg-accent transition-colors"
+                className="hidden md:flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-1.5 font-mono text-xs tracking-widest hover:bg-accent transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                 aria-label="Publicar nota"
               >
                 <Upload className="w-3.5 h-3.5" />
@@ -228,7 +228,7 @@ function Navbar({
               </button>
               <button
                 onClick={onLogout}
-                className="text-muted-foreground hover:text-foreground transition-colors"
+                className="text-muted-foreground hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                 aria-label="Cerrar sesión"
               >
                 <LogOut className="w-4 h-4" />
@@ -238,7 +238,7 @@ function Navbar({
           {!loggedIn && (
             <button
               onClick={() => navigate("/login")}
-              className="flex items-center gap-1.5 border border-foreground px-3 py-1.5 font-mono text-xs tracking-widest hover:bg-foreground hover:text-background transition-colors"
+              className="flex items-center gap-1.5 border border-foreground px-3 py-1.5 font-mono text-xs tracking-widest hover:bg-foreground hover:text-background transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
               aria-label="Acceso periodistas"
             >
               <LogIn className="w-3.5 h-3.5" />
@@ -362,7 +362,7 @@ function HomeScreen({
           </nav>
           <button
             onClick={() => setSearchOpen(!searchOpen)}
-            className="ml-4 text-muted-foreground hover:text-foreground transition-colors shrink-0"
+            className="ml-4 text-muted-foreground hover:text-foreground transition-colors shrink-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
             aria-label="Buscar notas"
           >
             <Search className="w-4 h-4" />
