@@ -1,0 +1,34 @@
+PLANTILLA DE REPORTE DE PRÁCTICAS - LABANDERA
+================================================
+
+1. MENÚ BASADO EN EVENTOS (POINTER-TRIGGERED DROPDOWN)
+-------------------------------------------------------
+Descripción:
+El menú de navegación principal utiliza un evento basado en puntero (click/tap) para desplegar opciones adicionales. Al hacer clic en el botón de menú, se activa un estado que muestra un panel flotante con enlaces a secciones como "Acerca de", "Equipo Editorial", "Metodología", "Fuentes", etc.
+
+Implementación técnica:
+- Se utiliza React State (`dropdownOpen`) para controlar la visibilidad.
+- Se emplea un hook personalizado `useClickOutside` para cerrar el menú al hacer clic fuera de él.
+- Los eventos de puntero (`mousedown`, `touchstart`) se manejan para mejorar la accesibilidad y UX en dispositivos móviles.
+
+Captura de pantalla requerida:
+[SÍ, SE DEBE ANEXAR CAPTURA AQUÍ: Muestra el menú desplegado con las opciones visibles y el puntero interactuando.]
+
+2. EVENTO BASADO EN PERIODO (CAMBIO DE INTERFAZ CALENDARIZADO)
+--------------------------------------------------------------
+Descripción:
+La aplicación detecta automáticamente fechas específicas del calendario y modifica la interfaz (fondo o banners) para reflejar eventos programados (ej. elecciones, ferias, conmemoraciones).
+
+Implementación técnica:
+- Se creó un hook `useCalendarEvent` que compara la fecha actual con un array de eventos programados.
+- Si la fecha coincide, se aplica un tema visual dinámico (color de fondo, banner, tipografía).
+- La lógica se integra en el componente principal `App` y se propaga a la UI.
+
+Captura de pantalla requerida:
+[SÍ, SE DEBE ANEXAR CAPTURA AQUÍ: Muestra la interfaz con el cambio de fondo/banner activado por el evento calendarizado.]
+
+3. EVIDENCIAS Y DOCUMENTACIÓN ADICIONAL
+----------------------------------------
+- Código fuente modificado: frontend/src/app/App.tsx, frontend/src/app/hooks/useCalendarEvent.ts
+- Instrucciones de ejecución: npm run dev
+- Notas: Las capturas deben realizarse en el entorno de desarrollo o producción, mostrando claramente la interacción y el cambio visual.

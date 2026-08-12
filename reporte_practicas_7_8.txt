@@ -1,0 +1,30 @@
+PLANTILLA DE REPORTE DE PRÁCTICAS - LABANDERA (7 y 8)
+======================================================
+
+1. EVENTO JAVASCRIPT PARA ACTUALIZACIÓN DE TEMPORADA (PRÁCTICA 7)
+-----------------------------------------------------------------
+Descripción:
+Se implementó un hook personalizado `useSeasonalUpdate` que detecta automáticamente la temporada actual del año (Primavera, Verano, Otoño, Invierno) y aplica un tema visual dinámico al sitio web. Este evento se dispara al cargar la página y se actualiza diariamente para reflejar cambios estacionales.
+
+Implementación técnica:
+- Se creó el hook `useSeasonalUpdate.ts` que utiliza `useEffect` y `setInterval` para verificar la fecha actual.
+- Se define un objeto `SEASONS` con las clases de Tailwind CSS para fondo, banner y color de acento correspondiente a cada temporada.
+- El hook retorna el tema activo, el cual se inyecta en el componente raíz `App` para modificar el fondo global y mostrar un banner estacional.
+- El evento se ejecuta automáticamente sin intervención del usuario, garantizando una experiencia actualizada.
+
+Captura de pantalla requerida:
+[SÍ, SE DEBE ANEXAR CAPTURA AQUÍ: Muestra el sitio web con el banner y fondo correspondientes a la temporada actual.]
+
+2. EVENTO DESTACAR CONTENIDO MEDIANTE EL PUNTERO (PRÁCTICA 8)
+-------------------------------------------------------------
+Descripción:
+Se implementó un sistema de resaltado interactivo que destaca las tarjetas de artículos cuando el puntero del mouse (o dedo en dispositivos táctiles) se posiciona sobre ellas. Este evento mejora la UX al proporcionar feedback visual inmediato y enfocar la atención del usuario en el contenido seleccionado.
+
+Implementación técnica:
+- Se modificó el componente `ArticleCard` para escuchar los eventos `onPointerEnter` y `onPointerLeave`.
+- Se utiliza un estado `highlightedId` en `HomeScreen` para rastrear qué tarjeta está activa.
+- Al activarse el evento, se aplica una clase CSS dinámica que aumenta el contraste, aplica un borde de acento y una sombra pronunciada, diferenciándolo del estado `hover` estándar.
+- Se asegura compatibilidad con eventos de puntero (`pointer`) para funcionar tanto en desktop como en móviles.
+
+Captura de pantalla requerida:
+[SÍ, SE DEBE ANEXAR CAPTURA AQUÍ: Muestra el cursor sobre una tarjeta de artículo resaltada con el borde y sombra de acento activados.]

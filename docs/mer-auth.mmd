@@ -1,0 +1,34 @@
+erDiagram
+    User {
+        string id PK
+        string name
+        string email
+        string password
+        datetime createdAt
+        datetime updatedAt
+    }
+    Role {
+        string id PK
+        string name
+        string description
+    }
+    Permission {
+        string id PK
+        string name
+        string description
+    }
+    UserRole {
+        string id PK
+        string userId FK
+        string roleId FK
+    }
+    RolePermission {
+        string id PK
+        string roleId FK
+        string permissionId FK
+    }
+
+    User ||--o{ UserRole : "tiene"
+    Role ||--o{ UserRole : "asignado a"
+    Role ||--o{ RolePermission : "tiene"
+    Permission ||--o{ RolePermission : "otorgado en"
