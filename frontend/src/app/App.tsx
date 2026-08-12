@@ -146,7 +146,8 @@ function Navbar({
 }) {
   const navigate = useNavigate();
   const location = useLocation();
-  const isHome = location.pathname === "/";
+  const [searchParams] = useSearchParams();
+  const activeTag = searchParams.get("tag") || "TODOS";
 
   return (
     <header className="border-b-2 border-foreground bg-card sticky top-0 z-50">
@@ -169,7 +170,7 @@ function Navbar({
               <li key={t}>
                 <Link
                   to={`/?tag=${encodeURIComponent(t)}`}
-                  aria-current={isHome ? "page" : undefined}
+                  aria-current={activeTag === t ? "page" : undefined}
                   className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                 >
                   {t}
@@ -265,7 +266,7 @@ function Navbar({
                     <SheetClose asChild>
                       <Link
                         to={`/?tag=${encodeURIComponent(t)}`}
-                        aria-current={isHome ? "page" : undefined}
+                        aria-current={activeTag === t ? "page" : undefined}
                         className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                       >
                         {t}
