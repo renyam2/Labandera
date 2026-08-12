@@ -165,12 +165,12 @@ function Navbar({
           <ul className="flex items-center gap-6 list-none">
             {["SALUD", "PATRIMONIO", "LEGISLATIVO", "CORRUPCIÓN", "ELECTORAL", "SEGURIDAD"].map((t) => (
               <li key={t}>
-                <button
-                  onClick={() => navigate("/")}
+                <Link
+                  to="/"
                   className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t}
-                </button>
+                </Link>
               </li>
             ))}
           </ul>
@@ -260,12 +260,12 @@ function Navbar({
                 {TAGS.slice(1).map((t) => (
                   <li key={t}>
                     <SheetClose asChild>
-                      <button
-                        onClick={() => navigate("/")}
+                      <Link
+                        to="/"
                         className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground"
                       >
                         {t}
-                      </button>
+                      </Link>
                     </SheetClose>
                   </li>
                 ))}
