@@ -162,16 +162,19 @@ function Navbar({
 
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6" aria-label="Navegación principal">
-          {["SALUD", "PATRIMONIO", "LEGISLATIVO", "CORRUPCIÓN", "ELECTORAL", "SEGURIDAD"].map((t, i) => (
-            <button
-              key={t}
-              onClick={() => navigate("/")}
-              aria-current={i === 0 ? "page" : undefined}
-              className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {t}
-            </button>
-          ))}
+          <ul className="flex items-center gap-6 list-none">
+            {["SALUD", "PATRIMONIO", "LEGISLATIVO", "CORRUPCIÓN", "ELECTORAL", "SEGURIDAD"].map((t, i) => (
+              <li key={t}>
+                <button
+                  onClick={() => navigate("/")}
+                  aria-current={i === 0 ? "page" : undefined}
+                  className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  {t}
+                </button>
+              </li>
+            ))}
+          </ul>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
@@ -254,38 +257,44 @@ function Navbar({
                 <SheetTitle className="font-mono text-xs tracking-widest">MENÚ</SheetTitle>
                 <SheetDescription className="sr-only">Navegación móvil</SheetDescription>
               </SheetHeader>
-              <div className="flex flex-col gap-4 mt-6">
+              <ul className="flex flex-col gap-4 mt-6 list-none">
                 {TAGS.slice(1).map((t) => (
-                  <SheetClose asChild key={t}>
-                    <button
-                      onClick={() => navigate("/")}
-                      className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground"
-                    >
-                      {t}
-                    </button>
-                  </SheetClose>
+                  <li key={t}>
+                    <SheetClose asChild>
+                      <button
+                        onClick={() => navigate("/")}
+                        className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground"
+                      >
+                        {t}
+                      </button>
+                    </SheetClose>
+                  </li>
                 ))}
-                <SheetClose asChild>
-                  <button
-                    onClick={() => navigate("/fuentes")}
-                    className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground"
-                  >
-                    FUENTES
-                  </button>
-                </SheetClose>
-                {loggedIn && (
+                <li>
                   <SheetClose asChild>
                     <button
-                      onClick={() => navigate("/upload")}
-                      className="flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-2 font-mono text-xs tracking-widest w-fit"
-                      aria-label="Publicar nota"
+                      onClick={() => navigate("/fuentes")}
+                      className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground"
                     >
-                      <Upload className="w-3.5 h-3.5" />
-                      PUBLICAR NOTA
+                      FUENTES
                     </button>
                   </SheetClose>
+                </li>
+                {loggedIn && (
+                  <li>
+                    <SheetClose asChild>
+                      <button
+                        onClick={() => navigate("/upload")}
+                        className="flex items-center gap-1.5 bg-primary text-primary-foreground px-3 py-2 font-mono text-xs tracking-widest w-fit"
+                        aria-label="Publicar nota"
+                      >
+                        <Upload className="w-3.5 h-3.5" />
+                        PUBLICAR NOTA
+                      </button>
+                    </SheetClose>
+                  </li>
                 )}
-              </div>
+              </ul>
             </SheetContent>
           </Sheet>
         </div>
