@@ -170,7 +170,7 @@ function Navbar({
                 <Link
                   to="/"
                   aria-current={isHome ? "page" : undefined}
-                  className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors"
+                  className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                 >
                   {t}
                 </Link>
@@ -266,7 +266,7 @@ function Navbar({
                       <Link
                         to="/"
                         aria-current={isHome ? "page" : undefined}
-                        className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground"
+                        className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                       >
                         {t}
                       </Link>
@@ -348,7 +348,7 @@ function HomeScreen({
                   <button
                     onClick={() => setActiveTag(t)}
                     aria-current={activeTag === t ? "page" : undefined}
-                    className={`font-mono text-xs tracking-widest px-4 py-3 border-b-2 whitespace-nowrap transition-colors ${
+                    className={`font-mono text-xs tracking-widest px-4 py-3 border-b-2 whitespace-nowrap transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent ${
                       activeTag === t
                         ? "border-accent text-foreground"
                         : "border-transparent text-muted-foreground hover:text-foreground"
