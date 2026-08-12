@@ -260,7 +260,7 @@ function Navbar({
                 <SheetDescription className="sr-only">Navegación móvil</SheetDescription>
               </SheetHeader>
               <ul className="flex flex-col gap-4 mt-6 list-none">
-                {TAGS.slice(1).map((t) => (
+                {TAGS.map((t) => (
                   <li key={t}>
                     <SheetClose asChild>
                       <Link
@@ -341,22 +341,25 @@ function HomeScreen({
       {/* Tag bar */}
       <div className="border-b border-border bg-card sticky top-14 z-40">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between overflow-x-auto">
-          <div className="flex">
-            {TAGS.map((t) => (
-              <button
-                key={t}
-                onClick={() => setActiveTag(t)}
-                aria-current={activeTag === t ? "page" : undefined}
-                className={`font-mono text-xs tracking-widest px-4 py-3 border-b-2 whitespace-nowrap transition-colors ${
-                  activeTag === t
-                    ? "border-accent text-foreground"
-                    : "border-transparent text-muted-foreground hover:text-foreground"
-                }`}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
+          <nav aria-label="Filtrar por categoría">
+            <ul className="flex list-none">
+              {TAGS.map((t) => (
+                <li key={t}>
+                  <button
+                    onClick={() => setActiveTag(t)}
+                    aria-current={activeTag === t ? "page" : undefined}
+                    className={`font-mono text-xs tracking-widest px-4 py-3 border-b-2 whitespace-nowrap transition-colors ${
+                      activeTag === t
+                        ? "border-accent text-foreground"
+                        : "border-transparent text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    {t}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
           <button
             onClick={() => setSearchOpen(!searchOpen)}
             className="ml-4 text-muted-foreground hover:text-foreground transition-colors shrink-0"
