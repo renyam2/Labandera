@@ -41,6 +41,7 @@ import {
   Twitter,
   Instagram,
   Linkedin,
+  X,
 } from "lucide-react";
 import api from "./services/api";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
@@ -49,7 +50,7 @@ import RegisterPage from "./pages/RegisterPage";
 import AcercaDePage from "./pages/AcercaDePage";
 import EquipoPage from "./pages/EquipoPage";
 import MetodologiaPage from "./pages/MetodologiaPage";
-import { getArticles, createArticle, getCategories } from "./services/articles";
+import { getArticles, createArticle, getCategories, getArticleById } from "./services/articles";
 import { FrontendArticle } from "./services/articles";
 import { StateSelector } from "./components/StateSelector";
 
