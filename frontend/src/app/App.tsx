@@ -166,10 +166,10 @@ function Navbar({
         {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6" aria-label="Navegación principal">
           <ul className="flex items-center gap-6 list-none">
-            {["SALUD", "PATRIMONIO", "LEGISLATIVO", "CORRUPCIÓN", "ELECTORAL", "SEGURIDAD"].map((t) => (
+            {TAGS.map((t) => (
               <li key={t}>
                 <Link
-                  to={`/?tag=${encodeURIComponent(t)}`}
+                  to={t === "TODOS" ? "/" : `/?tag=${encodeURIComponent(t)}`}
                   aria-current={activeTag === t ? "page" : undefined}
                   className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                 >
