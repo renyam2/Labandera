@@ -261,7 +261,7 @@ function Navbar({
                 <SheetTitle className="font-mono text-xs tracking-widest">MENÚ</SheetTitle>
                 <SheetDescription className="sr-only">Navegación móvil</SheetDescription>
               </SheetHeader>
-              <ul className="flex flex-col gap-4 mt-6 list-none">
+              <ul className="flex flex-col gap-4 mt-6 list-none" aria-label="Categorías">
                 {TAGS.map((t) => (
                   <li key={t}>
                     <SheetClose asChild>
