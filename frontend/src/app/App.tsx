@@ -43,7 +43,7 @@ import {
   Linkedin,
 } from "lucide-react";
 import api from "./services/api";
-import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link, useParams, useLocation, useSearchParams } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link, useParams, useSearchParams } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
 import AcercaDePage from "./pages/AcercaDePage";
@@ -261,25 +261,52 @@ function Navbar({
                 <SheetTitle className="font-mono text-xs tracking-widest">MENÚ</SheetTitle>
                 <SheetDescription className="sr-only">Navegación móvil</SheetDescription>
               </SheetHeader>
-              <ul className="flex flex-col gap-4 mt-6 list-none" aria-label="Categorías">
-                {TAGS.map((t) => (
-                  <li key={t}>
-                    <SheetClose asChild>
-                      <Link
-                        to={`/?tag=${encodeURIComponent(t)}`}
-                        aria-current={activeTag === t ? "page" : undefined}
-                        className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
-                      >
-                        {t}
-                      </Link>
-                    </SheetClose>
-                  </li>
-                ))}
+              <ul className="flex flex-col gap-4 mt-6 list-none" aria-label="Secciones">
+                <li>
+                  <SheetClose asChild>
+                    <Link
+                      to="/acerca"
+                      className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+                    >
+                      ACERCA DE LABANDERA
+                    </Link>
+                  </SheetClose>
+                </li>
+                <li>
+                  <SheetClose asChild>
+                    <Link
+                      to="/equipo"
+                      className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+                    >
+                      EQUIPO EDITORIAL
+                    </Link>
+                  </SheetClose>
+                </li>
+                <li>
+                  <SheetClose asChild>
+                    <Link
+                      to="/metodologia"
+                      className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+                    >
+                      METODOLOGÍA
+                    </Link>
+                  </SheetClose>
+                </li>
+                <li>
+                  <SheetClose asChild>
+                    <Link
+                      to="/contacto"
+                      className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+                    >
+                      CONTACTO
+                    </Link>
+                  </SheetClose>
+                </li>
                 <li>
                   <SheetClose asChild>
                     <Link
                       to="/fuentes"
-                      className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground"
+                      className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                     >
                       FUENTES
                     </Link>
