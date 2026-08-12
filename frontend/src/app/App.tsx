@@ -383,7 +383,7 @@ function HomeScreen({
         )}
       </div>
 
-      <main className="max-w-7xl mx-auto px-4 py-8">
+      <main id="main-content" className="max-w-7xl mx-auto px-4 py-8">
         {loadingArticles ? (
           <div className="text-center py-20">
             <p className="font-mono text-muted-foreground text-sm">
@@ -1381,6 +1381,12 @@ export default function App() {
 
   return (
     <div className={`min-h-screen ${currentBg} transition-colors duration-500`}>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-accent focus:text-accent-foreground focus:px-4 focus:py-2 focus:font-mono focus:text-sm focus:tracking-widest focus:rounded"
+      >
+        Saltar al contenido
+      </a>
       {currentBanner && (
         <div className={`w-full py-2 text-center font-mono text-sm tracking-widest ${currentBanner.bannerBg}`}>
           {currentBanner.bannerText}
