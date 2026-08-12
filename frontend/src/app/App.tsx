@@ -367,6 +367,7 @@ function HomeScreen({
             onClick={() => setSearchOpen(!searchOpen)}
             className="ml-4 text-muted-foreground hover:text-foreground transition-colors shrink-0 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
             aria-label="Buscar notas"
+            aria-expanded={searchOpen}
           >
             <Search className="w-4 h-4" />
           </button>
