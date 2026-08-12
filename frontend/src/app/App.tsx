@@ -50,6 +50,7 @@ import RegisterPage from "./pages/RegisterPage";
 import AcercaDePage from "./pages/AcercaDePage";
 import EquipoPage from "./pages/EquipoPage";
 import MetodologiaPage from "./pages/MetodologiaPage";
+import EstadisticasPage from "./pages/EstadisticasPage";
 import { getArticles, createArticle, getCategories, getArticleById } from "./services/articles";
 import { FrontendArticle } from "./services/articles";
 import { StateSelector } from "./components/StateSelector";
@@ -1341,6 +1342,30 @@ function UploadGuard() {
   return <UploadScreenLazy onBack={() => navigate("/")} onPublish={() => navigate("/")} />;
 }
 
+function AdminGuard() {
+  const navigate = useNavigate();
+  const raw = localStorage.getItem('user');
+
+  if (raw) {
+    try {
+      const user = JSON.parse(raw);
+      const roles = user.roles || [];
+      if (!roles.includes("Administrador")) {
+        navigate("/");
+        return null;
+      }
+    } catch (e) {
+      navigate("/");
+      return null;
+    }
+  } else {
+    navigate("/login");
+    return null;
+  }
+
+  return <EstadisticasPage />;
+}
+
 // ─── Root App ─────────────────────────────────────────────────────────────────
 
 export default function App() {
@@ -1418,6 +1443,7 @@ export default function App() {
           )
         } />
         <Route path="/upload" element={<UploadGuard />} />
+        <Route path="/estadisticas" element={<AdminGuard />} />
         <Route path="/privacidad" element={<PrivacidadScreen />} />
         <Route path="/terminos" element={<TerminosScreen />} />
         <Route path="/contacto" element={<ContactoScreen />} />
