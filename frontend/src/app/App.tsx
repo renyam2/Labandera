@@ -182,6 +182,7 @@ function Navbar({
             <DropdownMenuTrigger asChild>
               <button
                 className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+                aria-label="Ver secciones"
               >
                 SECCIONES ▾
               </button>
