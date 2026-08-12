@@ -145,9 +145,6 @@ function Navbar({
   onLogout: () => void;
 }) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const [searchParams] = useSearchParams();
-  const activeTag = searchParams.get("tag") || "TODOS";
 
   return (
     <header className="border-b-2 border-foreground bg-card sticky top-0 z-50">
@@ -164,20 +161,7 @@ function Navbar({
         </Link>
 
         {/* Desktop nav */}
-        <nav className="hidden md:flex items-center gap-6" aria-label="Navegación principal">
-          <ul className="flex items-center gap-6 list-none">
-            {TAGS.map((t) => (
-              <li key={t}>
-                <Link
-                  to={t === "TODOS" ? "/" : `/?tag=${encodeURIComponent(t)}`}
-                  aria-current={activeTag === t ? "page" : undefined}
-                  className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
-                >
-                  {t}
-                </Link>
-              </li>
-            ))}
-          </ul>
+        <div className="hidden md:flex items-center gap-6">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <button
@@ -214,7 +198,7 @@ function Navbar({
           >
             FUENTES
           </Link>
-        </nav>
+        </div>
 
         {/* Actions */}
         <div className="flex items-center gap-3">
