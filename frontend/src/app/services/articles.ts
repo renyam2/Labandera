@@ -7,6 +7,7 @@ export interface BackendArticle {
   summary: string | null
   content: string
   image: string | null
+  state: string | null
   published: boolean
   authorId: string
   categoryId: string
@@ -43,7 +44,7 @@ export const getArticles = async (): Promise<FrontendArticle[]> => {
       year: 'numeric',
     }).toUpperCase(),
     tag: a.category?.name || 'SIN CATEGORÍA',
-    state: '',
+    state: a.state || '',
     imageUrl: a.images?.[0]?.url || '',
     featured: false,
   }))
@@ -55,7 +56,7 @@ export const createArticle = async (data: {
   title: string
   summary: string
   body: string
-  authorId: string
+  state: string
   categoryId: string
 }): Promise<BackendArticle> => {
   const slug = data.title
@@ -66,13 +67,17 @@ export const createArticle = async (data: {
     .replace(/[^a-z0-9-]/g, '')
 
   const res = await api.post<BackendArticle>('/articles', {
-    ...data,
+    title: data.title,
+    summary: data.summary,
     content: data.body,
+    state: data.state,
+    categoryId: data.categoryId,
     slug,
     published: true,
   })
   return res.data
 }
+
 
 export const updateArticle = (id: string, data: object) => api.put(`/articles/${id}`, data)
 export const deleteArticle = (id: string) => api.delete(`/articles/${id}`)

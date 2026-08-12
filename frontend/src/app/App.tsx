@@ -31,8 +31,9 @@ import api from "./services/api";
 import { BrowserRouter, Routes, Route, Navigate, useNavigate, Link, useParams } from "react-router-dom";
 import LoginPage from "./pages/LoginPage";
 import RegisterPage from "./pages/RegisterPage";
-import { getArticles, createArticle } from "./services/articles";
+import { getArticles, createArticle, getCategories } from "./services/articles";
 import { FrontendArticle } from "./services/articles";
+import { StateSelector } from "./components/StateSelector";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -675,9 +676,8 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
     title: "",
     summary: "",
     body: "",
-    author: "",
     state: "",
-    tag: "CORRUPCIÓN",
+    categoryId: "",
   });
   const [images, setImages] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
@@ -687,6 +687,30 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
   const fileRef = useRef<HTMLInputElement>(null);
 
   const set = (k: string, v: string) => setForm((f) => ({ ...f, [k]: v }));
+
+  const currentUser = (() => {
+    try {
+      const raw = localStorage.getItem('user');
+      return raw ? JSON.parse(raw) as { id: string; name: string } : null;
+    } catch {
+      return null;
+    }
+  })();
+
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      try {
+        const data = await getCategories();
+        if (!cancelled) setCategories(data);
+      } catch (err) {
+        console.error('Error al cargar categorías:', err);
+      }
+    })();
+    return () => { cancelled = true; };
+  }, []);
 
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
@@ -702,18 +726,7 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.title || !form.summary || !form.body || !form.author) return;
-
-    let user: { id: string } | null = null;
-    try {
-      const raw = localStorage.getItem('user');
-      if (!raw) throw new Error('No hay usuario logueado');
-      user = JSON.parse(raw);
-      if (!user?.id) throw new Error('El usuario no tiene un id válido');
-    } catch (err) {
-      setError('Error de autenticación: no se pudo obtener el usuario actual.');
-      return;
-    }
+    if (!form.title || !form.summary || !form.body || !form.state || !form.categoryId) return;
 
     setSending(true);
     setError(null);
@@ -723,8 +736,8 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
         title: form.title,
         summary: form.summary,
         body: form.body,
-        authorId: user.id,
-        categoryId: "ed571bb9-a529-4833-b1c4-65ce74443e16",
+        state: form.state,
+        categoryId: form.categoryId,
       });
       const articleId = created.id;
 
@@ -743,8 +756,8 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
       setSubmitted(true);
       setTimeout(() => {
         onPublish();
-        navigate("/");
-      }, 2000);
+        navigate(`/article/${articleId}`);
+      }, 1200);
     } catch (err) {
       console.error('Error al publicar nota:', err);
       setError('No se pudo publicar la nota. Inténtalo de nuevo más tarde.');
@@ -753,8 +766,7 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
     }
   };
 
-  const incomplete = !form.title || !form.summary || !form.body || !form.author;
-
+  const incomplete = !form.title || !form.summary || !form.body || !form.state || !form.categoryId;
   if (submitted) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-8">
@@ -913,46 +925,35 @@ function UploadScreenLazy({ onBack, onPublish }: { onBack: () => void; onPublish
 
               <div>
                 <label className="font-mono text-xs tracking-widest block mb-1.5">
-                  <span className="flex items-center gap-1"><Eye className="w-3 h-3" /> PERIODISTA *</span>
+                  <span className="flex items-center gap-1"><Eye className="w-3 h-3" /> PERIODISTA</span>
                 </label>
-                <input
-                  type="text"
-                  required
-                  value={form.author}
-                  onChange={(e) => set("author", e.target.value)}
-                  placeholder="Nombre completo"
-                  className="w-full bg-card border border-border px-3 py-2 text-sm focus:outline-none focus:border-primary transition"
-                />
+                <p className="w-full bg-card border border-border px-3 py-2 text-sm text-foreground">
+                  {currentUser?.name || "Desconocido"}
+                </p>
               </div>
 
               <div>
                 <label className="font-mono text-xs tracking-widest block mb-1.5">
-                  <span className="flex items-center gap-1"><Tag className="w-3 h-3" /> CATEGORÍA</span>
+                  <span className="flex items-center gap-1"><Tag className="w-3 h-3" /> CATEGORÍA *</span>
                 </label>
                 <select
-                  value={form.tag}
-                  onChange={(e) => set("tag", e.target.value)}
+                  value={form.categoryId}
+                  onChange={(e) => set("categoryId", e.target.value)}
+                  required
                   className="w-full bg-card border border-border px-3 py-2 text-sm focus:outline-none focus:border-primary transition font-mono"
                 >
-                  {TAGS.slice(1).map((t) => (
-                    <option key={t} value={t}>{t}</option>
+                  <option value="" disabled>Selecciona una categoría...</option>
+                  {categories.map((c) => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
                   ))}
-                  <option value="SEGURIDAD">SEGURIDAD</option>
                 </select>
               </div>
 
               <div>
                 <label className="font-mono text-xs tracking-widest block mb-1.5">
-                  <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> ESTADO / ENTIDAD</span>
+                  <span className="flex items-center gap-1"><MapPin className="w-3 h-3" /> ESTADO / ENTIDAD *</span>
                 </label>
-                <input
-                  type="text"
-                  required
-                  value={form.state}
-                  onChange={(e) => set("state", e.target.value)}
-                  placeholder="Ciudad de México"
-                  className="w-full bg-card border border-border px-3 py-2 text-sm focus:outline-none focus:border-primary transition"
-                />
+                <StateSelector value={form.state} onChange={(v) => set("state", v)} />
               </div>
 
               <div>
@@ -1202,7 +1203,7 @@ function ArticleLoader({ setCurrentArticle }: { setCurrentArticle: (article: Art
               year: 'numeric',
             }).toUpperCase(),
             tag: backendArticle.category?.name || 'SIN CATEGORÍA',
-            state: '',
+            state: backendArticle.state || '',
             imageUrl: backendArticle.image || '',
             featured: false,
           };
