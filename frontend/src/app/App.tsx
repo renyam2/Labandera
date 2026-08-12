@@ -145,6 +145,8 @@ function Navbar({
   onLogout: () => void;
 }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const isHome = location.pathname === "/";
 
   return (
     <header className="border-b-2 border-foreground bg-card sticky top-0 z-50">
@@ -167,6 +169,7 @@ function Navbar({
               <li key={t}>
                 <Link
                   to="/"
+                  aria-current={isHome ? "page" : undefined}
                   className="font-mono text-xs tracking-widest text-muted-foreground hover:text-foreground transition-colors"
                 >
                   {t}
@@ -262,6 +265,7 @@ function Navbar({
                     <SheetClose asChild>
                       <Link
                         to="/"
+                        aria-current={isHome ? "page" : undefined}
                         className="font-mono text-xs tracking-widest text-left text-muted-foreground hover:text-foreground"
                       >
                         {t}
@@ -342,6 +346,7 @@ function HomeScreen({
               <button
                 key={t}
                 onClick={() => setActiveTag(t)}
+                aria-current={activeTag === t ? "page" : undefined}
                 className={`font-mono text-xs tracking-widest px-4 py-3 border-b-2 whitespace-nowrap transition-colors ${
                   activeTag === t
                     ? "border-accent text-foreground"
