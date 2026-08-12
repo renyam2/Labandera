@@ -432,8 +432,11 @@ function HomeScreen({
 
 <Link
             to={`/article/${featured.id}`}
+            onClick={() => onArticle(featured)}
             className="grid grid-cols-1 lg:grid-cols-2 border-2 border-foreground mb-8 cursor-pointer group"
           >
+
+
             <div className="relative overflow-hidden bg-muted">
               <img
                 src={featured.imageUrl}
@@ -483,13 +486,16 @@ function HomeScreen({
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
           {rest.map((article) => (
-            <ArticleCard 
+
+<ArticleCard 
               key={article.id} 
               article={article} 
               isHighlighted={highlightedId === article.id}
               onPointerEnter={() => setHighlightedId(article.id)}
               onPointerLeave={() => setHighlightedId(null)}
+              onArticle={onArticle}
             />
+
           ))}
         </div>
 
@@ -512,18 +518,23 @@ function ArticleCard({
   article,
   isHighlighted,
   onPointerEnter,
-  onPointerLeave
+  onPointerLeave,
+  onArticle
 }: {
   article: Article;
   isHighlighted: boolean;
   onPointerEnter: () => void;
   onPointerLeave: () => void;
+  onArticle: (a: Article) => void;
 }) {
+
   return (
-    <Link
+<Link
       to={`/article/${article.id}`}
+      onClick={() => onArticle(article)}
       onPointerEnter={onPointerEnter}
       onPointerLeave={onPointerLeave}
+
       className={`bg-card p-6 cursor-pointer group flex flex-col gap-4 transition-all duration-300 ${
         isHighlighted
           ? "bg-secondary border-2 border-accent shadow-xl scale-[1.02] z-10"
@@ -709,6 +720,7 @@ function ArticleScreenLazy({
 <Link
   key={r.id}
   to={`/article/${r.id}`}
+  onClick={() => onArticle(r)}
   className="cursor-pointer group flex gap-3"
 >
   <div className="w-20 h-16 bg-muted shrink-0 overflow-hidden">
