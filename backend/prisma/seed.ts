@@ -2,6 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 import bcrypt from 'bcryptjs'
 import 'dotenv/config'
+import { ROLES } from '../src/constants/roles'
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL! })
 const prisma = new PrismaClient({ adapter })
@@ -33,9 +34,9 @@ async function main() {
 
   // ─── 2. Crear roles ──────────────────────────────────────────────────────────
   const roles = [
-    { name: 'Administrador', description: 'Acceso completo al sistema' },
-    { name: 'Editor', description: 'Puede crear, editar y publicar artículos' },
-    { name: 'Usuario', description: 'Puede ver artículos' },
+    { name: ROLES.ADMIN, description: 'Acceso completo al sistema' },
+    { name: ROLES.EDITOR, description: 'Puede crear, editar y publicar artículos' },
+    { name: ROLES.USER, description: 'Puede ver artículos' },
   ]
 
   const rolesCreados: Record<string, { id: string }> = {}
@@ -60,11 +61,11 @@ async function main() {
   // ─── 4. Asignar permisos a roles ─────────────────────────────────────────────
   const asignaciones = [
     // Administrador: todos los permisos
-    { role: 'Administrador', permisos: Object.keys(permisosCreados) },
+    { role: ROLES.ADMIN, permisos: Object.keys(permisosCreados) },
     // Editor: crear, editar, publicar, ver
-    { role: 'Editor', permisos: ['crear_articulo', 'editar_articulo', 'publicar_articulo', 'ver_articulo'] },
+    { role: ROLES.EDITOR, permisos: ['crear_articulo', 'editar_articulo', 'publicar_articulo', 'ver_articulo'] },
     // Usuario: solo ver
-    { role: 'Usuario', permisos: ['ver_articulo'] },
+    { role: ROLES.USER, permisos: ['ver_articulo'] },
   ]
 
   for (const a of asignaciones) {
@@ -93,9 +94,9 @@ async function main() {
   const hashedPassword = await bcrypt.hash(password, 10)
 
   const usuariosPrueba = [
-    { name: 'Admin Test', email: 'admin@labandera.mx', role: 'Administrador' },
-    { name: 'Editor Test', email: 'editor@labandera.mx', role: 'Editor' },
-    { name: 'Usuario Test', email: 'usuario@labandera.mx', role: 'Usuario' },
+    { name: 'Admin Test', email: 'admin@labandera.mx', role: ROLES.ADMIN },
+    { name: 'Editor Test', email: 'editor@labandera.mx', role: ROLES.EDITOR },
+    { name: 'Usuario Test', email: 'usuario@labandera.mx', role: ROLES.USER },
   ]
 
   for (const u of usuariosPrueba) {

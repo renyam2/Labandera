@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction, RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
+import { validateEnv } from '../schemas/env'
 
 export interface AuthRequest extends Request {
   user?: { id: string; roles: string[] }
@@ -13,7 +14,7 @@ export const verificarToken: RequestHandler = (req: AuthRequest, res: Response, 
     return
   }
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string; roles: string[] }
+    const decoded = jwt.verify(token, validateEnv().JWT_SECRET) as { id: string; roles: string[] }
     req.user = decoded
     next()
   } catch {
@@ -30,7 +31,7 @@ export const requireRole = (roles: string[]): RequestHandler => {
       return
     }
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET!) as { id: string; roles: string[] }
+      const decoded = jwt.verify(token, validateEnv().JWT_SECRET) as { id: string; roles: string[] }
       req.user = decoded
       if (!decoded.roles.some(r => roles.includes(r))) {
         res.status(403).json({ message: 'No tienes permiso' })

@@ -1,11 +1,15 @@
 import { Router } from 'express'
-import { register, login, logout } from '../controllers/auth.controller'
-import { verificarToken } from '../middlewares/auth'
+import { register, login } from '../controllers/auth.controller'
+import { authLimiter } from '../middlewares/rateLimit'
+import { validate } from '../middlewares/validate'
+import { registerSchema, loginSchema } from '../schemas/auth.schemas'
 
 const router = Router()
 
-router.post('/register', register)
-router.post('/login', login)
-router.post('/logout', verificarToken, logout)
+// Rate-limiting anti fuerza bruta en las rutas de autenticación
+router.use(authLimiter)
+
+router.post('/register', validate(registerSchema), register)
+router.post('/login', validate(loginSchema), login)
 
 export default router

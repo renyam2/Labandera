@@ -1,4 +1,5 @@
 import api from './api'
+import type { Article } from '../types'
 
 export interface BackendArticle {
   id: string
@@ -6,7 +7,6 @@ export interface BackendArticle {
   slug: string
   summary: string | null
   content: string
-  image: string | null
   state: string | null
   published: boolean
   authorId: string
@@ -15,22 +15,10 @@ export interface BackendArticle {
   updatedAt: string
   author?: { name: string }
   category?: { name: string }
+  images?: { url: string }[]
 }
 
-export interface FrontendArticle {
-  id: string
-  title: string
-  summary: string
-  body: string
-  author: string
-  date: string
-  tag: string
-  state: string
-  imageUrl: string
-  featured: boolean
-}
-
-export const getArticles = async (): Promise<FrontendArticle[]> => {
+export const getArticles = async (): Promise<Article[]> => {
   const res = await api.get<BackendArticle[]>('/articles')
   return res.data.map((a) => ({
     id: a.id,

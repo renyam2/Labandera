@@ -10,3 +10,6 @@ frontend/.env
 backend/.env
 *.log
 backend/uploads/
+/package-lock.json
+/pnpm-lock.yaml
+.env.example
