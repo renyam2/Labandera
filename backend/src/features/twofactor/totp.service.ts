@@ -1,4 +1,6 @@
-import { authenticator } from 'otplib'
+import { Authenticator } from '@otplib/core'
+import { createDigest, createRandomBytes } from '@otplib/plugin-crypto'
+import { keyDecoder, keyEncoder } from '@otplib/plugin-thirty-two'
 import bcrypt from 'bcryptjs'
 
 const TOTP_ISSUER = 'Labandera'
@@ -8,11 +10,19 @@ const TOTP_WINDOW = 1 // tolera ±1 intervalo (30 s) para desfases de reloj
 const BACKUP_CODES_COUNT = 10
 const BACKUP_CODE_LENGTH = 8
 
+const authenticator = new Authenticator({
+  createDigest,
+  createRandomBytes,
+  keyDecoder,
+  keyEncoder,
+  window: TOTP_WINDOW,
+})
+
 /**
  * Genera un secreto TOTP en Base32 (RFC 4648).
  */
 export function generateTotpSecret(): string {
-  return authenticator.key()
+  return authenticator.generateSecret()
 }
 
 /**
@@ -31,10 +41,6 @@ export function verifyTotpCode(secret: string, code: string): boolean {
   return authenticator.verify({
     token: code,
     secret,
-    encoding: 'decimal',
-    digits: TOTP_DIGITS,
-    period: TOTP_PERIOD,
-    window: TOTP_WINDOW,
   })
 }
 
