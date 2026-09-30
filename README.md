@@ -72,6 +72,9 @@ Build de producción: `pnpm build`
 - Desde entonces, el login tiene dos pasos: contraseña y código TOTP (o código
   de respaldo). El token pendiente de 5 minutos no se guarda en el navegador.
 - Detalle en [`docs/2fa.md`](docs/2fa.md).
+- **App de smart watch (Wear OS)**: [`wear-app/`](wear-app/README.md) — escanea el
+  mismo QR desde un reloj (emulador de Wear OS de Android Studio) y muestra
+  el código TOTP de 6 dígitos con countdown de 30 s. Sin cambios en backend.
 
 ## Scripts de referencia
 

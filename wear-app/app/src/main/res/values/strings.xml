@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Labandera 2FA</string>
+
+    <string name="scan_title">Escanear QR de Labandera</string>
+    <string name="scan_hint">Apunta la cámara al código QR de la página /security del sitio web</string>
+
+    <string name="code_title">Código de verificación 2FA</string>
+    <string name="countdown_format">Se renueva en %1$d s</string>
+
+    <string name="reset_button">Restablecer</string>
+    <string name="reset_title">¿Restablecer?</string>
+    <string name="reset_message">Se borrará el secreto TOTP guardado en este reloj. Tendrás que escanear el QR de nuevo desde la página /security.</string>
+    <string name="reset_confirm">Restablecer</string>
+    <string name="cancel">Cancelar</string>
+</resources>
