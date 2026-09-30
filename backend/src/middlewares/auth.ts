@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import { validateEnv } from '../schemas/env'
 
 export interface AuthRequest extends Request {
-  user?: { id: string; roles: string[] }
+  user?: { id: string; roles: string[]; mfa?: string }
 }
 
 // Solo valida que exista un token válido, sin exigir rol específico

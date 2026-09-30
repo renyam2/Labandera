@@ -4,6 +4,7 @@ import helmet from 'helmet'
 import dotenv from 'dotenv'
 import path from 'path'
 import authRoutes from './routes/auth.routes'
+import totpRoutes from './features/twofactor/totp.routes'
 import articleRoutes from './routes/article.routes'
 import categoryRoutes from './routes/category.routes'
 import { errorHandler, notFoundHandler } from './middlewares/errorHandler'
@@ -29,6 +30,7 @@ app.get('/', (req, res) => {
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')))
 app.use('/api', apiLimiter)
 app.use('/api/auth', authRoutes)
+app.use('/api/auth/totp', totpRoutes)
 app.use('/api/articles', articleRoutes)
 app.use('/api/categories', categoryRoutes)
 
