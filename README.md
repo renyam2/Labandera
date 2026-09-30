@@ -11,11 +11,12 @@ Sitio web de noticias (frontend) con API REST (backend) para autenticación, ges
 │   │   ├── controllers/   # Lógica de endpoints
 │   │   ├── routes/        # Definición de rutas
 │   │   ├── middlewares/   # Autenticación (JWT) y RBAC
+│   │   ├── features/      # Módulos por funcionalidad (twofactor)
 │   │   └── index.ts       # Punto de entrada
 │   └── uploads/    # Imágenes subidas (no versionado)
 ├── frontend/   # SPA Vite + React + Tailwind
 │   └── src/app/
-│       ├── pages/       # Páginas (login, registro, secciones)
+│       ├── pages/       # Páginas (login, registro, secciones, seguridad)
 │       ├── components/  # Componentes de UI
 │       ├── hooks/       # Hooks personalizados
 │       └── services/    # Cliente HTTP y llamadas a la API
@@ -62,6 +63,16 @@ El proxy de Vite (`vite.config.ts`) reenvía `/api` y `/uploads` a `http://local
 
 Build de producción: `pnpm build`
 
+### 3. 2FA (TOTP)
+
+- En la página `/security` del frontend: **ACTIVAR 2FA** → escanea el QR con
+  cualquier app TOTP (Aegis, Authy, Google Authenticator, o una app TOTP del
+  smart watch) → confirma el código de 6 dígitos → guarda los 10 códigos de
+  respaldo (se muestran una sola vez).
+- Desde entonces, el login tiene dos pasos: contraseña y código TOTP (o código
+  de respaldo). El token pendiente de 5 minutos no se guarda en el navegador.
+- Detalle en [`docs/2fa.md`](docs/2fa.md).
+
 ## Scripts de referencia
 
 | App      | Script         | Descripción                          |
@@ -78,5 +89,7 @@ Build de producción: `pnpm build`
 
 - [`docs/pruebas-manuales.md`](docs/pruebas-manuales.md) — Pruebas manuales del sitio
 - [`docs/pruebas-rbac.md`](docs/pruebas-rbac.md) — Pruebas de control de acceso por roles
+- [`docs/2fa.md`](docs/2fa.md) — Autenticación de dos factores (TOTP): endpoints, flujo y decisiones de seguridad
+- [`docs/mer-2fa.mmd`](docs/mer-2fa.mmd) — Diagrama del modelo de datos y secuencia del 2FA
 - [`docs/mer-auth.mmd`](docs/mer-auth.mmd) — Diagrama del flujo de autenticación
 - [`docs/evidencia-practicas-9-10.md`](docs/evidencia-practicas-9-10.md) — Evidencia de prácticas

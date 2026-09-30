@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
-import { Droplets, LogIn, Eye, EyeOff } from "lucide-react";
-import { Card, CardHeader, CardContent, CardFooter, CardTitle, CardDescription } from "../components/ui/card";
+import { useState, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { Droplets, LogIn, ShieldCheck } from "lucide-react";
+import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
-import { login } from "../services/auth";
+import { login, type LoginResponse } from "../services/auth";
+import { verifyTwoFactor } from "../services/totp";
 
 export default function LoginPage({ onLogin }: { onLogin: () => void }) {
   const navigate = useNavigate();
@@ -12,157 +13,174 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  // Segundo paso: el token pendiente vive SOLO en memoria (React state),
+  // nunca en localStorage (Hito H5).
+  const [step, setStep] = useState<"credentials" | "totp">("credentials");
+  const [pendingToken, setPendingToken] = useState<string | null>(null);
+  const [code, setCode] = useState("");
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const finishLogin = (token: string, user: NonNullable<LoginResponse["user"]>) => {
+    localStorage.setItem("token", token);
+    localStorage.setItem("user", JSON.stringify(user));
+    onLogin();
+    navigate("/");
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
-    
     if (!email || !password) {
-      setError("Completa todos los campos.");
+      setError("Ingresa tu correo y contraseña.");
       return;
     }
-
     setLoading(true);
     try {
       const res = await login(email, password);
-      localStorage.setItem("token", res.data.token);
-	localStorage.setItem("user", JSON.stringify(res.data.user));
-      onLogin();
-      navigate("/");
+      if (res.requires2fa && res.pendingToken) {
+        setPendingToken(res.pendingToken);
+        setStep("totp");
+        setTimeout(() => inputRef.current?.focus(), 50);
+      } else if (res.token && res.user) {
+        finishLogin(res.token, res.user);
+      }
     } catch (err: any) {
-      setError(err.response?.data?.message || "Credenciales incorrectas. Intenta de nuevo.");
+      setError(err.response?.data?.message || "No se pudo iniciar sesión.");
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="min-h-screen bg-background flex">
-      {/* Left panel - Branding */}
-      <div className="hidden lg:flex flex-col justify-between w-1/2 bg-foreground text-background p-12">
-        <div className="flex items-center gap-2">
-          <Droplets className="w-6 h-6 text-accent" />
-          <span
-            className="text-3xl font-black tracking-tight"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-          >
-            LA<span className="text-accent">BANDERA</span>
-          </span>
-        </div>
-        <div>
-          <p className="font-mono text-xs text-muted-foreground tracking-widest mb-6">
-            PERIODISMO · TRANSPARENCIA · MÉXICO
-          </p>
-          <h2
-            className="text-5xl font-black leading-tight mb-6"
-            style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-          >
-            FILTRAMOS
-            <br />
-            <span className="text-accent">EL AGUA</span>
-            <br />
-            SUCIA
-          </h2>
-          <p className="text-muted-foreground text-sm leading-relaxed max-w-xs" style={{ fontFamily: "'Lora', serif" }}>
-            Acceso exclusivo para periodistas acreditados del equipo LABANDERA.
-          </p>
-        </div>
-        <div className="border-t border-muted pt-6">
-          <p className="font-mono text-xs text-muted-foreground">
-            ¿No tienes cuenta? <Link to="/register" className="text-accent hover:underline">Regístrate</Link>
-          </p>
-        </div>
-      </div>
+  const handleVerify = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    if (!pendingToken) return;
+    if (!/^\d{6,8}$/.test(code)) {
+      setError("Ingresa el código de 6 dígitos (o un código de respaldo de 8).");
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await verifyTwoFactor(pendingToken, code);
+      if (res.token && res.user) {
+        finishLogin(res.token, res.user);
+      }
+    } catch (err: any) {
+      setError(err.response?.data?.message || "Código incorrecto.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-      {/* Right panel - Form */}
-      <div className="flex-1 flex items-center justify-center p-8">
-        <Card className="w-full max-w-sm">
+  const backToCredentials = () => {
+    setStep("credentials");
+    setPendingToken(null);
+    setCode("");
+    setError("");
+  };
+
+  return (
+    <div className="min-h-screen bg-background">
+      <div className="max-w-md mx-auto px-4 py-10">
+        <Card>
           <CardHeader className="space-y-1">
-            <div className="lg:hidden flex items-center gap-2 mb-4">
-              <Droplets className="w-5 h-5 text-accent" />
-              <span
-                className="text-2xl font-black"
-                style={{ fontFamily: "'Barlow Condensed', sans-serif" }}
-              >
-                LA<span className="text-accent">BANDERA</span>
-              </span>
+            <div className="flex items-center gap-2">
+              <Droplets className="w-6 h-6 text-accent" />
+              <CardTitle className="text-3xl font-black" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>
+                {step === "credentials" ? "INICIAR SESIÓN" : "VERIFICACIÓN 2FA"}
+              </CardTitle>
             </div>
-            <CardTitle className="text-3xl font-black" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>
-              ACCESO
-            </CardTitle>
             <CardDescription className="font-mono text-xs tracking-widest">
-              SALA DE REDACCIÓN
+              {step === "credentials" ? "ACCESO PERIODISTAS" : "SEGUNDO PASO"}
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
-              <div className="space-y-2">
-                <label className="font-mono text-xs tracking-widest text-muted-foreground">
-                  USUARIO
-                </label>
-                <Input
-                  type="email"
-                  placeholder="tu.nombre@labandera.mx"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <label className="font-mono text-xs tracking-widest text-muted-foreground">
-                  CONTRASEÑA
-                </label>
-                <div className="relative">
+            {step === "credentials" ? (
+              <form onSubmit={handleSubmit} className="space-y-4" noValidate>
+                <div className="space-y-2">
+                  <label className="font-mono text-xs tracking-widest text-muted-foreground">
+                    CORREO
+                  </label>
                   <Input
-                    type={showPassword ? "text" : "password"}
+                    type="email"
+                    placeholder="tu@correo.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="font-mono text-xs tracking-widest text-muted-foreground">
+                    CONTRASEÑA
+                  </label>
+                  <Input
+                    type="password"
                     placeholder="••••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                     minLength={6}
                   />
-                  <button
-                    type="button"
-                    onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
-                    aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
-                  >
-                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                  </button>
                 </div>
-              </div>
-
-              {error && (
-                <p className="font-mono text-xs text-accent" role="alert">{error}</p>
-              )}
-
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={loading}
-              >
-                {loading ? (
-                  <span className="animate-pulse">VERIFICANDO...</span>
-                ) : (
-                  <>
-                    <LogIn className="w-4 h-4" />
-                    ENTRAR
-                  </>
+                {error && (
+                  <p className="font-mono text-xs text-accent" role="alert">{error}</p>
                 )}
-              </Button>
-            </form>
+                <Button type="submit" disabled={loading} className="w-full">
+                  <LogIn className="w-4 h-4" />
+                  {loading ? "VERIFICANDO..." : "INICIAR SESIÓN"}
+                </Button>
+              </form>
+            ) : (
+              <form onSubmit={handleVerify} className="space-y-4" noValidate>
+                <div className="flex items-start gap-2 rounded-md border border-border bg-card p-3">
+                  <ShieldCheck className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                  <p className="font-mono text-xs text-muted-foreground leading-relaxed">
+                    INGRESA EL CÓDIGO DE 6 DÍGITOS DE TU APP AUTENTICADORA
+                    (SMART WATCH O TELÉFONO). SI NO LA TIENES A LA MANO,
+                    USA UN CÓDIGO DE RESPALDO DE 8 DÍGITOS.
+                  </p>
+                </div>
+                <div className="space-y-2">
+                  <label className="font-mono text-xs tracking-widest text-muted-foreground">
+                    CÓDIGO
+                  </label>
+                  <Input
+                    ref={inputRef}
+                    type="text"
+                    inputMode="numeric"
+                    placeholder="000000"
+                    value={code}
+                    onChange={(e) => setCode(e.target.value.replace(/\D/g, "").slice(0, 8))}
+                    required
+                    minLength={6}
+                    maxLength={8}
+                    className="font-mono text-center text-2xl tracking-[0.5em]"
+                  />
+                </div>
+                {error && (
+                  <p className="font-mono text-xs text-accent" role="alert">{error}</p>
+                )}
+                <div className="flex gap-2">
+                  <Button type="button" variant="outline" onClick={backToCredentials} className="flex-1">
+                    VOLVER
+                  </Button>
+                  <Button type="submit" disabled={loading} className="flex-1">
+                    <ShieldCheck className="w-4 h-4" />
+                    {loading ? "VERIFICANDO..." : "VERIFICAR"}
+                  </Button>
+                </div>
+                <p className="font-mono text-xs text-muted-foreground">
+                  El token pendiente expira en 5 minutos y no se guarda en el navegador.
+                </p>
+              </form>
+            )}
           </CardContent>
-          <CardFooter className="flex flex-col gap-3">
-            <Button
-              variant="outline"
-              className="w-full"
-              onClick={() => navigate("/register")}
-            >
-              ¿No tienes cuenta? <span className="font-bold">Regístrate</span>
-            </Button>
+          <CardFooter>
             <p className="font-mono text-xs text-muted-foreground text-center">
-              ¿Problemas de acceso? <Link to="/contacto" className="text-primary hover:underline">Contacta al editor</Link>.
+              ¿No tienes cuenta?{" "}
+              <a href="/register" className="text-accent hover:underline">
+                REGÍSTRATE
+              </a>
             </p>
           </CardFooter>
         </Card>

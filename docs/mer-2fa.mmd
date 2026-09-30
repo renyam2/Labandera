@@ -1,0 +1,58 @@
+erDiagram
+    User {
+        string id PK
+        string name
+        string email
+        string password
+        string totpSecret "Base32, null si 2FA desactivado"
+        boolean totpEnabled
+        datetime totpEnabledAt
+    }
+    TotpBackupCode {
+        string id PK
+        string codeHash "bcrypt, 8 dígitos, un solo uso"
+        datetime usedAt
+        datetime createdAt
+        string userId FK
+    }
+    AuthAttempt {
+        string id PK
+        string type "totp | backup_code"
+        boolean success
+        datetime createdAt
+        string userId FK "nullable"
+    }
+
+    User ||--o{ TotpBackupCode : "tiene (10 códigos)"
+    User ||--o{ AuthAttempt : "auditoría de intentos"
+
+sequenceDiagram
+    participant W as Smart watch (app TOTP)
+    participant F as Frontend
+    participant B as Backend
+    participant DB as PostgreSQL
+
+    Note over F,B: Configuración (página /security)
+    F->>B: POST /api/auth/totp/setup
+    B->>DB: guarda totpSecret
+    B-->>F: { secret, otpauthUri }
+    F->>W: usuario escanea QR (otpauth://)
+    W-->>F: código de 6 dígitos (cada 30 s)
+    F->>B: POST /api/auth/totp/verify-setup { code }
+    B->>DB: totpEnabled = true + 10 backup codes (bcrypt)
+    B-->>F: { backupCodes } (se muestran una vez)
+
+    Note over F,B: Login de dos pasos
+    F->>B: POST /api/auth/login { email, password }
+    B-->>F: { requires2fa: true, pendingToken } (5 min, solo en memoria)
+    W-->>F: código TOTP
+    F->>B: POST /api/auth/login/verify-2fa { code } (Bearer pendingToken)
+    B->>DB: AuthAttempt (auditoría)
+    alt código TOTP válido
+        B-->>F: JWT 7 días
+    else código de respaldo válido
+        B->>DB: marca usedAt
+        B-->>F: JWT 7 días
+    else incorrecto / expirado
+        B-->>F: 400 (reintentar con contraseña)
+    end

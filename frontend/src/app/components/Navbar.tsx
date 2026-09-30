@@ -16,7 +16,7 @@ import {
   SheetDescription,
   SheetClose,
 } from "../components/ui/sheet";
-import { LogIn, LogOut, Upload, Menu, Droplets } from "lucide-react";
+import { LogIn, LogOut, Upload, Menu, Droplets, Shield } from "lucide-react";
 
 export default function Navbar({
   loggedIn,
@@ -112,6 +112,14 @@ export default function Navbar({
                 PUBLICAR
               </button>
               <button
+                onClick={() => navigate("/security")}
+                className="hidden md:flex items-center gap-1.5 text-muted-foreground hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
+                aria-label="Seguridad"
+              >
+                <Shield className="w-3.5 h-3.5" />
+                SEGURIDAD
+              </button>
+              <button
                 onClick={onLogout}
                 className="text-muted-foreground hover:text-foreground transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-accent"
                 aria-label="Cerrar sesión"
@@ -205,6 +213,20 @@ export default function Navbar({
                       >
                         <Upload className="w-3.5 h-3.5" />
                         PUBLICAR NOTA
+                      </Link>
+                    </SheetClose>
+                  </li>
+                )}
+                {loggedIn && (
+                  <li>
+                    <SheetClose asChild>
+                      <Link
+                        to="/security"
+                        className="flex items-center gap-1.5 text-muted-foreground hover:text-foreground px-3 py-2 font-mono text-xs tracking-widest w-fit"
+                        aria-label="Seguridad"
+                      >
+                        <Shield className="w-3.5 h-3.5" />
+                        SEGURIDAD
                       </Link>
                     </SheetClose>
                   </li>

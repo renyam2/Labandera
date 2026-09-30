@@ -8,6 +8,7 @@ import Navbar from "./components/Navbar";
 import ArticleLoader from "./components/ArticleLoader";
 import UploadGuard from "./components/UploadGuard";
 import AdminGuard from "./components/AdminGuard";
+import SecurityGuard from "./components/SecurityGuard";
 import HomePage from "./pages/HomePage";
 import ArticlePage from "./pages/ArticlePage";
 import LoginPage from "./pages/LoginPage";
@@ -96,6 +97,7 @@ export default function App() {
         } />
         <Route path="/upload" element={<UploadGuard />} />
         <Route path="/estadisticas" element={<AdminGuard />} />
+        <Route path="/security" element={<SecurityGuard />} />
         <Route path="/privacidad" element={<PrivacidadPage />} />
         <Route path="/terminos" element={<TerminosPage />} />
         <Route path="/contacto" element={<ContactoPage />} />
