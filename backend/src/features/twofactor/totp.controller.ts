@@ -10,6 +10,23 @@ import {
 } from './totp.service'
 
 /**
+ * GET /api/auth/totp/status
+ * Estado del 2FA del usuario autenticado (para la página de seguridad).
+ */
+export const getStatus = async (req: AuthRequest, res: Response) => {
+  const uid = req.user?.id
+  if (!uid) return res.status(401).json({ message: 'Token requerido' })
+
+  const user = await prisma.user.findUnique({
+    where: { id: uid },
+    select: { totpEnabled: true, totpEnabledAt: true },
+  })
+  if (!user) return res.status(404).json({ message: 'Usuario no encontrado' })
+
+  res.json({ totpEnabled: user.totpEnabled, totpEnabledAt: user.totpEnabledAt })
+}
+
+/**
  * POST /api/auth/totp/setup
  * Genera el secreto TOTP y la URI otpauth:// (para escanear con la
  * app autenticadora del smart watch). Aún NO activa el 2FA: se activa
