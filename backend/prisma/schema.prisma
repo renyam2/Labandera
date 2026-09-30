@@ -7,12 +7,19 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  name      String
-  email     String    @unique
-  password  String
-  roles     UserRole[]
-  articles  Article[]
+  id          String    @id @default(uuid())
+  name        String
+  email       String    @unique
+  password    String
+  roles       UserRole[]
+  articles    Article[]
+  backupCodes TotpBackupCode[]
+  attempts    AuthAttempt[]
+
+  totpSecret    String?   @db.VarChar(64)
+  totpEnabled   Boolean   @default(false)
+  totpEnabledAt DateTime?
+
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
 }
@@ -82,4 +89,29 @@ model ArticleImage {
   order     Int      @default(0)
   articleId String
   article   Article  @relation(fields: [articleId], references: [id], onDelete: Cascade)
+}
+
+/// Código de respaldo TOTP de uso único (se almacena en hash, nunca en claro).
+model TotpBackupCode {
+  id        String   @id @default(uuid())
+  codeHash  String
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId    String
+
+  @@unique([userId, codeHash])
+  @@index([userId])
+}
+
+/// Registro de auditoría de intentos de verificación 2FA.
+model AuthAttempt {
+  id        String   @id @default(uuid())
+  type      String // "totp" | "backup"
+  success   Boolean
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  userId    String?
+
+  @@index([userId, createdAt])
 }
