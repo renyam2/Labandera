@@ -2,6 +2,7 @@ package mx.labandera.wear
 
 import javax.crypto.Mac
 import javax.crypto.spec.SecretKeySpec
+import kotlin.math.pow
 
 /**
  * Implementación TOTP (RFC 6238) — misma lógica que `@otplib` en el backend.
