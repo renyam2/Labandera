@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken'
 import { prisma } from '../prisma'
 import { validateEnv } from '../schemas/env'
 import { ROLES } from '../constants/roles'
-import { verifyTotpCode, verifyBackupCode } from '../features/twofactor/totp.service'
+import { verifyTotpCode, verifyBackupCode, buildOtpauthUri } from '../features/twofactor/totp.service'
 import { AuthRequest } from '../middlewares/auth'
 
 // Duración del token pendiente (solo para completar la verificación 2FA).
@@ -82,7 +82,13 @@ export const login = async (req: Request, res: Response) => {
       validateEnv().JWT_SECRET,
       { expiresIn: PENDING_TTL }
     )
-    res.json({ requires2fa: true, pendingToken })
+    // Se incluye la URI otpauth:// para que el login muestre el QR
+    // de inmediato y el usuario pueda escanearlo sin ir a /security.
+    res.json({
+      requires2fa: true,
+      pendingToken,
+      otpauthUri: user.totpSecret ? buildOtpauthUri(user.totpSecret, user.email) : undefined,
+    })
     return
   }
 

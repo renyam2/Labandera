@@ -1,6 +1,7 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Droplets, LogIn, ShieldCheck } from "lucide-react";
+import { QRCodeSVG } from "qrcode.react";
+import { Droplets, LogIn, ShieldCheck, QrCode } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "../components/ui/card";
 import { Input } from "../components/ui/input";
 import { Button } from "../components/ui/button";
@@ -17,6 +18,8 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
   // nunca en localStorage (Hito H5).
   const [step, setStep] = useState<"credentials" | "totp">("credentials");
   const [pendingToken, setPendingToken] = useState<string | null>(null);
+  const [qrUri, setQrUri] = useState<string | null>(null);
+  const [showQr, setShowQr] = useState(false);
   const [code, setCode] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -39,8 +42,10 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
       const res = await login(email, password);
       if (res.requires2fa && res.pendingToken) {
         setPendingToken(res.pendingToken);
+        setQrUri(res.otpauthUri ?? null);
         setStep("totp");
-        setTimeout(() => inputRef.current?.focus(), 50);
+        // El QR salta de inmediato al validar las credenciales.
+        setShowQr(true);
       } else if (res.token && res.user) {
         finishLogin(res.token, res.user);
       }
@@ -75,9 +80,25 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
   const backToCredentials = () => {
     setStep("credentials");
     setPendingToken(null);
+    setQrUri(null);
+    setShowQr(false);
     setCode("");
     setError("");
   };
+
+  const closeQr = () => {
+    setShowQr(false);
+    setTimeout(() => inputRef.current?.focus(), 50);
+  };
+
+  useEffect(() => {
+    if (!showQr) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeQr();
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [showQr]);
 
   return (
     <div className="min-h-screen bg-background">
@@ -140,6 +161,12 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
                     USA UN CÓDIGO DE RESPALDO DE 8 DÍGITOS.
                   </p>
                 </div>
+                {qrUri && (
+                  <Button variant="outline" type="button" onClick={() => setShowQr(true)} className="w-full">
+                    <QrCode className="w-4 h-4" />
+                    VER CÓDIGO QR
+                  </Button>
+                )}
                 <div className="space-y-2">
                   <label className="font-mono text-xs tracking-widest text-muted-foreground">
                     CÓDIGO
@@ -185,6 +212,44 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
           </CardFooter>
         </Card>
       </div>
+
+      {step === "totp" && showQr && qrUri && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Escanea el código QR"
+        >
+          <Card className="max-w-sm w-full">
+            <CardHeader className="space-y-1">
+              <div className="flex items-center gap-2">
+                <QrCode className="w-6 h-6 text-accent" />
+                <CardTitle className="text-xl font-black" style={{ fontFamily: "'Barlow Condensed', sans-serif" }}>
+                  ESCANEA EL QR
+                </CardTitle>
+              </div>
+              <CardDescription className="font-mono text-xs tracking-widest">
+                APP AUTENTICADORA (SMART WATCH O TELÉFONO)
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <div className="flex justify-center rounded-md border border-border bg-background p-3">
+                <QRCodeSVG value={qrUri} size={200} />
+              </div>
+              <p className="font-mono text-xs text-muted-foreground leading-relaxed">
+                SI YA LO ESCANEASTE ANTES, CIERRA ESTE VENTANA E INGRESA
+                EL CÓDIGO DE 6 DÍGITOS.
+              </p>
+            </CardContent>
+            <CardFooter>
+              <Button onClick={closeQr} className="w-full">
+                <ShieldCheck className="w-4 h-4" />
+                YA LO ESCANEÉ
+              </Button>
+            </CardFooter>
+          </Card>
+        </div>
+      )}
     </div>
   );
 }

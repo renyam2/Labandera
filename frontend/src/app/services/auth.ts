@@ -3,6 +3,7 @@ import api from './api'
 export interface LoginResponse {
   requires2fa?: boolean
   pendingToken?: string
+  otpauthUri?: string
   token?: string
   user?: { id: string; name: string; email: string; roles: string[] }
 }
