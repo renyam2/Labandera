@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
     private fun requestCameraAndScan() {
         binding.codePanel.visibility = View.GONE
         binding.previewView.visibility = View.VISIBLE
+        binding.scanReticle.visibility = View.VISIBLE
         binding.scanHint.visibility = View.VISIBLE
 
         val granted = ContextCompat.checkSelfPermission(
@@ -164,6 +165,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun showCodePanel() {
         binding.previewView.visibility = View.GONE
+        binding.scanReticle.visibility = View.GONE
         binding.scanHint.visibility = View.GONE
         binding.codePanel.visibility = View.VISIBLE
         binding.accountText.text = prefs.getString("account", "")
@@ -180,6 +182,7 @@ class MainActivity : AppCompatActivity() {
         val remaining = period - (nowSeconds % period)
         binding.codeText.text = Totp.generate(secret, nowSeconds, period, digits)
         binding.countdownText.text = getString(R.string.countdown_format, remaining)
+        binding.codeRing.setProgress(remaining.toFloat() / period)
     }
 
     private fun confirmReset() {

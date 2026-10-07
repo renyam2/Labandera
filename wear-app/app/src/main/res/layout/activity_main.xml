@@ -4,87 +4,115 @@
     android:layout_height="match_parent"
     android:background="@android:color/black">
 
-    <!-- Vista de cámara (escaneo del QR) -->
-    <androidx.camera.view.PreviewView
-        android:id="@+id/previewView"
+    <!-- ── Escaneo del QR: esfera circular ─────────────────────────────── -->
+    <FrameLayout
+        android:id="@+id/scanContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:padding="10dp">
 
-    <LinearLayout
-        android:id="@+id/scanHint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:orientation="vertical">
+        <!-- Cámara recortada a círculo (pantalla redonda de Wear OS) -->
+        <mx.labandera.wear.CirclePreviewView
+            android:id="@+id/previewView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToOutline="true" />
 
-        <TextView
+        <!-- Retícula animada de escaneo -->
+        <mx.labandera.wear.ScanReticleView
+            android:id="@+id/scanReticle"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:id="@+id/scanHint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/scan_title"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginBottom="22dp"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="@string/scan_hint"
-            android:textColor="#B0B0B0"
-            android:textSize="13sp" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/scan_title"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-    <!-- Panel del código TOTP -->
-    <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/scan_hint"
+                android:textColor="#B0B0B0"
+                android:textSize="11sp" />
+        </LinearLayout>
+    </FrameLayout>
+
+    <!-- ── Panel del código TOTP: esfera circular ──────────────────────── -->
+    <FrameLayout
         android:id="@+id/codePanel"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
+        android:padding="10dp"
         android:visibility="gone">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/code_title"
-            android:textColor="#808080"
-            android:textSize="14sp" />
+        <!-- Anillo de countdown pegado al borde de la esfera -->
+        <mx.labandera.wear.CodeRingView
+            android:id="@+id/codeRing"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-        <TextView
-            android:id="@+id/accountText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textColor="#B0B0B0"
-            android:textSize="13sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/codeText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:fontFamily="monospace"
-            android:letterSpacing="0.2"
-            android:text="000000"
-            android:textColor="#4FC3F7"
-            android:textSize="48sp"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/code_title"
+                android:textColor="#808080"
+                android:textSize="12sp" />
 
-        <TextView
-            android:id="@+id/countdownText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:textColor="#808080"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/accountText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:textColor="#B0B0B0"
+                android:textSize="11sp" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/resetButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/reset_button"
-            android:textSize="14sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/codeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:fontFamily="monospace"
+                android:letterSpacing="0.15"
+                android:text="000000"
+                android:textColor="#4FC3F7"
+                android:textSize="36sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/countdownText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="#808080"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/resetButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/reset_button"
+                android:textSize="13sp" />
+        </LinearLayout>
+    </FrameLayout>
 </FrameLayout>

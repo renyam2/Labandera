@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Labandera 2FA — Pantallas del Smart Watch (Wear OS)</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --card: #161b22;
+    --border: #2d333b;
+    --txt: #e6edf3;
+    --muted: #8b949e;
+    --accent: #4fc3f7;
+    --green: #3fb950;
+    --red: #f85149;
+    --amber: #d29922;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 32px;
+    background: var(--bg); color: var(--txt);
+    font-family: "Segoe UI", system-ui, sans-serif;
+  }
+  h1 { font-size: 1.5rem; margin-bottom: 4px; }
+  .subtitle { color: var(--muted); margin-bottom: 28px; }
+  h2 { font-size: 1.15rem; margin: 36px 0 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
+
+  /* ── Grid de pantallas ── */
+  .screens { display: flex; flex-wrap: wrap; gap: 28px; justify-content: center; }
+  .screen-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 18px 18px 14px; width: 340px;
+    text-align: center;
+  }
+  .screen-title { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
+  .screen-state { color: var(--muted); font-size: 0.78rem; margin-bottom: 12px; }
+
+  /* ── Reloj Wear OS (esfera) ── */
+  .watch {
+    width: 260px; height: 260px; margin: 0 auto;
+    border-radius: 50%;
+    background: #000;
+    border: 10px solid #2b2f36;          /* bisel */
+    outline: 3px solid #111;
+    position: relative; overflow: hidden;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+  }
+  .watch .time-top {
+    position: absolute; top: 26px; left: 0; right: 0;
+    color: #6e7681; font-size: 13px; letter-spacing: 1px;
+  }
+  .watch .time-bottom {
+    position: absolute; bottom: 24px; left: 0; right: 0;
+    color: #6e7681; font-size: 13px; letter-spacing: 1px;
+  }
+
+  /* ── Escena 1: permiso de cámara ── */
+  .dialog {
+    position: absolute; inset: 18px;
+    background: #1c2128; border-radius: 14px;
+    display: flex; flex-direction: column; gap: 10px;
+    padding: 14px; text-align: left;
+  }
+  .dialog .app-icon {
+    width: 34px; height: 34px; border-radius: 8px;
+    background: linear-gradient(135deg, #4fc3f7, #1976d2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+  }
+  .dialog h4 { margin: 0; font-size: 13px; }
+  .dialog p { margin: 0; font-size: 11px; color: #adbac7; line-height: 1.4; }
+  .dialog .btns { display: flex; gap: 10px; justify-content: flex-end; margin-top: 4px; }
+  .btn {
+    border: none; border-radius: 20px; padding: 7px 14px;
+    font-size: 11px; font-weight: 600; cursor: default;
+  }
+  .btn.ghost { background: transparent; color: #4fc3f7; }
+  .btn.primary { background: #4fc3f7; color: #001318; }
+
+  /* ── Escena 2: escaneo ── */
+  .camera {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(circle at 35% 30%, #3a4148 0%, #23282e 55%, #14181d 100%);
+  }
+  .camera .qr-fake {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%,-58%);
+    width: 120px; height: 120px; border-radius: 6px;
+    background:
+      repeating-conic-gradient(#fff 0 12deg, #000 12deg 24deg);
+    opacity: .9;
+    box-shadow: 0 0 0 6px #fff;
+  }
+  .reticle {
+    position: absolute; inset: 26px;
+    border: 2px dashed rgba(79,195,247,.85);
+    border-radius: 50%;
+    animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+  .scan-hint {
+    position: absolute; bottom: 30px; left: 0; right: 0;
+    text-align: center;
+  }
+  .scan-hint b { display: block; font-size: 13px; color: #fff; }
+  .scan-hint span { font-size: 10.5px; color: #b0b0b0; }
+
+  /* ── Escena 3: panel del código ── */
+  .code-ring {
+    position: absolute; inset: 4px;
+    border-radius: 50%;
+    background: conic-gradient(var(--accent) 0deg 252deg, #2b333b 252deg 360deg);
+    -webkit-mask: radial-gradient(circle, transparent 0 46px, #000 47px);
+            mask: radial-gradient(circle, transparent 0 46px, #000 47px);
+  }
+  .code-panel { position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; gap: 6px; }
+  .code-panel .lbl { font-size: 11px; color: #808080; letter-spacing: 2px; text-transform: uppercase; }
+  .code-panel .account { font-size: 11px; color: #b0b0b0; }
+  .code-panel .code {
+    font-family: "Cascadia Code", Consolas, monospace;
+    font-size: 40px; font-weight: 700; color: var(--accent);
+    letter-spacing: 6px; margin-top: 6px;
+  }
+  .code-panel .countdown { font-size: 12px; color: #808080; }
+  .code-panel .reset {
+    margin-top: 10px; border: none; border-radius: 18px;
+    padding: 7px 16px; font-size: 11.5px; font-weight: 600;
+    background: #22262b; color: #e6edf3;
+  }
+
+  /* ── Escena 4: diálogo restablecer ── */
+  .dialog.small { inset: 30px; }
+  .dialog .warn { color: var(--amber); font-size: 11px; }
+
+  /* ── Escena 5: sin cámara ── */
+  .toast {
+    position: absolute; bottom: 40px; left: 14px; right: 14px;
+    background: #2a2f36; border-radius: 10px; padding: 10px 12px;
+    font-size: 11.5px; text-align: center;
+  }
+  .no-cam-face {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 60px; color: #4a525c;
+  }
+
+  /* ── Nota bajo cada pantalla ── */
+  .note { font-size: 0.78rem; color: var(--muted); margin-top: 12px; text-align: left; line-height: 1.45; }
+  .note code { color: #adbac7; background: #0d1117; padding: 1px 5px; border-radius: 4px; font-size: 0.72rem; }
+
+  /* ── Diagrama de flujo ── */
+  .flow {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 14px; padding: 20px; max-width: 900px; margin: 12px auto 0;
+    font-family: Consolas, monospace; font-size: 0.82rem; line-height: 1.7;
+    color: #adbac7; overflow-x: auto; white-space: pre;
+  }
+  .flow .ok { color: var(--green); } .flow .err { color: var(--red); } .flow .hl { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<h1>Labandera — Pantallas del Smart Watch (Wear OS 2FA)</h1>
+<p class="subtitle">
+  Mockups CSS de la app <code>wear-app/</code> (namespace <code>mx.labandera.wear</code>) —
+  todos los estados posibles de <code>MainActivity</code>. Esfera circular de 260 px;
+  la hora superior/inferior simula el reloj de fondo de Wear OS.
+</p>
+
+<h2>Diagrama de flujo de estados</h2>
+<div class="flow">
+┌────────────────────────────────────────────────────────────────────┐
+│  INICIO (onCreate)                                                 │
+│        │                                                            │
+│        ▼                                                            │
+│  ¿prefs contiene "secret"?                                         │
+│     sí ──────────────► <span class="hl">[PANTALLA 3] PANEL DE CÓDIGO</span> (tick 1 s)│
+│     no                                                            │
+│        ▼                                                            │
+│  ¿Permiso CAMERA?                                                   │
+│     no  ─────────────► <span class="hl">[PANTALLA 1] DIÁLOGO DE PERMISO</span>        │
+│     sí  ─────────────► ¿provider.hasCamera(...)?                    │
+│                             no ──► <span class="hl">[PANTALLA 5] SIN CÁMARA (toast)</span> │
+│                             sí ──► <span class="hl">[PANTALLA 2] ESCANEO (retícula)</span>   │
+│                                          │                          │
+│                     ML Kit detecta URI   │                          │
+│                     otpauth:// válida    │                          │
+│        ┌────────────────────────────────┘                          │
+│        ▼                                                            │
+│  Guarda secret/account/issuer/digits/period en SharedPreferences   │
+│  stopCamera() ──► <span class="hl">[PANTALLA 3] PANEL DE CÓDIGO</span>                  │
+│                                          │                          │
+│        [Botón Restablecer]              │                          │
+│        ▼                                │                          │
+│  <span class="hl">[PANTALLA 4] DIÁLOGO DE CONFIRMACIÓN</span>                        │
+│     Cancelar ──► vuelve al panel de código                         │
+│     Restablecer ──► prefs.clear() ──► <span class="hl">[PANTALLA 2] ESCANEO</span>      │
+└────────────────────────────────────────────────────────────────────┘
+</div>
+
+<h2>Escenario 1 — Primer uso: solicitud de permiso de cámara</h2>
+<div class="screens">
+  <div class="screen-card">
+    <div class="screen-title">Pantalla 1 · Permiso de cámara</div>
+    <div class="screen-state">Estado: sin secreto guardado · sin permiso concedido</div>
+    <div class="watch">
+      <div class="time-top">10:24</div>
+      <div class="dialog">
+        <div class="app-icon">⌚</div>
+        <h4>Labandera 2FA</h4>
+        <p>¿Permitir que Labandera 2FA use la cámara? Se usa para escanear el QR de activación de 2FA.</p>
+        <div class="btns">
+          <button class="btn ghost">Cancelar</button>
+          <button class="btn primary">Permitir</button>
+        </div>
+      </div>
+      <div class="time-bottom">10:24</div>
+    </div>
+    <div class="note">
+      Se dispara vía <code>registerForActivityResult(RequestPermission())</code> solo si
+      <code>checkSelfPermission(CAMERA) != GRANTED</code>. Al conceder → <code>startCamera()</code>.
+      Si se cancela, la app queda en pantalla de escaneo esperando (el usuario puede volver a tocar).
+    </div>
+  </div>
+</div>
+
+<h2>Escenario 2 — Escaneo del QR (estado activo)</h2>
+<div class="screens">
+  <div class="screen-card">
+    <div class="screen-title">Pantalla 2 · Escaneo en curso</div>
+    <div class="screen-state">Estado: cámara activa · ML Kit analizando frames</div>
+    <div class="watch">
+      <div class="time-top">10:25</div>
+      <div class="camera">
+        <div class="qr-fake"></div>
+        <div class="reticle"></div>
+      </div>
+      <div class="scan-hint">
+        <b>Escanea el QR de 2FA</b>
+        <span>Apunta la cámara al QR de la página /security</span>
+      </div>
+      <div class="time-bottom">10:25</div>
+    </div>
+    <div class="note">
+      <code>CirclePreviewView</code> recorta el preview al círculo; <code>ScanReticleView</code> dibuja la
+      retícula punteada animada; <code>ImageAnalysis</code> con <code>STRATEGY_KEEP_ONLY_LATEST</code> envía
+      cada frame a ML Kit. Si la URI no es <code>otpauth://totp</code> válida, <b>se sigue escaneando</b>
+      (misma pantalla, sin feedback adicional).
+    </div>
+  </div>
+</div>
+
+<h2>Escenario 3 — Código TOTP generado (estado principal)</h2>
+<div class="screens">
+  <div class="screen-card">
+    <div class="screen-title">Pantalla 3 · Panel del código — 12 s restantes</div>
+    <div class="screen-state">Estado: secreto guardado · tick cada 1 s</div>
+    <div class="watch">
+      <div class="time-top">10:26</div>
+      <div class="code-ring"></div>
+      <div class="code-panel">
+        <div class="lbl">Código 2FA</div>
+        <div class="account">admin@labandera.mx</div>
+        <div class="code">483920</div>
+        <div class="countdown">Se actualiza en 12 s</div>
+        <button class="reset">Restablecer</button>
+      </div>
+      <div class="time-bottom">10:26</div>
+    </div>
+    <div class="note">
+      <code>CodeRingView</code> es el anillo de progreso (<code>remaining/period</code>; aquí 12/30 = 252°).
+      El código se regenera con <code>Totp.generate()</code> (RFC 6238, HmacSHA1) cada vez que el contador
+      de 30 s cambia; el countdown y el anillo se actualizan cada segundo.
+      <code>FLAG_KEEP_SCREEN_ON</code> mantiene la esfera encendida.
+    </div>
+  </div>
+  <div class="screen-card">
+    <div class="screen-title">Pantalla 3b · Último segundo (transición)</div>
+    <div class="screen-state">Estado: remaining = 1 s · anillo casi completo</div>
+    <div class="watch">
+      <div class="time-top">10:26</div>
+      <div class="code-ring" style="background: conic-gradient(var(--accent) 0deg 354deg, #2b333b 354deg 360deg);"></div>
+      <div class="code-panel">
+        <div class="lbl">Código 2FA</div>
+        <div class="account">admin@labandera.mx</div>
+        <div class="code">726104</div>
+        <div class="countdown">Se actualiza en 1 s</div>
+        <button class="reset">Restablecer</button>
+      </div>
+      <div class="time-bottom">10:26</div>
+    </div>
+    <div class="note">
+      Al llegar a 0 s el contador avanza: cambia el código (nuevo período de 30 s) y el anillo
+      reinicia al 100 %. El usuario debe leer el código <b>antes</b> de la rotación para teclearlo
+      en <code>POST /api/auth/login/verify-2fa</code> (el backend tolera ±1 período).
+    </div>
+  </div>
+</div>
+
+<h2>Escenario 4 — Restablecer el secreto</h2>
+<div class="screens">
+  <div class="screen-card">
+    <div class="screen-title">Pantalla 4 · Diálogo de confirmación</div>
+    <div class="screen-state">Estado: se tocó [Restablecer] sobre el panel de código</div>
+    <div class="watch">
+      <div class="time-top">10:27</div>
+      <div class="dialog small">
+        <h4>¿Restablecer 2FA?</h4>
+        <p class="warn">Se borrará el secreto de este reloj. Tendrás que escanear el QR de nuevo.</p>
+        <div class="btns">
+          <button class="btn ghost">Cancelar</button>
+          <button class="btn primary">Restablecer</button>
+        </div>
+      </div>
+      <div class="time-bottom">10:27</div>
+    </div>
+    <div class="note">
+      <code>MaterialAlertDialogBuilder</code>. <b>Cancelar</b> → vuelve al panel de código (Pantalla 3).
+      <b>Restablecer</b> → <code>prefs.edit().clear()</code>, detiene el tick y vuelve a la
+      Pantalla 2 (escaneo).
+    </div>
+  </div>
+</div>
+
+<h2>Escenario 5 — Dispositivo sin cámara</h2>
+<div class="screens">
+  <div class="screen-card">
+    <div class="screen-title">Pantalla 5 · Sin cámara disponible</div>
+    <div class="screen-state">Estado: hasCamera(backend)=false y hasCamera(front)=false</div>
+    <div class="watch">
+      <div class="time-top">10:28</div>
+      <div class="no-cam-face">📷✕</div>
+      <div class="toast">Este dispositivo no tiene cámara</div>
+      <div class="time-bottom">10:28</div>
+    </div>
+    <div class="note">
+      Cubierto por el commit <code>53382f5</code> ("Manejar dispositivos sin cámara en startCamera").
+      <code>provider.hasCamera()</code> se consulta en un <code>try/catch</code>; si no hay cámara trasera
+      ni frontal, se muestra un <code>Toast</code> largo y la app se queda en la esfera sin preview.
+    </div>
+  </div>
+</div>
+
+<h2>Escenario 6 — QR inválido / no detectado (loop de escaneo)</h2>
+<div class="screens">
+  <div class="screen-card">
+    <div class="screen-title">Pantalla 6 · Escaneando (QR no válido)</div>
+    <div class="screen-state">Estado: frame analizado · OtpauthParser devolvió null</div>
+    <div class="watch">
+      <div class="time-top">10:29</div>
+      <div class="camera">
+        <div class="reticle"></div>
+      </div>
+      <div class="scan-hint">
+        <b>Escanea el QR de 2FA</b>
+        <span>Apunta la cámara al QR de la página /security</span>
+      </div>
+      <div class="time-bottom">10:29</div>
+    </div>
+    <div class="note">
+      Si el QR no se lee (bajo contraste, desenfocado) o la URI no es
+      <code>otpauth://totp</code> con <code>secret</code>, <code>OtpauthParser.parse()</code> devuelve
+      <code>null</code> y el escaneo continúa sin cambios visibles. En el emulador se resuelve
+      reenviando una captura más grande a la <b>cámara virtual</b> (Extended Controls → Camera → Set Image).
+    </div>
+  </div>
+</div>
+
+<h2>Resumen de mapeo pantalla → código</h2>
+<div class="flow">
+<span class="hl">Pantalla 1</span>  Permiso cámara     → cameraPermission.launch(Manifest.permission.CAMERA)
+<span class="hl">Pantalla 2</span>  Escaneo QR         → startCamera() + CirclePreviewView + ScanReticleView + ML Kit
+<span class="hl">Pantalla 3</span>  Panel del código   → showCodePanel() + updateCode() (tick 1 s, CodeRingView)
+<span class="hl">Pantalla 3b</span> Rotación 30 s      → Totp.generate() con nuevo counter = tiempo/period
+<span class="hl">Pantalla 4</span>  Restablecer        → confirmReset() → MaterialAlertDialogBuilder
+<span class="hl">Pantalla 5</span>  Sin cámara         → selector == null → Toast "Este dispositivo no tiene cámara"
+<span class="hl">Pantalla 6</span>  QR inválido        → OtpauthParser.parse() == null → sigue en Pantalla 2
+</div>
+
+</body>
+</html>
