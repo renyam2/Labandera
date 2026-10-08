@@ -15,12 +15,15 @@ object Totp {
     /** Decodifica un secreto Base32 (RFC 4648) a bytes. */
     fun base32Decode(input: String): ByteArray {
         val clean = input.uppercase().replace("=", "").replace("-", "")
+        if (clean.isEmpty()) throw IllegalArgumentException("Secreto TOTP vacío")
         var accumulator = 0
         var bits = 0
         val out = ArrayList<Byte>()
         for (c in clean) {
             val value = BASE32_ALPHABET.indexOf(c)
-            if (value < 0) continue
+            if (value < 0) {
+                throw IllegalArgumentException("Secreto TOTP contiene un carácter no Base32: '$c'")
+            }
             accumulator = (accumulator shl 5) or value
             bits += 5
             if (bits >= 8) {
