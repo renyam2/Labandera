@@ -41,6 +41,8 @@ class MainActivity : AppCompatActivity() {
     private var barcodeScanner: BarcodeScanner? = null
     private var cameraProvider: ProcessCameraProvider? = null
     private var cameraBound = false
+    private var lastInvalidSecret: String? = null
+    private var codeErrorShown = false
 
     private val cameraPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
@@ -140,8 +142,19 @@ class MainActivity : AppCompatActivity() {
                 for (barcode in barcodes) {
                     val raw = barcode.rawValue ?: continue
                     val config = OtpauthParser.parse(raw) ?: continue
+                    val secret = config.secret.uppercase()
+                    try {
+                        Totp.base32Decode(secret)
+                    } catch (e: IllegalArgumentException) {
+                        // Evita spam de toasts si la cámara sigue detectando el mismo QR.
+                        if (raw != lastInvalidSecret) {
+                            lastInvalidSecret = raw
+                            Toast.makeText(this, "Secreto TOTP inválido: ${e.message}", Toast.LENGTH_LONG).show()
+                        }
+                        return@addOnSuccessListener // sigue escaneando
+                    }
                     prefs.edit()
-                        .putString("secret", config.secret)
+                        .putString("secret", secret)
                         .putString("account", config.account)
                         .putString("issuer", config.issuer)
                         .putInt("digits", config.digits)
@@ -184,7 +197,17 @@ class MainActivity : AppCompatActivity() {
         val period = prefs.getInt("period", 30)
         val nowSeconds = System.currentTimeMillis() / 1000L
         val remaining = period - (nowSeconds % period)
-        binding.codeText.text = Totp.generate(secret, nowSeconds, period, digits)
+        try {
+            binding.codeText.text = Totp.generate(secret, nowSeconds, period, digits)
+            codeErrorShown = false
+        } catch (e: IllegalArgumentException) {
+            // Secreto guardado inválido (p. ej. de una versión anterior): no tumbar la app.
+            binding.codeText.text = "—"
+            if (!codeErrorShown) {
+                codeErrorShown = true
+                Toast.makeText(this, "Secreto TOTP guardado es inválido: ${e.message}", Toast.LENGTH_LONG).show()
+            }
+        }
         binding.countdownText.text = getString(R.string.countdown_format, remaining)
         binding.codeRing.setProgress(remaining.toFloat() / period)
     }
@@ -195,6 +218,8 @@ class MainActivity : AppCompatActivity() {
             .setMessage(R.string.reset_message)
             .setPositiveButton(R.string.reset_confirm) { _, _ ->
                 prefs.edit().clear().apply()
+                lastInvalidSecret = null
+                codeErrorShown = false
                 handler.removeCallbacks(tick)
                 requestCameraAndScan()
             }
@@ -237,6 +262,12 @@ class MainActivity : AppCompatActivity() {
                 val account = accountInput.text.toString().trim().ifEmpty { "usuario" }
                 if (secret.isEmpty()) {
                     Toast.makeText(this, "El secreto no puede estar vacío", Toast.LENGTH_SHORT).show()
+                    return@OnClickListener
+                }
+                try {
+                    Totp.base32Decode(secret)
+                } catch (e: IllegalArgumentException) {
+                    Toast.makeText(this, "Secreto no válido (Base32): ${e.message}", Toast.LENGTH_LONG).show()
                     return@OnClickListener
                 }
                 prefs.edit()
