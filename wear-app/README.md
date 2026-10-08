@@ -12,6 +12,7 @@ La app:
 3. **Genera el código de 6 dígitos** cada 30 s (RFC 6238, HmacSHA1 —
    misma lógica que `@otplib` en el backend) y lo muestra con countdown.
 4. Botón **Restablecer** para borrar el secreto y escanear de nuevo.
+5. Botón **Ingresar secreto manualmente** para pegar el secreto Base32 sin escanear el QR (útil si la cámara virtual del emulador no lo detecta).
 
 > Cero cambios en backend/frontend: el QR ya existe en el sitio; el reloj
 > solo lo consume.
@@ -29,9 +30,12 @@ wear-app/
     └── src/main/
         ├── AndroidManifest.xml # permiso CAMERA, launcher
         ├── java/mx/labandera/wear/
-        │   ├── MainActivity.kt   # escaneo QR + panel del código
+        │   ├── MainActivity.kt   # escaneo QR + panel del código + entrada manual
         │   ├── Totp.kt           # RFC 6238 (Base32 + HmacSHA1)
-        │   └── OtpauthParser.kt  # parsea otpauth://totp/...
+        │   ├── OtpauthParser.kt  # parsea otpauth://totp/...
+        │   ├── CirclePreviewView.kt # preview de cámara recortado a círculo
+        │   ├── ScanReticleView.kt   # retícula animada de escaneo
+        │   └── CodeRingView.kt      # anillo de progreso del countdown
         └── res/
             ├── layout/activity_main.xml
             ├── values/strings.xml
@@ -73,7 +77,9 @@ El emulador de Wear OS tiene **cámara virtual**:
 4. La app detecta la URI `otpauth://`, guarda el secreto y muestra el código.
 
 > Tip: si el QR no se detecta a la primera, sube una captura más grande /
-> con más contraste, o reenvía la imagen a la cámara virtual.
+> con más contraste, o reenvía la imagen a la cámara virtual. También puedes
+> usar el botón **Ingresar secreto manualmente** y pegar el secreto Base32
+> que aparece en la página /security.
 
 ### 5. Cerrar el flujo 2FA en la web
 

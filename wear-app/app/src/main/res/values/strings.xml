@@ -13,4 +13,11 @@
     <string name="reset_message">Se borrará el secreto TOTP guardado en este reloj. Tendrás que escanear el QR de nuevo desde la página /security.</string>
     <string name="reset_confirm">Restablecer</string>
     <string name="cancel">Cancelar</string>
+
+    <string name="manual_button">Ingresar secreto manualmente</string>
+    <string name="manual_title">Ingresar secreto TOTP</string>
+    <string name="manual_hint">Pega el secreto Base32 que aparece en la página /security</string>
+    <string name="manual_secret_label">Secreto Base32 (página /security)</string>
+    <string name="manual_account_label">Cuenta (opcional)</string>
+    <string name="manual_save">Guardar</string>
 </resources>

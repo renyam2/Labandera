@@ -19,6 +19,9 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.content.ContextCompat
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.ScrollView
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.mlkit.vision.barcode.BarcodeScanner
 import com.google.mlkit.vision.barcode.BarcodeScanning
@@ -58,6 +61,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.resetButton.setOnClickListener { confirmReset() }
+        binding.manualButton.setOnClickListener { showManualInput() }
 
         if (prefs.contains("secret")) showCodePanel() else requestCameraAndScan()
     }
@@ -196,6 +200,62 @@ class MainActivity : AppCompatActivity() {
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+    // ── Entrada manual del secreto ──────────────────────────────────────────
+
+    private fun showManualInput() {
+        val secretInput = EditText(this).apply {
+            hint = getString(R.string.manual_secret_label)
+            inputType = android.text.InputType.TYPE_CLASS_TEXT or
+                android.text.InputType.TYPE_TEXT_FLAG_CAP_CHARACTERS
+            textSize = 14f
+            height = 48
+        }
+        val accountInput = EditText(this).apply {
+            hint = getString(R.string.manual_account_label)
+            textSize = 14f
+            height = 48
+        }
+
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(40, 8, 40, 0)
+            addView(secretInput)
+            addView(accountInput)
+        }
+
+        val dialog = MaterialAlertDialogBuilder(this)
+            .setView(ScrollView(this).apply { addView(layout) })
+            .setNegativeButton(R.string.cancel, null)
+            .create()
+        dialog.setButton(
+            android.content.DialogInterface.BUTTON_POSITIVE,
+            getString(R.string.manual_save),
+            android.content.DialogInterface.OnClickListener { _, _ ->
+                val secret = secretInput.text.toString().trim().uppercase()
+                val account = accountInput.text.toString().trim().ifEmpty { "usuario" }
+                if (secret.isEmpty()) {
+                    Toast.makeText(this, "El secreto no puede estar vacío", Toast.LENGTH_SHORT).show()
+                    return@OnClickListener
+                }
+                prefs.edit()
+                    .putString("secret", secret)
+                    .putString("account", account)
+                    .putString("issuer", "Labandera")
+                    .putInt("digits", 6)
+                    .putInt("period", 30)
+                    .apply()
+                dialog.dismiss()
+                onSecretSaved()
+            }
+        )
+        dialog.show()
+        // En Wear la ventana del diálogo es demasiado pequeña; se hace a pantalla completa
+        dialog.window?.setLayout(
+            android.view.ViewGroup.LayoutParams.MATCH_PARENT,
+            android.view.ViewGroup.LayoutParams.MATCH_PARENT
+        )
     }
 
     override fun onDestroy() {
