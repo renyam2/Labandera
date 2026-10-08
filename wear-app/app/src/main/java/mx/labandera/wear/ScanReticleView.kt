@@ -66,7 +66,22 @@ class ScanReticleView @JvmOverloads constructor(
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        post(animator)
+        if (visibility == VISIBLE) post(animator)
+    }
+
+    /**
+     * Detiene el animador cuando la vista se oculta (p. ej. al mostrar el
+     * panel del código) y lo reanuda al volver a ser visible, para no
+     * seguir gastando CPU/batería en un view que no se dibuja.
+     */
+    override fun onVisibilityChanged(changedView: View, visibility: Int) {
+        super.onVisibilityChanged(changedView, visibility)
+        if (visibility == VISIBLE) {
+            removeCallbacks(animator)
+            post(animator)
+        } else {
+            removeCallbacks(animator)
+        }
     }
 
     override fun onDetachedFromWindow() {
