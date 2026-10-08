@@ -42,6 +42,7 @@ class MainActivity : AppCompatActivity() {
     private var cameraProvider: ProcessCameraProvider? = null
     private var cameraBound = false
     private var lastInvalidSecret: String? = null
+    private var lastNonOtpauth: String? = null
     private var codeErrorShown = false
 
     private val cameraPermission =
@@ -161,7 +162,16 @@ class MainActivity : AppCompatActivity() {
             .addOnSuccessListener { barcodes ->
                 for (barcode in barcodes) {
                     val raw = barcode.rawValue ?: continue
-                    val config = OtpauthParser.parse(raw) ?: continue
+                    val config = OtpauthParser.parse(raw)
+                    if (config == null) {
+                        // La cámara SÍ está leyendo el QR, pero no es una URI
+                        // otpauth:// válida: dar feedback en lugar de callar.
+                        if (raw != lastNonOtpauth) {
+                            lastNonOtpauth = raw
+                            Toast.makeText(this, getString(R.string.qr_not_totp), Toast.LENGTH_LONG).show()
+                        }
+                        continue
+                    }
                     val secret = config.secret.uppercase()
                     try {
                         Totp.base32Decode(secret)
@@ -243,6 +253,7 @@ class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.reset_confirm) { _, _ ->
                 prefs.edit().clear().apply()
                 lastInvalidSecret = null
+                lastNonOtpauth = null
                 codeErrorShown = false
                 handler.removeCallbacks(tick)
                 requestCameraAndScan()
