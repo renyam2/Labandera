@@ -208,6 +208,8 @@ class MainActivity : AppCompatActivity() {
         val account = prefs.getString("account", null).orEmpty()
         binding.accountText.visibility = if (account.isEmpty()) View.GONE else View.VISIBLE
         binding.accountText.text = account
+        // 8 dígitos no caben cómodamente a 36sp en la esfera de Wear OS
+        binding.codeText.textSize = if (prefs.getInt("digits", 6) >= 8) 28f else 36f
         updateCode()
         handler.removeCallbacks(tick)
         handler.postDelayed(tick, 1000L)
