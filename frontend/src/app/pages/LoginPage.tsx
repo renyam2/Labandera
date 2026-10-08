@@ -234,7 +234,7 @@ export default function LoginPage({ onLogin }: { onLogin: () => void }) {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex justify-center rounded-md border border-border bg-background p-3">
-                <QRCodeSVG value={qrUri} size={200} />
+                <QRCodeSVG value={qrUri} size={240} marginSize={4} />
               </div>
               <p className="font-mono text-xs text-muted-foreground leading-relaxed">
                 SI YA LO ESCANEASTE ANTES, CIERRA ESTE VENTANA E INGRESA

@@ -171,7 +171,7 @@ export default function SecurityPage() {
                   ESCANEA EL CÓDIGO QR CON TU APP AUTENTICADORA (SMART WATCH O TELÉFONO).
                 </p>
                 <div className="flex justify-center">
-                  <QRCodeSVG value={setup.otpauthUri} size={220} />
+                  <QRCodeSVG value={setup.otpauthUri} size={280} marginSize={4} />
                 </div>
                 <div className="space-y-1">
                   <label className="font-mono text-xs tracking-widest text-muted-foreground">
