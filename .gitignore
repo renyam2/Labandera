@@ -13,3 +13,9 @@ backend/uploads/
 /package-lock.json
 /pnpm-lock.yaml
 .env.example
+
+# Gradle
+.gradle/
+wear-app/.gradle/
+wear-app/build/
+gradle-daemon-jvm.properties
