@@ -46,7 +46,12 @@ class MainActivity : AppCompatActivity() {
 
     private val cameraPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { granted ->
-            if (granted) startCamera()
+            if (granted) {
+                binding.scanHint.setOnClickListener(null)
+                startCamera()
+            } else {
+                showCameraDenied()
+            }
         }
 
     private val tick = object : Runnable {
@@ -75,11 +80,26 @@ class MainActivity : AppCompatActivity() {
         binding.previewView.visibility = View.VISIBLE
         binding.scanReticle.visibility = View.VISIBLE
         binding.scanHint.visibility = View.VISIBLE
+        binding.scanHintText.text = getString(R.string.scan_hint)
+        binding.scanHint.setOnClickListener(null)
 
         val granted = ContextCompat.checkSelfPermission(
             this, Manifest.permission.CAMERA
         ) == PackageManager.PERMISSION_GRANTED
         if (granted) startCamera() else cameraPermission.launch(Manifest.permission.CAMERA)
+    }
+
+    /**
+     * El usuario denegó el permiso de cámara: muestra un mensaje y permite
+     * reintentar tocando la pantalla.
+     */
+    private fun showCameraDenied() {
+        binding.previewView.visibility = View.GONE
+        binding.scanReticle.visibility = View.GONE
+        binding.scanHintText.text = getString(R.string.camera_denied_hint)
+        binding.scanHint.setOnClickListener {
+            cameraPermission.launch(Manifest.permission.CAMERA)
+        }
     }
 
     private fun startCamera() {

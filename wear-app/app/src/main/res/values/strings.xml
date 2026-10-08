@@ -4,6 +4,7 @@
 
     <string name="scan_title">Escanear QR de Labandera</string>
     <string name="scan_hint">Apunta la cámara al código QR de la página /security del sitio web</string>
+    <string name="camera_denied_hint">Permiso de cámara denegado. Toca la pantalla para reintentar.</string>
 
     <string name="code_title">Código de verificación 2FA</string>
     <string name="countdown_format">Se renueva en %1$d s</string>
