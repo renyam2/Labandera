@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
                         .putInt("digits", config.digits)
                         .putInt("period", config.period)
                         .apply()
-                    handler.post { onSecretSaved() }
+                    handler.post { if (!isDestroyed) onSecretSaved() }
                     return@addOnSuccessListener
                 }
             }
