@@ -205,7 +205,9 @@ class MainActivity : AppCompatActivity() {
         binding.scanReticle.visibility = View.GONE
         binding.scanHint.visibility = View.GONE
         binding.codePanel.visibility = View.VISIBLE
-        binding.accountText.text = prefs.getString("account", "")
+        val account = prefs.getString("account", null).orEmpty()
+        binding.accountText.visibility = if (account.isEmpty()) View.GONE else View.VISIBLE
+        binding.accountText.text = account
         updateCode()
         handler.removeCallbacks(tick)
         handler.postDelayed(tick, 1000L)
