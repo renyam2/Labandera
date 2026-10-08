@@ -1,6 +1,7 @@
 package mx.labandera.wear
 
 import android.net.Uri
+import java.net.URLDecoder
 
 /** Configuración extraída de una URI `otpauth://totp/...`. */
 data class OtpauthConfig(
@@ -22,16 +23,26 @@ object OtpauthParser {
     fun parse(raw: String): OtpauthConfig? {
         val uri = Uri.parse(raw)
         if (uri.scheme?.lowercase() != "otpauth") return null
-        if (uri.path?.removePrefix("/")?.lowercase() != "totp") return null
+        // El tipo ("totp") va en la host de la URI: otpauth://totp/Label?... ;
+        // se acepta también el formato alternativo otpauth://totp/Label.
+        if (uri.host?.lowercase() != "totp") return null
 
         val secret = uri.getQueryParameter("secret")
         if (secret.isNullOrBlank()) return null
 
-        val label = uri.getQueryParameter("label") ?: ""
+        // El label estándar va en la path; se acepta también un query param `label`.
+        // Uri.getPath() devuelve la path sin decodificar: se decodifica el
+        // percent-encoding (p. ej. %3A → ':', %40 → '@').
+        val label = uri.path?.removePrefix("/")
+            ?.let { URLDecoder.decode(it, "UTF-8") }
+            ?.trim()
+            ?.ifEmpty { null }
+            ?: uri.getQueryParameter("label")
+            ?: ""
         val issuer = uri.getQueryParameter("issuer")
             ?: label.substringBefore(':').ifEmpty { "Labandera" }
         val account = label.substringAfter(':', missingDelimiterValue = label)
-            .ifEmpty { uri.host ?: "usuario" }
+            .ifEmpty { "usuario" }
 
         val digits = uri.getQueryParameter("digits")?.toIntOrNull()?.coerceIn(6, 8) ?: 6
         val period = uri.getQueryParameter("period")?.toIntOrNull()?.coerceIn(15, 120) ?: 30
