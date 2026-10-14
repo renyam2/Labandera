@@ -49,7 +49,8 @@ object Totp {
         if (key.isEmpty()) throw IllegalArgumentException("Secreto TOTP vacío o inválido")
 
         val counterBytes = ByteArray(8)
-        for (i in 7 downTo 0) counterBytes[i] = (counter ushr (i * 8)).toByte()
+        // RFC 6238: el counter se serializa en BIG-endian (8 octetos)
+        for (i in 0 until 8) counterBytes[i] = (counter ushr ((7 - i) * 8)).toByte()
 
         val mac = Mac.getInstance("HmacSHA1")
         mac.init(SecretKeySpec(key, "HmacSHA1"))

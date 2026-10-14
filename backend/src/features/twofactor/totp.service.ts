@@ -10,6 +10,7 @@ const TOTP_WINDOW = 1 // tolera ±1 intervalo (30 s) para desfases de reloj
 const BACKUP_CODES_COUNT = 10
 const BACKUP_CODE_LENGTH = 8
 
+// Se usa una instancia fija para generar secretos y URIs (no dependen del tiempo).
 const authenticator = new Authenticator({
   createDigest,
   createRandomBytes,
@@ -17,6 +18,23 @@ const authenticator = new Authenticator({
   keyEncoder,
   window: TOTP_WINDOW,
 })
+
+/**
+ * Crea un Authenticator con `epoch` en el momento actual.
+ * @otplib congela `epoch: Date.now()` al construir la instancia; si se reutiliza
+ * una sola instancia para verificar, el TOTP se valida contra el momento en que
+ * arrancó el servidor y nunca coincide con el código de la app del smartwatch.
+ */
+function createVerifyAuthenticator(): Authenticator {
+  return new Authenticator({
+    createDigest,
+    createRandomBytes,
+    keyDecoder,
+    keyEncoder,
+    window: TOTP_WINDOW,
+    epoch: Date.now(),
+  })
+}
 
 /**
  * Genera un secreto TOTP en Base32 (RFC 4648).
@@ -38,7 +56,7 @@ export function buildOtpauthUri(secret: string, accountName: string): string {
  * Devuelve true si el código es válido dentro de la ventana tolerada.
  */
 export function verifyTotpCode(secret: string, code: string): boolean {
-  return authenticator.verify({
+  return createVerifyAuthenticator().verify({
     token: code,
     secret,
   })
