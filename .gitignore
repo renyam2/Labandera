@@ -19,3 +19,6 @@ backend/uploads/
 wear-app/.gradle/
 wear-app/build/
 gradle-daemon-jvm.properties
+
+# App Flutter aparte
+smart_room_app/
