@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.FitSyncPhone" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">#4FC3F7</item>
+        <item name="colorOnPrimary">#000000</item>
+    </style>
+</resources>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Reporte — Viabilidad de integración de Práctica 5 y 6 en Labandera</title>
+<style>
+body { font-family: sans-serif; font-size: 11pt; line-height: 1.45; }
+h1 { font-size: 16pt; }
+h2 { font-size: 13pt; margin-top: 20px; border-bottom: 2px solid #4FC3F7; padding-bottom: 4px; }
+h3 { font-size: 11.5pt; margin-top: 14px; }
+table { border-collapse: collapse; width: 100%; margin: 10px 0; }
+th, td { border: 1px solid #666; padding: 5px 8px; text-align: left; font-size: 10pt; vertical-align: top; }
+th { background: #e8f4fd; }
+code { font-family: monospace; background: #f0f0f0; padding: 1px 4px; font-size: 9.5pt; }
+pre { font-family: monospace; font-size: 9pt; background: #f5f5f5; padding: 8px; border: 1px solid #ccc; white-space: pre-wrap; }
+ul, ol { margin: 6px 0 6px 18px; }
+.verdict { background: #fff3f3; border: 1px solid #d99; padding: 10px 12px; margin: 12px 0; }
+.ok { background: #f0fff0; border: 1px solid #9c9; padding: 10px 12px; margin: 12px 0; }
+</style>
+</head>
+<body>
+
+<h1>Reporte de viabilidad: integración de las funciones de la Práctica 5 (WatchControl) y la Práctica 6 (FitSync) en el proyecto principal Labandera</h1>
+
+<p><b>Fecha:</b> 2025 &nbsp;|&nbsp; <b>Alcance:</b> evaluación técnica de integrar las funcionalidades de las prácticas 5 y 6 dentro del repositorio principal de Labandera (sitio de noticias + backend + app Wear OS de 2FA).</p>
+
+<h2>1. Resumen ejecutivo</h2>
+<div class="verdict">
+<b>Veredicto: NO es viable la integración funcional.</b><br>
+Las funciones de la Práctica 5 (comandos de entrenamiento bidireccionales) y la Práctica 6 (sincronización de actividad física) <b>no aportan nada al flujo de autenticación</b> del proyecto principal y <b>no comparten dominio de datos</b> con él. Si se mantienen como módulos aislados, tampoco entorpecen la autenticación; el único escenario en el que sí la entorpecerían es forzarlas dentro del camino de 2FA, lo cual agrega una dependencia de Bluetooth y un salto extra sin ninguna ganancia de seguridad.
+</div>
+
+<h2>2. Contexto</h2>
+
+<h3>2.1. Proyecto principal (Labandera)</h3>
+<table>
+<tr><th>Módulo</th><th>Tecnología</th><th>Función</th></tr>
+<tr><td><code>backend/</code></td><td>Express + Prisma (PostgreSQL)</td><td>API REST: autenticación (JWT), 2FA/TOTP, noticias, categorías, imágenes</td></tr>
+<tr><td><code>frontend/</code></td><td>SPA React + Vite + Tailwind</td><td>Interfaz web (login, registro, secciones, seguridad)</td></tr>
+<tr><td><code>wear-app/</code></td><td>Wear OS (Kotlin, AGP 8.5.2)</td><td>2FA/TOTP en smartwatch: escanea QR <code>otpauth://</code>, genera código de 6 dígitos (RFC 6238)</td></tr>
+<tr><td><code>smart_room_app/</code></td><td>Flutter</td><td>Proyecto aparte (sin relación con auth)</td></tr>
+</table>
+
+<h3>2.2. Práctica 5 — WatchControl</h3>
+<p>App Android (teléfono) + app Wear OS que intercambian <b>comandos de entrenamiento</b> (<code>START</code>, <code>PAUSE</code>, <code>STOP</code>) por el <b>Wearable Data Layer</b> (<code>MessageClient</code>). El teléfono envía por <code>/training</code> y el reloj confirma por <code>/training/ack</code>.</p>
+
+<h3>2.3. Práctica 6 — FitSync</h3>
+<p>App Wear OS + app Android que sincronizan <b>registros de actividad física simulados</b> (<code>ActivityRecord</code>: id, timestamp, HR, pasos, duración) por el <b>Wearable Data Layer</b>. El reloj envía por <code>/activity</code>; el teléfono valida, detecta duplicados y persiste en un historial local.</p>
+
+<h2>3. Análisis de viabilidad</h2>
+
+<h3>3.1. Requisito técnico del Wearable Data Layer</h3>
+<p>La <i>Wearable Data Layer</i> (<code>com.google.android.gms:play-services-wearable</code>) exige <b>dos nodos Android nativos vinculados</b>: un dispositivo móvil (teléfono) y un dispositivo Wear OS. Ambos deben ejecutar apps nativas que instancien <code>MessageClient</code> / <code>NodeClient</code>.</p>
+<p>El "lado móvil" del proyecto principal es una <b>SPA web</b> (React/Vite). Una aplicación web <b>no puede ser nodo del Wearable Data Layer</b>: no existe en el repositorio ninguna app Android de teléfono que pueda ser el par del reloj. Este es el obstáculo estructural principal.</p>
+
+<h3>3.2. Ausencia de un par de teléfono</h3>
+<p>El módulo <code>wear-app/</code> actual es una app Wear OS <b>aislada</b> (2FA). No existe una app de teléfono emparejada que le envíe comandos ni reciba datos. Para las prácticas 5 y 6 sería necesario <b>crear desde cero</b> el lado de teléfono (un nuevo módulo <code>phone-app</code> nativo), que no existe hoy en el proyecto.</p>
+
+<h3>3.3. Ausencia de relación de dominio de datos</h3>
+<table>
+<tr><th>Funcionalidad</th><th>Datos involucrados</th><th>Relación con el proyecto principal</th></tr>
+<tr><td>Práctica 5</td><td>Comandos de entrenamiento (<code>START/PAUSE/STOP</code>)</td><td>Ninguna</td></tr>
+<tr><td>Práctica 6</td><td>Registros de actividad (pasos, HR, duración)</td><td>Ninguna</td></tr>
+<tr><td>Proyecto principal</td><td>Noticias, usuarios, JWT, secretos TOTP</td><td>—</td></tr>
+</table>
+<p>No hay ningún endpoint, modelo de datos o flujo que conecte los comandos de entrenamiento o los registros de actividad con el dominio de noticias/autenticación. Serían apps paralelas sin acoplamiento.</p>
+
+<h3>3.4. Naturaleza de entregable autónomo</h3>
+<p>Cada práctica fue diseñada como proyecto independiente: propio Gradle wrapper, namespaces distintos (<code>mx.labandera.watchcontrol</code>, <code>mx.labandera.fitsync</code>) y APKs propios. No fueron concebidas para acoplarse a otro sistema.</p>
+
+<h2>4. Impacto en la autenticación (2FA/TOTP)</h2>
+
+<h3>4.1. Flujo de autenticación actual</h3>
+<pre>Web /security  ──►  POST /api/auth/totp/setup  ──►  QR otpauth://
+      └──────────────────────────────────────────────►  wear-app (reloj) escanea QR
+                                                        guarda secreto (SharedPreferences)
+                                                        genera código 6 dígitos / 30 s (RFC 6238)
+Usuario teclea código en login web  ──►  backend valida (@otplib)  ──►  sesión JWT</pre>
+
+<p><b>El teléfono no participa en ningún paso.</b> El código se genera en el reloj y la validación la hace el backend. Las prácticas 5 y 6 no generan ni validan TOTP, no tocan JWT, sesiones ni endpoints de auth.</p>
+
+<div class="ok">
+<b>Conclusión parcial:</b> las funciones de las prácticas <b>no ayudan</b> al mecanismo de autenticación, porque el flujo de 2FA no requiere un nodo de teléfono y las prácticas no intervienen en la generación ni validación del código.
+</div>
+
+<h3>4.2. ¿Entorpecería el proceso?</h3>
+<p><b>Si se mantienen como módulos aislados:</b> NO. No modifican <code>backend/</code> ni <code>frontend/</code>, usan packages distintos (<code>mx.labandera.wear</code> vs <code>mx.labandera.watchcontrol</code>/<code>mx.labandera.fitsync</code>) y múltiples apps Wear OS conviven en el mismo emulador sin interferir. El único costo es mayor tiempo de build y más dependencias.</p>
+
+<div class="verdict">
+<b>Si se forzaran dentro del camino de autenticación (p. ej., reenviar el código TOTP del reloj al teléfono por <code>MessageClient</code> y desde ahí al login), SÍ entorpecería:</b>
+<ul>
+<li><b>Salto extra por Bluetooth:</b> el Wearable Data Layer encola mensajes si el enlace se interrumpe y los entrega al reconectarse, agregando latencia e incertidumbre a un flujo hoy directo (reloj → teclado del usuario).</li>
+<li><b>Dependencia de conectividad:</b> la autenticación dejaría de funcionar si el teléfono no está vinculado/encendido, cuando hoy solo necesita el reloj.</li>
+<li><b>Sin ganancia de seguridad:</b> el código ya está en el reloj; copiarlo al teléfono no lo protege más, solo duplica una copia sensible.</li>
+<li><b>Confusión conceptual:</b> mezclar una demo educativa (entrenamiento/fitness) con el módulo de seguridad debilita la claridad del entregable.</li>
+</ul>
+</div>
+
+<h2>5. Matriz de decisión</h2>
+<table>
+<tr><th>Escenario</th><th>Impacto en autenticación</th><th>Viabilidad</th></tr>
+<tr><td>Mantener prácticas aisladas (carpetas independientes)</td><td>Ninguno (ni mejora ni entorpece)</td><td>Viable, pero sin beneficio</td></tr>
+<tr><td>Agregar como módulos Gradle en el repo (sin acoplar)</td><td>Ninguno funcional; más build/deps</td><td>Técnicamente posible, sin valor</td></tr>
+<tr><td>Forzar integración en el flujo de 2FA</td><td>Negativo (BLE, encolado, sin ganancia de seguridad)</td><td>NO viable</td></tr>
+</table>
+
+<h2>6. Recomendación</h2>
+<p>Mantener las Prácticas 5 y 6 en sus carpetas independientes (<code>practica5-watchcontrol/</code>, <code>practica6-fitsync/</code>). No tocan la autenticación, por lo que ni la mejoran ni la estropean; integrarla al proyecto principal solo añadiría ruido arquitectónico y dependencias innecesarias, sin ningún beneficio funcional ni de seguridad. Si en el futuro se desea un "lado de teléfono" nativo, debe diseñarse como app propia con un objetivo claro, no como reutilización de estas prácticas.</p>
+
+</body>
+</html>

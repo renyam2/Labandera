@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FitSync</string>
+    <string name="title">FitSync – Sincronización de actividad</string>
+    <string name="watch_connected">Reloj conectado</string>
+    <string name="watch_not_connected">Reloj no conectado</string>
+    <string name="last_result_label">Último resultado</string>
+    <string name="no_result">—</string>
+    <string name="records_count">%1$d registro(s) en el historial</string>
+    <string name="view_history">Ver historial</string>
+    <string name="history_title">Historial de actividad</string>
+    <string name="empty_history">Sin registros todavía</string>
+</resources>

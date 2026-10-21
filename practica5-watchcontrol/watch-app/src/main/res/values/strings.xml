@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WatchControl</string>
+    <string name="title">Sesión de entrenamiento</string>
+    <string name="state_label">Estado</string>
+    <string name="state_idle">Inactiva</string>
+    <string name="state_running">En curso</string>
+    <string name="state_paused">En pausa</string>
+    <string name="last_command_label">Último comando</string>
+    <string name="last_ack_label">Última respuesta</string>
+    <string name="no_command">—</string>
+    <string name="no_response">—</string>
+</resources>

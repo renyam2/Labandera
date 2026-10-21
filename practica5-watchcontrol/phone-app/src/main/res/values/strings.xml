@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WatchControl</string>
+    <string name="title">Control de sesión de entrenamiento</string>
+    <string name="start">Iniciar sesión</string>
+    <string name="pause">Pausar sesión</string>
+    <string name="stop">Finalizar sesión</string>
+    <string name="invalid">Enviar comando inválido (prueba)</string>
+    <string name="response_label">Respuesta del reloj</string>
+    <string name="watch_not_connected">Fallo: reloj no conectado</string>
+    <string name="sent_waiting">Comando %1$s enviado. Esperando confirmación…</string>
+    <string name="send_failed">Fallo al enviar: %1$s</string>
+</resources>

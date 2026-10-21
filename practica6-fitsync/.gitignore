@@ -1,0 +1,8 @@
+# Gradle / Android — artefactos de build
+.gradle/
+build/
+local.properties
+
+# IDE
+.idea/
+.kotlin/

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Práctica 6 — FitSync</title>
+<style>
+body { font-family: sans-serif; font-size: 11pt; line-height: 1.4; }
+h1 { font-size: 16pt; }
+h2 { font-size: 13pt; margin-top: 18px; }
+table { border-collapse: collapse; width: 100%; margin: 8px 0; }
+th, td { border: 1px solid #666; padding: 4px 8px; text-align: left; font-size: 10pt; }
+th { background: #e8f4fd; }
+pre { font-family: monospace; font-size: 9pt; background: #f5f5f5; padding: 8px; border: 1px solid #ccc; white-space: pre-wrap; }
+.cap { border: 1px dashed #999; height: 120px; display: flex; align-items: center; justify-content: center; color: #888; margin: 8px 0; }
+</style>
+</head>
+<body>
+
+<h1>Práctica 6 — FitSync: sincronización de actividad física entre smartwatch y dispositivo móvil</h1>
+<p><b>Objetivo:</b> implementar la comunicación entre un smartwatch (Wear OS) y un dispositivo móvil (Android) mediante la <i>Wearable Data Layer</i> (<code>MessageClient</code>) para transferir registros de actividad física simulados, validando la integridad de los datos y detectando duplicados en el receptor.</p>
+
+<h2>1. Modelo de datos (Actividad 1)</h2>
+<p>El registro se representa con la clase <code>ActivityRecord</code>, serializada en JSON (Gson) y transmitida por la ruta <code>/activity</code>:</p>
+<pre>data class ActivityRecord(
+    val id: String,            // UUID único
+    val timestamp: Long,       // epoch ms
+    val heartRate: Int,        // bpm
+    val steps: Int,
+    val durationSeconds: Int
+)</pre>
+<table>
+<tr><th>Campo</th><th>Regla de validación</th></tr>
+<tr><td>id</td><td>no vacío</td></tr>
+<tr><td>timestamp</td><td>fecha válida: no antes de 01/01/2000 y no posterior a "ahora + 5 min"</td></tr>
+<tr><td>heartRate</td><td>entre 30 y 220 bpm</td></tr>
+<tr><td>steps</td><td>≥ 0</td></tr>
+<tr><td>durationSeconds</td><td>≥ 0</td></tr>
+</table>
+<div class="cap">Captura 1 — Modelo ActivityRecord (código)</div>
+
+<h2>2. Envío desde el smartwatch (Actividad 2)</h2>
+<p>El botón "Registrar actividad" genera una medición simulada con identificador único (<code>UUID.randomUUID()</code>) y la envía al teléfono emparejado:</p>
+<pre>val record = ActivityRecord.generateSimulated()
+val json = gson.toJson(record)
+messageClient.sendMessage(peer.id, "/activity", json.toByteArray(Charsets.UTF_8))</pre>
+<p>El nodo destino se obtiene con <code>Wearable.getNodeClient(this).getConnectedNodes()</code> y se elige el nodo <code>isNearby</code> (el teléfono emparejado y encendido).</p>
+<div class="cap">Captura 2 — Código de envío (watch-app, MainActivity)</div>
+
+<h2>3. Recepción, validación y almacenamiento (Actividad 3)</h2>
+<p>El teléfono escucha la ruta literal <code>/activity</code> y aplica el pipeline: deserializar → validar → detectar duplicado → guardar:</p>
+<pre>val record = gson.fromJson(json, ActivityRecord::class.java)
+val errors = ActivityRecord.validate(record)
+if (errors.isNotEmpty()) return "INVÁLIDO: ${errors.joinToString(", ")}"
+if (repository.contains(record.id)) return "DUPLICADO: ${record.id} ya existe"
+repository.save(record)
+return "REGISTRADO: ${record.id} (HR ${record.heartRate} bpm, ${record.steps} pasos)"</pre>
+<p>La persistencia usa <code>SharedPreferences</code> ("fitsync_records") con Gson, de modo que el historial sobrevive reinicios de la app.</p>
+<div class="cap">Captura 3 — Código de recepción y validación (phone-app, MainActivity)</div>
+
+<h2>4. Historial y conectividad (Actividad 4)</h2>
+<p>La pantalla de historial (<code>HistoryActivity</code>) lista los registros válidos guardados, en orden descendente por fecha.</p>
+<p><b>Comportamiento de conectividad de DataClient:</b> la Wearable Data Layer <i>encola localmente</i> los mensajes cuando el nodo destino no está disponible y los entrega al restablecerse el enlace por Bluetooth. Por ello el envío no requiere reintentos manuales; aun así, la app verifica <code>getConnectedNodes()</code> antes de enviar para dar retroalimentación inmediata. Si no hay nodo cercano, se muestra "Teléfono no conectado" y no se envía.</p>
+<div class="cap">Captura 4 — Pantalla de historial en el teléfono</div>
+
+<h2>5. Resultados de pruebas (Actividad 5)</h2>
+<table>
+<tr><th>#</th><th>Caso</th><th>Resultado esperado</th><th>Resultado observado</th></tr>
+<tr><td>1</td><td>Registro válido</td><td>REGISTRADO + suma al historial</td><td>—</td></tr>
+<tr><td>2</td><td>Duplicado (reenvío con mismo id)</td><td>DUPLICADO, no se guarda dos veces</td><td>—</td></tr>
+<tr><td>3</td><td>Registro inválido (pasos negativos)</td><td>INVÁLIDO: pasos negativos, se descarta</td><td>—</td></tr>
+<tr><td>4</td><td>Reloj desconectado</td><td>No envía; mensaje de estado</td><td>—</td></tr>
+<tr><td>5</td><td>Historial</td><td>Lista de registros válidos</td><td>—</td></tr>
+</table>
+<div class="cap">Captura 5 — Prueba de registro válido</div>
+<div class="cap">Captura 6 — Prueba de duplicado</div>
+<div class="cap">Captura 7 — Prueba de registro inválido</div>
+
+<h2>6. Conclusión</h2>
+<p>La integridad de los datos se garantiza en el extremo receptor: el teléfono deserializa, valida contra reglas de plausibilidad (frecuencia cardíaca 30–220 bpm, pasos y duración no negativos, fecha coherente) y rechaza duplicados por <code>id</code> antes de persistir. La sincronización es unidireccional (push): el reloj genera la medición y la envía por <code>/activity</code>; la capa de datos encola el mensaje si el enlace se interrumpe y lo entrega al reconectarse, por lo que no se pierde el registro mientras el teléfono permanece vinculado. El historial local (SharedPreferences + Gson) permite auditar qué registros se aceptaron y cuáles se descartaron, cumpliendo el requisito de trazabilidad de la información sincronizada.</p>
+
+</body>
+</html>

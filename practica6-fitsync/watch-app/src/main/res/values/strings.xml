@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FitSync Watch</string>
+    <string name="title">FitSync – Registro de actividad</string>
+    <string name="phone_connected">Teléfono conectado</string>
+    <string name="phone_not_connected">Teléfono no conectado</string>
+    <string name="last_record_label">Último registro</string>
+    <string name="no_record">—</string>
+    <string name="record_format">id %1$s… · HR %2$d bpm · %3$d pasos · %4$d s</string>
+    <string name="register_activity">Registrar actividad</string>
+    <string name="resend_last">Reenviar último (prueba de duplicado)</string>
+    <string name="send_invalid">Enviar inválido (prueba)</string>
+    <string name="no_last_record">Aún no hay un registro para reenviar</string>
+    <string name="sending">Enviando %1$s…</string>
+    <string name="sent_ok">Enviado: %1$s…</string>
+    <string name="send_failed">Fallo al enviar: %1$s</string>
+</resources>
