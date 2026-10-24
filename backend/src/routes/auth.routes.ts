@@ -3,7 +3,7 @@ import { register, login, verifyTwoFactor } from '../controllers/auth.controller
 import { authLimiter, totpVerifyLimiter } from '../middlewares/rateLimit'
 import { validate } from '../middlewares/validate'
 import { registerSchema, loginSchema } from '../schemas/auth.schemas'
-import { totpCodeSchema } from '../features/twofactor/totp.schemas'
+import { verifyTwoFactorSchema } from '../features/twofactor/totp.schemas'
 import { verificarToken } from '../middlewares/auth'
 
 const router = Router()
@@ -19,7 +19,7 @@ router.post(
   '/login/verify-2fa',
   totpVerifyLimiter,
   verificarToken,
-  validate(totpCodeSchema),
+  validate(verifyTwoFactorSchema),
   verifyTwoFactor,
 )
 
