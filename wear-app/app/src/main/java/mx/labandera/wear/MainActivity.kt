@@ -112,13 +112,15 @@ class MainActivity : AppCompatActivity() {
             val provider = future.get()
             cameraProvider = provider
 
-            // Elegir una cámara que exista en este dispositivo
+            // Elegir una cámara que exista en este dispositivo.
+            // En el emulador con `-camera-front webcam0` la webcam física se
+            // expone como cámara frontal, así que se prioriza la frontal.
             val selector = try {
                 when {
-                    provider.hasCamera(CameraSelector.DEFAULT_BACK_CAMERA) ->
-                        CameraSelector.DEFAULT_BACK_CAMERA
                     provider.hasCamera(CameraSelector.DEFAULT_FRONT_CAMERA) ->
                         CameraSelector.DEFAULT_FRONT_CAMERA
+                    provider.hasCamera(CameraSelector.DEFAULT_BACK_CAMERA) ->
+                        CameraSelector.DEFAULT_BACK_CAMERA
                     else -> null
                 }
             } catch (e: Exception) {
