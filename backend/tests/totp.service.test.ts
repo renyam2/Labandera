@@ -26,8 +26,7 @@ describe('totp.service', () => {
     const secret = generateTotpSecret()
     // Genera el código "correcto" para el intervalo actual usando la misma librería.
     const { authenticator } = await import('otplib')
-    const validCode = authenticator.generate({
-      secret,
+    const validCode = authenticator.generate(secret, {
       encoding: 'decimal',
       digits: 6,
       period: 30,

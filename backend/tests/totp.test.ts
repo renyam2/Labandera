@@ -12,8 +12,7 @@ let totpSecret = ''
 let backupCodes: string[] = []
 
 const currentTotp = () =>
-  authenticator.generate({
-    secret: totpSecret,
+  authenticator.generate(totpSecret, {
     encoding: 'decimal',
     digits: 6,
     period: 30,
@@ -73,7 +72,7 @@ describe('2FA (TOTP)', () => {
       .send({ email, password })
     expect(res.status).toBe(200)
     expect(res.body.requires2fa).toBe(true)
-    expect(res.body.pendingToken).toBeType('string')
+    expect(typeof res.body.pendingToken).toBe('string')
     expect(res.body.token).toBeUndefined()
     pendingToken = res.body.pendingToken
   })
@@ -84,7 +83,7 @@ describe('2FA (TOTP)', () => {
       .set('Authorization', `Bearer ${pendingToken}`)
       .send({ code: currentTotp() })
     expect(res.status).toBe(200)
-    expect(res.body.token).toBeType('string')
+    expect(typeof res.body.token).toBe('string')
     expect(res.body.user.email).toBe(email)
   })
 
@@ -103,7 +102,7 @@ describe('2FA (TOTP)', () => {
       .set('Authorization', `Bearer ${pendingToken}`)
       .send({ code })
     expect(res.status).toBe(200)
-    expect(res.body.token).toBeType('string')
+    expect(typeof res.body.token).toBe('string')
 
     // El respaldo queda marcado como usado en la BD.
     const used = await prisma.totpBackupCode.findFirst({
