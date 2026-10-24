@@ -1,0 +1,861 @@
+--------- beginning of main
+10-22 17:54:05.321  3681  3724 I HWUI    : Davey! duration=1043ms; Flags=0, FrameTimelineVsyncId=145606, IntendedVsync=2875497114310, Vsync=2875697114302, InputEventId=0, HandleInputStart=2875698819098, AnimationStart=2875698819708, PerformTraversalsStart=2875698820008, DrawStart=2875698870388, FrameDeadline=2875930447626, FrameStartTime=2875698757777, FrameInterval=16666666, WorkloadTarget=16666666, AnimationTime=2875697114302, SyncQueued=2875698910068, SyncStart=2875900526029, IssueDrawCommandsStart=2875900551789, SwapBuffers=2876325402377, FrameCompleted=2876741736000, DequeueBufferDuration=1269, QueueBufferDuration=91190, GpuCompleted=2876741736000, SwapBuffersCompleted=2876528840890, DisplayPresentTime=0, CommandSubmissionCompleted=2876325402377, 
+10-22 17:54:05.523   509   509 I adbd    : adbd service requested 'shell,v2,TERM=xterm-256color,raw:am force-stop mx.labandera.wear'
+--------- beginning of system
+10-22 17:54:05.541   641   951 I ActivityManager: Force stopping mx.labandera.wear appid=10235 user=0: from pid 4107
+10-22 17:54:05.541   641   951 I ActivityManager: Killing 3681:mx.labandera.wear/u0a235 (adj 0): stop mx.labandera.wear due to from pid 4107
+10-22 17:54:05.542   641   951 W ActivityTaskManager: Force removing ActivityRecord{82058177 u0 mx.labandera.wear/.MainActivity t13 f}}: app died, no saved state
+10-22 17:54:05.545   641   951 V WindowManager: Defer transition id=31 for TaskFragmentTransaction=android.os.Binder@a849403
+10-22 17:54:05.546   641   951 I AppsFilter: interaction: PackageSetting{6f1c410 com.android.microdroid.empty_payload/10208} -> PackageSetting{cde1f80 mx.labandera.wear/10235} BLOCKED
+10-22 17:54:05.548   891   968 V WindowManagerShell: Transition requested (#31): android.os.BinderProxy@67e406c TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=13 effectiveUid=10235 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=mx.labandera.wear/.MainActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{mx.labandera.wear/mx.labandera.wear.MainActivity} realActivityIsAppLockEnabled=false numActivities=0 lastActiveTime=248954 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@9ca0625} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isInteractive=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=true lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 0, 0) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 31 }
+10-22 17:54:05.548   891   968 W DisconnectHandler: No disconnect change found in the transition, not handling request.
+10-22 17:54:05.549   891   968 V ShellDesktopMode: DesktopTasksController: skipping handleRequest reason=triggerTask's display doesn't support desktop mode
+10-22 17:54:05.549   641   792 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-22 17:54:05.549   641   792 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-22 17:54:05.549   641   792 D InetDiagMessage: Destroyed live tcp sockets for uids={10235} in 1ms
+10-22 17:54:05.550   641   792 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-22 17:54:05.550   641   792 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-22 17:54:05.550   641   792 D InetDiagMessage: Destroyed live tcp sockets for uids={20235} in 0ms
+10-22 17:54:05.550   577  3666 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-22 17:54:05.550   577  3666 D Camera2ClientBase: Camera 10: Shutting down
+10-22 17:54:05.736   499   499 I SurfaceFlinger: Display 4619827259835644672 policy changed
+10-22 17:54:05.736   499   499 I SurfaceFlinger: Previous: {defaultModeId=0, allowGroupSwitching=false, primaryRanges={physical=[30.00 Hz, inf Hz], render=[30.00 Hz, 60.00 Hz]}, appRequestRanges={physical=[30.00 Hz, inf Hz], render=[30.00 Hz, 60.00 Hz]} idleScreenConfig=nullptr}
+10-22 17:54:05.736   499   499 I SurfaceFlinger: Current:  DisplayManagerPolicy{defaultModeId=0, allowGroupSwitching=false, primaryRanges={physical=[0.00 Hz, inf Hz], render=[0.00 Hz, 60.00 Hz]}, appRequestRanges={physical=[0.00 Hz, inf Hz], render=[0.00 Hz, inf Hz]} idleScreenConfig=nullptr}
+10-22 17:54:05.736   499   499 I SurfaceFlinger: 0 mode changes were performed under the previous policy
+10-22 17:54:05.736   499   556 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-22 17:54:05.736   499   499 D SurfaceFlinger: setDesiredMode 4619827259835644672 {mode={fps=60.00 Hz, modePtr={id=0, vsyncRate=60.00 Hz, peakRefreshRate=60.00 Hz}}, emitEvent=true, force=false}
+10-22 17:54:05.736  1021  1021 D BaseActivity: Launcher flags updated: [state_started] +[state_started]
+10-22 17:54:05.736  1021  1021 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_user_active] +[state_resumed|state_user_active]
+10-22 17:54:05.736  1021  1021 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_user_active] +[]
+10-22 17:54:05.736  1021  1021 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_user_active] +[state_deferred_resumed]
+10-22 17:54:05.737  1021  1021 D StatsLog: LAUNCHER_ONRESUME
+10-22 17:54:05.737  1021  1087 D QuickstepModelDelegate: notifyAppTargetEvent action=1 launchLocation=workspace/0/[-1,-1]/[1,1]
+10-22 17:54:05.737   641  1922 V WindowManager: Continue transition id=31 for TaskFragmentTransaction=android.os.Binder@a849403
+10-22 17:54:05.738  1021  1021 D SmartspaceInteractor: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=6}
+10-22 17:54:05.738   499   556 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-22 17:54:05.738   641   655 D WindowManager: setClientSurface Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#138)/@0x8ba807b for 48f42a9 com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity
+10-22 17:54:05.739   891   968 V RecentTasksController: Notify recent tasks changed
+10-22 17:54:05.739  1021  1021 I Surface : Creating surface for consumer unnamed-1021-14 with slotExpansion=1 for 64 slots
+10-22 17:54:05.739  1557  1695 I AiAiEcho: Predicting[0]:  [CONTEXT sampling_count=5 ]
+10-22 17:54:05.739   577  3666 E libbinder.IPCThreadState: Binder transaction failure. id: 479426, cmd: BR_FROZEN_REPLY (29202), error: 0 (Success)
+10-22 17:54:05.739   577  3666 E cameraserver: getConsumerName failed to transact: -2147483646
+10-22 17:54:05.739  1557  1695 I AiAiEcho: EchoTargets: 
+10-22 17:54:05.739  1557  1695 I AiAiEcho: Filtered by AiAi flag check: 
+10-22 17:54:05.739  1557  1695 I AiAiEcho: [CONTEXT ratelimit_period="10 SECONDS" ]
+10-22 17:54:05.739  1021  1021 I Surface : Creating surface for consumer VRI[NexusLauncherActivity]#4(BLAST Consumer)4 with slotExpansion=1 for 64 slots
+10-22 17:54:05.739  1557  1695 I AiAiEcho: #remoteViewsTwiddler: feature disabled.
+10-22 17:54:05.739   891   968 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=true, height=173
+10-22 17:54:05.739  1557  1695 I AiAiEcho: #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+10-22 17:54:05.740  1021  1021 D ShortcutAndWidgetContainer: appWidgetScale - [x,y]: [1.0,1.0]
+10-22 17:54:05.740  1021  1021 D NavigableAppWidgetHostView: updateScale - [fitScale,bounceScale]: [1.0,1.0]
+10-22 17:54:05.740  1021  1021 D SsBaseTemplateCard: Date view text is empty
+10-22 17:54:05.740  1021  1021 D SsBaseTemplateCard: Passed-in item info is null
+10-22 17:54:05.740  1021  1021 D SsBaseTemplateCard: Passed-in item info is null
+10-22 17:54:05.740  1021  1021 D SsBaseTemplateCard: Passed-in item info is null
+10-22 17:54:05.740  1021  1021 D SsBaseTemplateCard: Passed-in item info is null
+10-22 17:54:05.740  1021  1021 I SsBaseTemplateCard: Secondary card pane is null
+10-22 17:54:05.740   577  3666 E libbinder.IPCThreadState: Binder transaction failure. id: 479486, cmd: BR_FROZEN_REPLY (29202), error: 0 (Success)
+10-22 17:54:05.740   577  3666 E cameraserver: getConsumerName failed to transact: -2147483646
+10-22 17:54:05.741  1021  1021 D SmartspaceInteractor: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=SmartspaceTarget{mSmartspaceTargetId='date_card_794317_92634', mHeaderAction=null, mBaseAction=null, mCreationTimeMillis=0, mExpiryTimeMillis=0, mScore=0.0, mActionChips=[], mIconGrid=[], mFeatureType=1, mSensitive=false, mShouldShowExpanded=false, mSourceNotificationKey='null', mComponentName=ComponentInfo{com.google.android.apps.nexuslauncher/a9.x}, mUserHandle=UserHandle{0}, mAssociatedSmartspaceTargetId='null', mSliceUri=null, mWidget=null, mTemplateData=BaseTemplateData{mTemplateType=1, mPrimaryItem=null, mSubtitleItem=null, mSubtitleSupplementalItem=null, mSupplementalLineItem=null, mSupplementalAlarmItem=null, mLayoutWeight=0}, mRemoteViews=null}, mSmartspaceActionId='null', mEventType=3}
+10-22 17:54:05.741  1021  1021 D SmartspaceInteractor: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=SmartspaceTarget{mSmartspaceTargetId='date_card_794317_92634', mHeaderAction=null, mBaseAction=null, mCreationTimeMillis=0, mExpiryTimeMillis=0, mScore=0.0, mActionChips=[], mIconGrid=[], mFeatureType=1, mSensitive=false, mShouldShowExpanded=false, mSourceNotificationKey='null', mComponentName=ComponentInfo{com.google.android.apps.nexuslauncher/a9.x}, mUserHandle=UserHandle{0}, mAssociatedSmartspaceTargetId='null', mSliceUri=null, mWidget=null, mTemplateData=BaseTemplateData{mTemplateType=1, mPrimaryItem=null, mSubtitleItem=null, mSubtitleSupplementalItem=null, mSupplementalLineItem=null, mSupplementalAlarmItem=null, mLayoutWeight=0}, mRemoteViews=null}, mSmartspaceActionId='null', mEventType=2}
+10-22 17:54:05.741  1021  1021 D BaseDepthController: setSurface:
+10-22 17:54:05.741  1021  1021 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-22 17:54:05.741  1021  1021 D BaseDepthController: 	mBaseSurface: Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#138)/@0x36eb310
+10-22 17:54:05.741  1021  1021 V BaseDepthController: Applying blur: 0 to Surface(name=VRI-com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#138)/@0x36eb310 applyImmediately: false
+10-22 17:54:05.741  1021  1021 D BaseDepthController: shouldBlurWorkspace: false targetState: Normal currentStableState: Normal mCurrentBlur: 0 mLauncher.getDepthBlurTargets(): [com.android.launcher3.Workspace{f114e09 V.ED..... ......ID 0,0-320,640 #7f0a0486 app:id/workspace}, com.android.launcher3.Hotseat{41b280e V.ED..... ......ID 0,467-320,640 #7f0a01f6 app:id/hotseat}]
+10-22 17:54:05.742   891  1432 D WallpaperService: onVisibilityChanged(true): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@3329253
+10-22 17:54:05.745   641   720 D ActivityManager: sync unfroze 1661 com.google.android.apps.photos for 6
+10-22 17:54:05.747   509   509 I adbd    : Remote process closed the socket (on MSG_PEEK)
+10-22 17:54:05.747   641   951 W AppOps  : Operation not started: uid=10235 pkg=mx.labandera.wear(null) op=CAMERA
+10-22 17:54:05.748   641   671 I libprocessgroup: Removed cgroup /sys/fs/cgroup/apps/uid_10235/pid_3681
+10-22 17:54:05.748   435   435 I Zygote  : Process 3681 exited due to signal 9 (Killed)
+10-22 17:54:05.749   641  1163 I WindowManager: WIN DEATH: Window{3f4306f u0 mx.labandera.wear/mx.labandera.wear.MainActivity}
+10-22 17:54:05.749   641  1892 I ImeTracker: mx.labandera.wear:a8c4881d: onRequestHide at ORIGIN_SERVER reason HIDE_REMOVE_CLIENT fromUser false userId 0 displayId 0
+10-22 17:54:05.749   641  1892 I ImeTracker: mx.labandera.wear:a8c4881d: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-22 17:54:05.749   641  1817 V ActivityManager: Got obituary of 3681:mx.labandera.wear
+10-22 17:54:05.749  1784  1784 W InputChannel-JNI: Channel already disposed.
+10-22 17:54:05.748   577  2199 I CameraService: binderDied: A camera client has died, removing it from the list of active clients
+10-22 17:54:05.749   641   663 W ActivityManager: setHasOverlayUi called on unknown pid: 3681
+10-22 17:54:05.750  1011  1011 D CarrierSvcBindHelper: onHandleForceStop: [mx.labandera.wear]
+10-22 17:54:05.751   577  2316 E libbinder.IPCThreadState: Binder transaction failure. id: 479562, cmd: BR_DEAD_REPLY (29189), error: -3 (No such process)
+10-22 17:54:05.752   577  2316 E libbinder.IPCThreadState: Binder transaction failure. id: 479588, cmd: BR_DEAD_REPLY (29189), error: -22 (Invalid argument)
+10-22 17:54:05.752   577  2316 E Surface : [ImageReader-640x480f23m4-3681-0](id:e6100000001) queueBuffer: error queuing buffer, -32
+10-22 17:54:05.752   577  2316 E Camera3-OutputStream: returnBufferCheckedLocked: Stream 1: Error queueing buffer to native window: Broken pipe (-32)
+10-22 17:54:05.752   577  3718 E Camera3-OutputStream: getBufferLockedCommon: Stream 1: Can't dequeue next output buffer: Broken pipe (-32)
+10-22 17:54:05.752   577  2316 E libbinder.IPCThreadState: Binder transaction failure. id: 479594, cmd: BR_DEAD_REPLY (29189), error: -22 (Invalid argument)
+10-22 17:54:05.752   577  2316 E Surface : [996719a SurfaceView[mx.labandera.wear/mx.labandera.wear.MainActivity]#1(BLAST Consumer)1](id:e6100000003) queueBuffer: error queuing buffer, -32
+10-22 17:54:05.752   577  2316 E Camera3-OutputStream: returnBufferCheckedLocked: Stream 0: Error queueing buffer to native window: Broken pipe (-32)
+10-22 17:54:05.752  1011  1011 D CarrierSvcBindHelper: No carrier app for: 0
+10-22 17:54:05.753   577  3717 I CameraService: Stop camera streaming for mx.labandera.wear (PID 0, UID 10235)
+10-22 17:54:05.753   577  3666 I CameraLatencyHistogram: ProcessCaptureRequest latency histogram (6315) samples:
+10-22 17:54:05.753   577  3666 I CameraLatencyHistogram:        40     80    120    160    200    240    280    320    360    inf (max ms)
+10-22 17:54:05.753   577  3666 I CameraLatencyHistogram:      89.36   0.05   0.06   0.03   0.08   10.15   0.00   0.00   0.00   0.27 (%)
+10-22 17:54:05.753   641   641 W ProcessStats: Tracking association SourceState{de29564 system/1000 ImpBg #1957} whose proc state 6 is better than process ProcessState{c3b2dd7 com.google.android.apps.photos/10175 pkg=com.google.android.apps.photos} proc state 14 (4 skipped)
+10-22 17:54:05.753  1021  1021 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-22 17:54:05.753   641  1799 W AppOps  : Operation not started: uid=10235 pkg=mx.labandera.wear(null) op=CAMERA
+10-22 17:54:05.756   891   917 V WindowManagerShell: onTransitionReady(transaction=2753074038020)
+10-22 17:54:05.756   891   968 V WindowManagerShell: onTransitionReady (#31) android.os.BinderProxy@67e406c: {id=31 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-22 17:54:05.756   891   968 V WindowManagerShell:         {m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#35)/@0x47c7af6 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},
+10-22 17:54:05.756   891   968 V WindowManagerShell:         {m=CLOSE f=FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=13#117)/@0x6bb7ef7 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},
+10-22 17:54:05.756   891   968 V WindowManagerShell:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1b008ad}#56)/@0x88e8164 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0}
+10-22 17:54:05.756   891   968 V WindowManagerShell:     ]}
+10-22 17:54:05.758   891   968 V WindowManagerShell: Playing animation for (#31) android.os.BinderProxy@67e406c@0
+10-22 17:54:05.758   891   968 D ShellSplitScreen: startAnimation: transition=31 isSplitActive=false
+10-22 17:54:05.758   891   968 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-22 17:54:05.758   891   968 V ShellDesktopMode: DesktopMixedTransitionHandler: No pending desktop transition
+10-22 17:54:05.758   891   968 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=31 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#35)/@0x47c7af6 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},{m=CLOSE f=FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=13#117)/@0x6bb7ef7 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1b008ad}#56)/@0x88e8164 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0}]}
+10-22 17:54:05.758   891   968 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@96d5082 windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@89f1393, appThread = android.app.IApplicationThread$Stub$Proxy@a644fd0, debugName = overlayBackTransition, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@96d5082 windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-22 17:54:05.758   891   968 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@7e78bc9, appThread = android.app.IApplicationThread$Stub$Proxy@a3f2ce, debugName = LauncherToDream, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-22 17:54:05.758   891   968 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@31d55ef, appThread = android.app.IApplicationThread$Stub$Proxy@98698fc, debugName = QuickstepDisplayMove, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} }}
+10-22 17:54:05.758   891   968 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fd41b85, appThread = android.app.IApplicationThread$Stub$Proxy@b906dda, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-22 17:54:05.758   891   968 D RemoteTransitionHandler: Found filterPair{{types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fd41b85, appThread = android.app.IApplicationThread$Stub$Proxy@b906dda, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-22 17:54:05.758   891   968 V WindowManagerShell:  Delegate animation for (#31) to RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fd41b85, appThread = android.app.IApplicationThread$Stub$Proxy@b906dda, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }
+10-22 17:54:05.761  1021  1021 D ShortcutAndWidgetContainer: appWidgetScale - [x,y]: [1.0,1.0]
+10-22 17:54:05.761  1021  1021 D NavigableAppWidgetHostView: updateScale - [fitScale,bounceScale]: [1.0,1.0]
+10-22 17:54:05.762  1021  1021 D SsBaseTemplateCard: Passed-in item info is null
+10-22 17:54:05.762  1021  1021 D SsBaseTemplateCard: Passed-in item info is null
+10-22 17:54:05.762  1021  1021 D SsBaseTemplateCard: Passed-in item info is null
+10-22 17:54:05.762  1021  1021 D SsBaseTemplateCard: Passed-in item info is null
+10-22 17:54:05.762  1021  1021 I SsBaseTemplateCard: Secondary card pane is null
+10-22 17:54:05.763   499   530 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-22 17:54:05.763   499   530 W skia    : AGTM parsing failed flags.readFromStream(s) at 159
+10-22 17:54:05.764   577  3666 E Surface : [996719a SurfaceView[mx.labandera.wear/mx.labandera.wear.MainActivity]#1(BLAST Consumer)1](id:e6100000003) Surface failed to disconnect. Cleaning up internals anyway. Error -32 (DEAD_OBJECT).
+10-22 17:54:05.764   577  3666 W Camera3-OutputStream: disconnectLocked: While disconnecting stream 0 from native window, the native window died from under us
+10-22 17:54:05.764   577  3666 I CameraLatencyHistogram: Stream 0 dequeueBuffer latency histogram (6315) samples:
+10-22 17:54:05.764   577  3666 I CameraLatencyHistogram:         5     10     15     20     25     30     35     40     45    inf (max ms)
+10-22 17:54:05.764   577  3666 I CameraLatencyHistogram:      75.88   1.27   0.51   0.14   0.02   0.03   0.00   0.05   0.03   22.07 (%)
+10-22 17:54:05.764   641   660 V WindowManager: Sent Transition (#31) createdAt=10-22 17:54:05.542 via request=TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=13 effectiveUid=10235 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=mx.labandera.wear/.MainActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{mx.labandera.wear/mx.labandera.wear.MainActivity} realActivityIsAppLockEnabled=false numActivities=0 lastActiveTime=248954 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{e143e8f Task{ddacf66 #13 type=standard A=10235:mx.labandera.wear}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isInteractive=true isVisible=true isVisibleRequested=true isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=true lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= false isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 0, 0) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 31 }
+10-22 17:54:05.764   641   660 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+10-22 17:54:05.764   577  3666 E Surface : [ImageReader-640x480f23m4-3681-0](id:e6100000001) Surface failed to disconnect. Cleaning up internals anyway. Error -32 (DEAD_OBJECT).
+10-22 17:54:05.764   641   660 V WindowManager:     info={id=31 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-22 17:54:05.764   641   660 V WindowManager:         {WCT{RemoteToken{cfc4e2f Task{b5b4030 #1 type=home}}} m=TO_FRONT f=SHOW_WALLPAPER|MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#35)/@0x5f38ca4 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},
+10-22 17:54:05.764   641   660 V WindowManager:         {WCT{RemoteToken{e143e8f Task{ddacf66 #13 type=standard A=10235:mx.labandera.wear}}} m=CLOSE f=FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=13#117)/@0xc17db69 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},
+10-22 17:54:05.764   641   660 V WindowManager:         {m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1b008ad}#56)/@0x22caf37 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0}
+10-22 17:54:05.764   641   660 V WindowManager:     ]}
+10-22 17:54:05.765   577  3666 W Camera3-OutputStream: disconnectLocked: While disconnecting stream 1 from native window, the native window died from under us
+10-22 17:54:05.765   577  3666 I CameraLatencyHistogram: Stream 1 dequeueBuffer latency histogram (6316) samples:
+10-22 17:54:05.765   577  3666 I CameraLatencyHistogram:         5     10     15     20     25     30     35     40     45    inf (max ms)
+10-22 17:54:05.765   577  3666 I CameraLatencyHistogram:      90.31   0.16   0.28   0.02   0.00   0.00   0.03   0.00   0.00   9.20 (%)
+10-22 17:54:05.765   577  3666 I CameraService: disconnect: Disconnected client for camera 10 for PID 0
+10-22 17:54:05.765   641  1799 W ActivityTaskManager: setRunningRemoteTransition: no process for null
+10-22 17:54:05.765   891   968 V WindowManagerShell:  animated by com.android.wm.shell.transition.RemoteTransitionHandler@5286e84
+10-22 17:54:05.765   577  2199 D Camera2ClientBase: Camera 10: Shutting down
+10-22 17:54:05.765   577  2199 E CameraServiceProxyWrapper: logClose: SessionStatsMap should contain camera 10 before it's closed
+10-22 17:54:05.766   641   641 V WindowManager: AppCompatCamera: Camera 10 is closed.
+10-22 17:54:05.766  1021  1021 D LauncherStateManager: StateManager.cancelAnimation: animation ongoing: false, partial trace:
+10-22 17:54:05.766  1021  1021 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.setCurrentAnimation(go/retraceme 9bf9d747b28c192bd799fb0161a08498ac2b938f666e7966c0095b4da2c9b843:59)
+10-22 17:54:05.766  1021  1021 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 9bf9d747b28c192bd799fb0161a08498ac2b938f666e7966c0095b4da2c9b843:712)
+10-22 17:54:05.766  1021  1021 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager$WallpaperOpenLauncherAnimationRunner.onAnimationStart(go/retraceme 9bf9d747b28c192bd799fb0161a08498ac2b938f666e7966c0095b4da2c9b843:135)
+10-22 17:54:05.766  1021  1021 D LauncherStateManager: StateManager.createAtomicAnimation: fromState: Normal, toState: Normal, partial trace:
+10-22 17:54:05.766  1021  1021 D LauncherStateManager: 	at com.android.quickstep.util.WorkspaceRevealAnim.prepareToAnimate(go/retraceme 9bf9d747b28c192bd799fb0161a08498ac2b938f666e7966c0095b4da2c9b843:19)
+10-22 17:54:05.766  1021  1021 D LauncherStateManager: 	at com.android.quickstep.util.WorkspaceRevealAnim.<init>(go/retraceme 9bf9d747b28c192bd799fb0161a08498ac2b938f666e7966c0095b4da2c9b843:10)
+10-22 17:54:05.766  1021  1021 D LauncherStateManager: 	at com.android.launcher3.QuickstepTransitionManager.createWallpaperOpenAnimations(go/retraceme 9bf9d747b28c192bd799fb0161a08498ac2b938f666e7966c0095b4da2c9b843:753)
+10-22 17:54:05.766  1021  1021 D AllAppsTransitionController: shouldProtectHeader: false skipScrim: true state: Normal stateManager.getState(): Normal
+10-22 17:54:05.766  1021  1021 D KeyboardInsetsHandler: removePendingImeController: pendingImeController=null
+10-22 17:54:05.767  1021  1021 D b/311077782: LauncherAnimationRunner.setAnimation
+10-22 17:54:05.778  1021  1021 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused|state_user_active] +[state_window_focused]
+10-22 17:54:05.778   641   748 I ImeTracker: com.google.android.apps.nexuslauncher:3ebd839f: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false userId 0 displayId 0
+10-22 17:54:05.778  1021  1021 D InsetsController: hide(ime())
+10-22 17:54:05.778  1021  1021 I ImeTracker: com.google.android.apps.nexuslauncher:3ebd839f: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-22 17:54:05.779   641   748 W InputChannel-JNI: Channel already disposed.
+10-22 17:54:05.779  1784  1784 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2259 
+10-22 17:54:05.779   641  1799 I ImeTracker: system_server:fc00e03b: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-22 17:54:05.779  1784  1784 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():103 repeatCheckTimes = 0, locked = false
+10-22 17:54:05.779   641   663 I ImeTracker: system_server:fc00e03b: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-22 17:54:05.779  1784  1784 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1446 onStartInput(EditorInfo{EditorInfo{packageName=com.google.android.apps.nexuslauncher, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+10-22 17:54:05.779  1784  1784 W AndroidIME: LatinIMEBase.updateInputViewCoverNavigation():327 Null input view, cannot update padding!
+10-22 17:54:05.780  1784  1784 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():103 repeatCheckTimes = 1, locked = false
+10-22 17:54:05.780   641  1799 W PackageConfigPersister: App-specific configuration not found for packageName: com.google.android.apps.nexuslauncher and userId: 0
+10-22 17:54:05.858  1011  1207 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-22 17:54:05.858  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-22 17:54:05.858  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:05.858  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:05.858  1011  1207 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-22 17:54:05.859  1011  1207 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-22 17:54:05.859  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-22 17:54:05.859  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:05.859  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:05.859  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-22 17:54:05.859  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-22 17:54:05.859  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:05.859  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:05.859  1011  1207 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-22 17:54:05.861  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-22 17:54:05.861  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:05.861  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:05.861  1011  1207 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-22 17:54:05.861  1011  1207 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-22 17:54:05.861  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-22 17:54:05.861  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:05.862  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:05.862  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-22 17:54:05.862  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-22 17:54:05.862  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:05.862  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:05.862  1011  1207 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-22 17:54:06.050   577  4113 I CameraService: Camera 10: Access for "mx.labandera.wear" has been restricted, isUidTrusted 0, isUidActive 0 isUidVisible 0, isCameraPrivacyEnabled 0 procState 20
+10-22 17:54:06.142  1021  1021 D WorkspaceRevealAnim: onAnimationEnd: workspace alpha = 1.0
+10-22 17:54:06.143   891   917 V WindowManagerShell: Received remote transition finished callback for (#31)
+10-22 17:54:06.143   891   968 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#31) android.os.BinderProxy@67e406c@0
+10-22 17:54:06.144   641   660 V WindowManager: Finish Transition (#31): created at 10-22 17:54:05.542 collect-started=0.013ms request-sent=0.05ms started=6.602ms ready=195.347ms sent=212.577ms commit=21.077ms finished=601.516ms
+10-22 17:54:06.144   641  2081 E libbinder.IPCThreadState: Binder transaction failure. id: 480209, cmd: BR_DEAD_REPLY (29189), error: -22 (Invalid argument)
+10-22 17:54:06.144   641  2081 W ActivityManager: pid 641 system sent binder code 7 with flags 1 and got error -32
+10-22 17:54:06.144   641  2081 W WindowManager: Exception thrown during dispatchAppVisibility Window{3f4306f u0 mx.labandera.wear/mx.labandera.wear.MainActivity EXITING}
+10-22 17:54:06.144   641  2081 W WindowManager: android.os.DeadObjectException
+10-22 17:54:06.144   641  2081 W WindowManager: 	at android.os.BinderProxy.transactNative(Native Method)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at android.os.BinderProxy.transact(BinderProxy.java:626)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at android.view.IWindow$Stub$Proxy.dispatchAppVisibility(IWindow.java:602)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3388)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1245)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at com.android.server.wm.WindowToken.setClientVisible(WindowToken.java:392)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5654)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at com.android.server.wm.Transition.finishTransition(Transition.java:1629)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at com.android.server.wm.TransitionController.finishTransition(TransitionController.java:1220)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.finishTransition(WindowOrganizerController.java:533)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at android.window.IWindowOrganizerController$Stub.onTransact(IWindowOrganizerController.java:265)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at com.android.server.wm.WindowOrganizerController.onTransact(WindowOrganizerController.java:239)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at android.os.Binder.execTransactInternal(Binder.java:1369)
+10-22 17:54:06.144   641  2081 W WindowManager: 	at android.os.Binder.execTransact(Binder.java:1323)
+10-22 17:54:06.144   641  2081 W Process : Unable to open /proc/3681/status
+10-22 17:54:06.146   891   968 V WindowManagerShell: Track 0 became idle
+10-22 17:54:06.146   891   968 V WindowManagerShell: All active transition animations finished
+10-22 17:54:06.146  1021  1021 D RecentsView: onTaskRemoved: 13, not handling task stack changes
+10-22 17:54:06.146  1021  1021 D RecentsView: onTaskRemoved: 13, not handling task stack changes
+10-22 17:54:06.147   641   869 I Surface : Creating surface for consumer unnamed-641-1 with slotExpansion=1 for 64 slots
+10-22 17:54:06.147   641   869 I Surface : Creating surface for consumer ImageReader-256x512f1m1-641-1 with slotExpansion=1 for 64 slots
+10-22 17:54:06.147   641   869 W ImageReader_JNI: Unable to acquire a buffer item, very likely client tried to acquire more than maxImages buffers
+10-22 17:54:06.147   641   869 E ConsumerBase: [ImageReader-256x512f1m1-641-1] abandonLocked: ConsumerBase is abandoned!
+10-22 17:54:06.159   891   968 V ShellTaskOrganizer: Task vanished taskId=13
+10-22 17:54:06.159   891   968 V ShellTaskOrganizer: Fullscreen Task Vanished: #13
+10-22 17:54:06.159   891   968 V ShellDesktopMode: Task Vanished: #13 closed=true
+10-22 17:54:06.159   891   968 D ShellPackageUpdate: PackageUpdateController: Removing handlePackageUpdate for task: 13
+10-22 17:54:06.159   641  1799 E WindowOrganizerController: Attempting to externally change a non-organized container: Task{ddacf66 #13 type=standard A=10235:mx.labandera.wear}={handlePackageUpdate:false,} playercount=2 taskorg=android.window.ITaskOrganizer$Stub$Proxy@94440f2
+10-22 17:54:06.160   891   968 V RecentTasksController: Notify recent tasks changed
+10-22 17:54:06.160   891   968 D ShellDesktopMode: AppToWebRepository: Task 13 is vanishing. Removing task data from repository
+10-22 17:54:06.160  1021  1021 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-22 17:54:06.160   891   968 V AppCompat: SingleSurfaceLetterboxController: []
+10-22 17:54:06.160   891   968 V AppCompat: MultiSurfaceLetterboxController: []
+10-22 17:54:06.160   891   968 V AppCompat: LetterboxInputController: []
+10-22 17:54:06.160   891   968 V AppCompat: RoundedCornersLetterboxController: {}
+10-22 17:54:06.192   499   499 E BpTransactionCompletedListener: Failed to transact (-32)
+10-22 17:54:06.192   499   499 E BpTransactionCompletedListener: Failed to transact (-32)
+10-22 17:54:06.203  1021  1021 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_COMPOSER, vsyncId: 145799, totalDuration: 2830100, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-22 17:54:06.203  1021  1021 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 145815, totalDuration: 2676252, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-22 17:54:06.203  1021  1021 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 145920, totalDuration: 1759521, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-22 17:54:06.203  1021  1021 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 145935, totalDuration: 1870387, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-22 17:54:06.203  1021  1021 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 145950, totalDuration: 1855133, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-22 17:54:06.203  1021  1021 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 145980, totalDuration: 1889454, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-22 17:54:06.203  1021  1021 W FrameTracker: Missed SF frame:jankTypeLegacy: JANK_COMPOSER, jankTypeExperimental: JANK_NONE, vsyncId: 146039, totalDuration: 1650901, CUJ=J<LAUNCHER_APP_CLOSE_TO_HOME_FALLBACK>
+10-22 17:54:06.587   641   786 D WifiConfigStore: Writing to stores completed in 1 ms.
+10-22 17:54:06.750   509   509 I adbd    : adbd service requested 'shell,v2,TERM=xterm-256color,raw:monkey -p mx.labandera.wear -c android.intent.category.LAUNCHER 1'
+10-22 17:54:06.792  4117  4117 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 2000 <<<<<<
+10-22 17:54:06.794  4117  4117 I AndroidRuntime: Using default boot image
+10-22 17:54:06.794  4117  4117 I AndroidRuntime: Leaving lock profiling enabled
+10-22 17:54:06.795  4117  4117 I app_process: Core platform API enforcement enabled from the hiddenapi_platform_enforcement flag and the device API level
+10-22 17:54:06.795  4117  4117 I app_process: Using generational CollectorTypeCMC GC.
+10-22 17:54:06.825  4117  4117 D nativeloader: InitDefaultPublicLibraries for_preload=1: libandroid.so:libaaudio.so:libamidi.so:libbinder_ndk.so:libc.so:libcamera2ndk.so:libdl.so:libEGL.so:libGLESv1_CM.so:libGLESv2.so:libGLESv3.so:libicu.so:libicui18n.so:libicuuc.so:libjnigraphics.so:liblog.so:libmediandk.so:libm.so:libnativehelper.so:libnativewindow.so:libOpenMAXAL.so:libOpenSLES.so:libRS.so:libstdc++.so:libsync.so:libvulkan.so:libwebviewchromium_plat_support.so:libz.so
+10-22 17:54:06.830  4117  4117 D nativeloader: Load libicu_jni.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+10-22 17:54:06.830  4117  4117 D app_process: u_setTimeZoneFilesDirectory("/apex/com.android.tzdata/etc/tz/versioned/10/icu") succeeded. 
+10-22 17:54:06.830  4117  4117 D app_process: I18n APEX ICU file found: /apex/com.android.i18n/etc/icu/icudt78l.dat
+10-22 17:54:06.830  4117  4117 D nativeloader: Load libjavacore.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+10-22 17:54:06.831  4117  4117 D nativeloader: Load libopenjdk.so using APEX ns com_android_art for caller /apex/com.android.art/javalib/core-oj.jar: ok
+10-22 17:54:06.831  4117  4117 I app_process: Priority-to-niceness mapping: 19, 16, 13, 10, 0, -2, -4, -5, -6, -8
+10-22 17:54:06.831  4117  4117 W app_process: Unexpected CPU variant for x86: x86_64.
+10-22 17:54:06.831  4117  4117 W app_process: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, pantherlake, default
+10-22 17:54:06.842  4117  4117 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-22 17:54:06.842  4117  4117 D AndroidRuntime: Calling main entry com.android.commands.monkey.Monkey
+10-22 17:54:06.842  4117  4117 D nativeloader: Load /system/lib64/libmonkey_jni.so using ns default for caller /system/framework/monkey.jar in same partition (is_bridged=0): ok
+10-22 17:54:06.842  4117  4117 W Monkey  : args: [-p, mx.labandera.wear, -c, android.intent.category.LAUNCHER, 1]
+10-22 17:54:06.843  4117  4117 I AconfigPackage: android.media.swcodec.flags is mapped to com.android.media.swcodec
+10-22 17:54:06.843  4117  4117 I AconfigPackage: com.android.permission.flags is mapped to com.android.permission
+10-22 17:54:06.843  4117  4117 I AconfigPackage: com.android.permissioncontroller.flags is mapped to com.android.permission
+10-22 17:54:06.843  4117  4117 I AconfigPackage: com.google.android.widevine.flags is mapped to com.google.android.widevine
+10-22 17:54:06.843  4117  4117 I AconfigPackage: com.android.icu is mapped to com.android.i18n
+10-22 17:54:06.843  4117  4117 I AconfigPackage: com.android.appsearch.flags is mapped to com.android.appsearch
+10-22 17:54:06.843  4117  4117 I AconfigPackage: com.android.uprobestats.flags is mapped to com.android.uprobestats
+10-22 17:54:06.843  4117  4117 I AconfigPackage: android.uprobestats.mainline.flags is mapped to com.android.uprobestats
+10-22 17:54:06.843  4117  4117 I AconfigPackage: com.android.crashrecovery.flags is mapped to com.android.crashrecovery
+10-22 17:54:06.844  4117  4117 I AconfigPackage: android.provider.flags is mapped to com.android.configinfrastructure
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.server.deviceconfig is mapped to com.android.configinfrastructure
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.compos.flags is mapped to com.android.compos
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.art.flags is mapped to com.android.art
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.art.rw.flags is mapped to com.android.art
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.libcore is mapped to com.android.art
+10-22 17:54:06.844  4117  4117 I AconfigPackage: android.telecom.flags is mapped to com.android.telephonycore
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.internal.telecom.flags is mapped to com.android.telephonycore
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.telephony.flags is mapped to com.android.telephonycore
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.media.extractor.flags is mapped to com.android.media
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.media.metrics.flags is mapped to com.android.media
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.media.mainline.flags is mapped to com.android.media
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.wifi.flags is mapped to com.android.wifi
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.org.conscrypt.flags is mapped to com.android.conscrypt
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.org.conscrypt.net.flags is mapped to com.android.conscrypt
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.healthfitness.flags is mapped to com.android.healthfitness
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.ipsec.flags is mapped to com.android.ipsec
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.nfc.module.flags is mapped to com.android.nfcservices
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.nfc.module.nonexported.flags is mapped to com.android.nfcservices
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.adservices.ondevicepersonalization.flags is mapped to com.android.ondevicepersonalization
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.adbd.flags is mapped to com.android.adbd
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.bluetooth.beta.flags is mapped to com.android.bt
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.bluetooth.flags is mapped to com.android.bt
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.devicelock.flags is mapped to com.android.devicelock
+10-22 17:54:06.844  4117  4117 I AconfigPackage: android.os.profiling is mapped to com.android.profiling
+10-22 17:54:06.844  4117  4117 I AconfigPackage: android.os.profiling.anomaly.flags is mapped to com.android.profiling
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.os.statsd.flags is mapped to com.android.os.statsd
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.webapp.flags is mapped to com.android.webapp
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.rkpd.flags is mapped to com.android.rkpd
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.cellbroadcastreceiver.flags is mapped to com.android.cellbroadcast
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.adservices.flags is mapped to com.android.adservices
+10-22 17:54:06.844  4117  4117 I AconfigPackage: com.android.sdksandbox.flags is mapped to com.android.adservices
+10-22 17:54:06.844  4117  4117 I AconfigPackage: android.app.sdksandbox.flags is mapped to com.android.adservices
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.uwb.flags is mapped to com.android.uwb
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.ranging.flags is mapped to com.android.uwb
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.npumanager is mapped to com.android.npumanager
+10-22 17:54:06.845  4117  4117 I AconfigPackage: android.graphics.pdf.flags is mapped to com.android.mediaprovider
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.providers.media.flags is mapped to com.android.mediaprovider
+10-22 17:54:06.845  4117  4117 I AconfigPackage: android.graphics.pdf.flags.readonly is mapped to com.android.mediaprovider
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.tethering.mainline.beta is mapped to com.android.tethering
+10-22 17:54:06.845  4117  4117 I AconfigPackage: android.net.http is mapped to com.android.tethering
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.tethering.readonly.flags is mapped to com.android.tethering
+10-22 17:54:06.845  4117  4117 I AconfigPackage: android.net.vcn is mapped to com.android.tethering
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.net.flags is mapped to com.android.tethering
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.tethering.flags is mapped to com.android.tethering
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.tethering.beta.test is mapped to com.android.tethering
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.nearby.flags is mapped to com.android.tethering
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.net.thread.flags is mapped to com.android.tethering
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.net.ct.flags is mapped to com.android.tethering
+10-22 17:54:06.845  4117  4117 I AconfigPackage: com.android.system.virtualmachine.flags is mapped to com.android.virt
+10-22 17:54:06.845  4117  4117 E FeatureFlagsImplExport: android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package android.xr cannot be found on the device
+10-22 17:54:06.847   641   740 D EventHub: No input device configuration file found for device 'Monkey touch'.
+10-22 17:54:06.847   641   740 I EventHub: usingClockIoctl=true
+10-22 17:54:06.847   641   740 I EventHub: New device: id=16, fd=423, path='/dev/input/event13', name='Monkey touch', classes=TOUCH | TOUCH_MT, configuration='', keyLayout='', keyCharacterMap='', builtinKeyboard=false, 
+10-22 17:54:06.847   641   740 I InputReader: Device reconfigured: id=17, name='Monkey touch', size 320x640, orientation Rotation0, mode DIRECT, display id 0
+10-22 17:54:06.847   641   740 I InputReader: Device added: id=17, eventHubId=16, name='Monkey touch', descriptor='e1fe28b90f915c7d1febbd52c1ef84b3c4cbed9f',sources=TOUCHSCREEN
+10-22 17:54:06.849  4117  4117 W Monkey  :  arg: "-p"
+10-22 17:54:06.849  4117  4117 W Monkey  :  arg: "mx.labandera.wear"
+10-22 17:54:06.849  4117  4117 W Monkey  :  arg: "-c"
+10-22 17:54:06.849  4117  4117 W Monkey  :  arg: "android.intent.category.LAUNCHER"
+10-22 17:54:06.849  4117  4117 W Monkey  :  arg: "1"
+10-22 17:54:06.849  4117  4117 W Monkey  : data="mx.labandera.wear"
+10-22 17:54:06.849  4117  4117 W Monkey  : data="android.intent.category.LAUNCHER"
+10-22 17:54:06.854   641   663 D WindowManager: Direct invocation of sendNewConfiguration: Display{#0 state=ON size=320x640 ROTATION_0}
+10-22 17:54:06.854   641   663 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-22 17:54:06.854   891   968 V ShellDesktopMode: DesktopDisplayModeController: canDesktopFirstModeBeEnabledOnDefaultDisplay: isDefaultDisplayDesktopEligible=false
+10-22 17:54:06.854   891   968 V WindowManagerShell: Directly starting a new transition type=CHANGE wct=WindowContainerTransaction { changes= {android.os.BinderProxy@1eac2ee={isTaskMoveAllowed:false,}} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null } handler=null
+10-22 17:54:06.854   641  1922 W ActivityManager: registerReceiverWithFeature: no app for null
+10-22 17:54:06.855  1784  1784 I PkDeviceHelper: PkDeviceHelper.refreshDevices():87 refreshing devices
+10-22 17:54:06.855  1784  1784 I PkDeviceHelper: PkDeviceHelper.addDevice():125 device AT Translated Set 2 keyboard added
+10-22 17:54:06.855   641  1799 V WindowManager: deferTransitionReady deferReadyDepth=1 stack=com.android.server.wm.WindowOrganizerController.applyTransaction:717 com.android.server.wm.WindowOrganizerController.applyTransaction:651 com.android.server.wm.WindowOrganizerController.lambda$startTransition$3:388 com.android.server.wm.WindowOrganizerController.$r8$lambda$PHnU0rj5Bcvaq0dL-Wi7kOJt8bo:0 com.android.server.wm.WindowOrganizerController$$ExternalSyntheticLambda5.onCollectStarted:0 
+10-22 17:54:06.855   641  1799 V WindowManager: continueTransitionReady deferReadyDepth=0 stack=com.android.server.wm.WindowOrganizerController.applyTransaction:864 com.android.server.wm.WindowOrganizerController.applyTransaction:651 com.android.server.wm.WindowOrganizerController.lambda$startTransition$3:388 com.android.server.wm.WindowOrganizerController.$r8$lambda$PHnU0rj5Bcvaq0dL-Wi7kOJt8bo:0 com.android.server.wm.WindowOrganizerController$$ExternalSyntheticLambda5.onCollectStarted:0 
+10-22 17:54:06.856   891   917 V WindowManagerShell: onTransitionReady(transaction=2753074038060)
+10-22 17:54:06.856   891   968 V WindowManagerShell: onTransitionReady (#32) android.os.BinderProxy@5915d92: {id=32 t=CHANGE f=0x0 trk=0 r=[] c=[]}
+10-22 17:54:06.856   641   660 V WindowManager: Sent Transition (#32) createdAt=10-22 17:54:06.855
+10-22 17:54:06.856   641   660 V WindowManager:     startWCT=WindowContainerTransaction { changes= {RemoteToken{e9d70eb DefaultTaskDisplayArea@201422222}={isTaskMoveAllowed:false,}} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+10-22 17:54:06.856   641   660 V WindowManager:     info={id=32 t=CHANGE f=0x0 trk=0 r=[] c=[]}
+10-22 17:54:06.856   891   968 V WindowManagerShell: No transition roots in (#32) android.os.BinderProxy@5915d92@0 so abort
+10-22 17:54:06.856   891   968 V WindowManagerShell: Transition animation finished (aborted=true), notifying core (#32) android.os.BinderProxy@5915d92@0
+10-22 17:54:06.856   641   660 V WindowManager: Finish Transition (#32): created at 10-22 17:54:06.855 collect-started=0.028ms started=0.038ms ready=0.43ms sent=0.84ms finished=1.722ms
+10-22 17:54:06.856   891   968 V WindowManagerShell: Track 0 became idle
+10-22 17:54:06.856   891   968 V WindowManagerShell: All active transition animations finished
+10-22 17:54:06.857   641  1799 W ActivityTaskManager: callingPackage for (uid=2000, pid=4117) has no WPC
+10-22 17:54:06.858   641  1799 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@f862e770 does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-22 17:54:06.858  1021  1021 D RecentsView: onTaskDisplayChanged: 14, new displayId = 0
+10-22 17:54:06.861   641  1799 D CorePackageUpdate: onRecentTaskRemoved Removing task: 13
+10-22 17:54:06.861   641  1799 D CorePackageUpdate: Couldn't find a persistent state for task= 13
+10-22 17:54:06.861   641  1799 V ActivityTaskManager: TaskLaunchParamsModifier: phase=3 task=Task{2c4111f #14 type=standard A=10235:mx.labandera.wear} activity=ActivityRecord{15785150 u0 mx.labandera.wear/.MainActivity t-1} display-from-task=0 display-id=0 task-display-area-windowing-mode=1 suggested-display-area=DefaultTaskDisplayArea@201422222 inherit-from-task=fullscreen non-freeform-task-display-area display-area=DefaultTaskDisplayArea@201422222 skip-bounds-fullscreen
+10-22 17:54:06.861   641  1799 I ActivityTaskManager: START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=mx.labandera.wear/.MainActivity} with LAUNCH_MULTIPLE from uid 2000 (com.android.shell) (BAL_ALLOW_PERMISSION) result code=0
+10-22 17:54:06.861   891   968 V WindowManagerShell: Transition requested (#33): android.os.BinderProxy@9294b60 TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=14 effectiveUid=10235 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=mx.labandera.wear/.MainActivity } baseActivity=ComponentInfo{mx.labandera.wear/mx.labandera.wear.MainActivity} topActivity=ComponentInfo{mx.labandera.wear/mx.labandera.wear.MainActivity} origActivity=null realActivity=ComponentInfo{mx.labandera.wear/mx.labandera.wear.MainActivity} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=2878282 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.os.BinderProxy@7cc8819} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{fe3c0de mx.labandera.wear.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 320, 640) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 33 }
+10-22 17:54:06.861   891   968 W DisconnectHandler: No disconnect change found in the transition, not handling request.
+10-22 17:54:06.861  1021  1021 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused|state_user_active] -[]
+10-22 17:54:06.861  4117  4117 I Monkey  : Events injected: 1
+10-22 17:54:06.861   891   968 V ShellDesktopMode: DesktopTasksController: skipping handleRequest reason=triggerTask's display doesn't support desktop mode
+10-22 17:54:06.861   891   968 D ShellSplitScreen: logExit: no-op, mLoggerSessionId is null
+10-22 17:54:06.861  1021  1021 D BaseActivity: Launcher flags updated: [state_started|state_resumed|state_deferred_resumed|state_window_focused] -[state_user_active]
+10-22 17:54:06.862  1021  1021 D BaseActivity: Launcher flags updated: [state_started|state_window_focused] -[state_resumed|state_deferred_resumed]
+10-22 17:54:06.862  1021  1021 W SplitSelectStateCtor: Missing session instanceIds
+10-22 17:54:06.862  1021  1021 D StatsLog: LAUNCHER_SPLIT_SELECTION_EXIT_INTERRUPTED
+10-22 17:54:06.862   891   968 D WindowManagerShell: setLauncherKeepClearAreaHeight: visible=false, height=173
+10-22 17:54:06.862   641   663 V GrammaticalInflectionUtils: AttributionSource: android.content.AttributionSource@f862e770 does not have READ_SYSTEM_GRAMMATICAL_GENDER permission.
+10-22 17:54:06.863   891   968 V RecentTasksController: Notify recent tasks changed
+10-22 17:54:06.863   641   951 I AppsFilter: interaction: PackageSetting{6f1c410 com.android.microdroid.empty_payload/10208} -> PackageSetting{2a2a03b mx.labandera.wear/10235} BLOCKED
+10-22 17:54:06.863   641   951 V WindowManager: Defer transition id=33 for TaskFragmentTransaction=android.os.Binder@4b26358
+10-22 17:54:06.864  1021  1021 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-22 17:54:06.864   641  1818 W InputChannel-JNI: Channel already disposed.
+10-22 17:54:06.864   891   968 D ShellDesktopMode: DesktopRepository(0): Removes freeform task: taskId=13
+10-22 17:54:06.864   891   968 W ShellDesktopMode: DesktopRepository(0): No display id found for task: taskId=13
+10-22 17:54:06.864   641  2081 V WindowManager: Continue transition id=33 for TaskFragmentTransaction=android.os.Binder@4b26358
+10-22 17:54:06.865   891   968 V RecentTasksController: Notify recent tasks changed
+10-22 17:54:06.865  4117  4117 I Monkey  : ## Network stats: elapsed time=8ms (0ms mobile, 0ms wifi, 8ms not connected)
+10-22 17:54:06.865  1021  1021 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-22 17:54:06.865  4117  4117 I app_process: System.exit called, status: 0
+10-22 17:54:06.865  4117  4117 I AndroidRuntime: VM exiting with result code 0.
+10-22 17:54:06.866   435   435 I Zygote  : Entering forkRepeatedly native zygote loop
+10-22 17:54:06.869   435   435 D Zygote  : Forked child process 4129
+10-22 17:54:06.869   641   670 I ActivityManager: Start proc 4129:mx.labandera.wear/u0a235 for next-top-activity {mx.labandera.wear/mx.labandera.wear.MainActivity}
+10-22 17:54:06.869   641   740 I EventHub: Removing device Monkey touch due to epoll hang-up event.
+10-22 17:54:06.869   641   740 I EventHub: Removed device: path=/dev/input/event13 name=Monkey touch id=16 fd=423 classes=TOUCH | TOUCH_MT
+10-22 17:54:06.871  4129  4129 I libprocessgroup: Created cgroup /sys/fs/cgroup/apps/uid_10235/pid_4129
+10-22 17:54:06.872  4129  4129 I Zygote  : Process 4129 created for mx.labandera.wear
+10-22 17:54:06.872  4129  4129 I .labandera.wear: Late-enabling -Xcheck:jni
+10-22 17:54:06.876   891  1086 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda14@f7ba1bc
+10-22 17:54:06.876   641  1818 D WindowManager: setClientSurface Surface(name=VRI-Splash Screen mx.labandera.wear#149)/@0x7d5c421 for e79c596 Splash Screen mx.labandera.wear
+10-22 17:54:06.877   641  2081 D CoreBackPreview: Window{e79c596 u0 Splash Screen mx.labandera.wear}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@a4cc046, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+10-22 17:54:06.877   891  1086 I Surface : Creating surface for consumer unnamed-891-7 with slotExpansion=1 for 64 slots
+10-22 17:54:06.877   891  1086 I Surface : Creating surface for consumer VRI[wear]#7(BLAST Consumer)7 with slotExpansion=1 for 64 slots
+10-22 17:54:06.879  4129  4129 I .labandera.wear: Using generational CollectorTypeCMC GC.
+10-22 17:54:06.879  4129  4129 W .labandera.wear: Unexpected CPU variant for x86: x86_64.
+10-22 17:54:06.879  4129  4129 W .labandera.wear: Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, goldmont-without-sha-xsaves, tremont, kabylake, alderlake, pantherlake, default
+10-22 17:54:06.881   509   543 I adbd    : jdwp connection from 4129
+10-22 17:54:06.881   641   660 V WindowManager: Sent Transition (#33) createdAt=10-22 17:54:06.858 via request=TransitionRequestInfo { type = OPEN, triggerTask = TaskInfo{userId=0 taskId=14 effectiveUid=10235 displayId=0 isRunning=true baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10200000 cmp=mx.labandera.wear/.MainActivity } baseActivity=ComponentInfo{mx.labandera.wear/mx.labandera.wear.MainActivity} topActivity=ComponentInfo{mx.labandera.wear/mx.labandera.wear.MainActivity} origActivity=null realActivity=ComponentInfo{mx.labandera.wear/mx.labandera.wear.MainActivity} realActivityIsAppLockEnabled=false numActivities=1 lastActiveTime=2878282 supportsMultiWindow=true supportsMultiWindowWithoutConstraints=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{ea9815d Task{2c4111f #14 type=standard A=10235:mx.labandera.wear}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=Rect(0, 0 - 0, 0) topActivityInfo=ActivityInfo{e849ad2 mx.labandera.wear.MainActivity} launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=false isInteractive=false isVisible=false isVisibleRequested=false isTopActivityNoDisplay=false isSleeping=false locusId=null displayAreaFeatureId=1 isTopActivityTransparent=false isActivityStackTransparent=false lastNonFullscreenBounds=null leafTaskBoundsFromOptions= false capturedLink=null capturedLinkTimestamp=0 requestedVisibleTypes=503 topActivityRequestOpenInBrowserEducationTimestamp=0 appCompatTaskInfo=AppCompatTaskInfo { topActivityInSizeCompat=false isLeafTask= true eligibleForLetterboxEducation= false isLetterboxEducationEnabled= true isLetterboxDoubleTapEnabled= false eligibleForUserAspectRatioButton= false topActivityBoundsLetterboxed= false isFromLetterboxDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 topActivityAppBounds=Rect(0, 0 - 320, 640) isUserFullscreenOverrideEnabled=false isSystemFullscreenOverrideEnabled=false hasMinAspectRatioOverride=false topActivityLetterboxBounds=null topNonResizableActivityAspectRatio=-1.0} topActivityMainWindowFrame=null isAppBubble=false}, pipChange = null, remoteTransitionInfo = null, displayChanges = null, requestedLocation = null, userChange = null, windowingLayerChange = null, fullscreenRequestChange = null, flags = 0, debugId = 33 }
+10-22 17:54:06.881   641   660 V WindowManager:     startWCT=WindowContainerTransaction { changes= {} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+10-22 17:54:06.881   641   660 V WindowManager:     info={id=33 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-22 17:54:06.881   641   660 V WindowManager:         {WCT{RemoteToken{ea9815d Task{2c4111f #14 type=standard A=10235:mx.labandera.wear}}} m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=14#146)/@0x1676207 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},
+10-22 17:54:06.881   641   660 V WindowManager:         {WCT{RemoteToken{cfc4e2f Task{b5b4030 #1 type=home}}} m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#35)/@0x5f38ca4 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},
+10-22 17:54:06.881   641   660 V WindowManager:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1b008ad}#56)/@0x22caf37 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0}
+10-22 17:54:06.881   641   660 V WindowManager:     ]}
+10-22 17:54:06.882   891   968 V ShellTaskOrganizer: Task appeared taskId=14 listener=FullscreenTaskListener
+10-22 17:54:06.882   891   968 V ShellTaskOrganizer: Fullscreen Task Appeared: #14
+10-22 17:54:06.882   891   968 D ShellPackageUpdate: PackageUpdateController: Setting handlePackageUpdate for task: 14
+10-22 17:54:06.882   641  1818 E TransitionChain: Can't collect into a chain with no transition
+10-22 17:54:06.882   891   968 V RecentTasksController: Notify recent tasks changed
+10-22 17:54:06.882  1021  1021 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-22 17:54:06.882  4129  4129 D nativeloader: Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+10-22 17:54:06.883   891  1684 V WindowManagerShell: onTransitionReady(transaction=2753074038108)
+10-22 17:54:06.883   891   968 V WindowManagerShell: onTransitionReady (#33) android.os.BinderProxy@9294b60: {id=33 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[
+10-22 17:54:06.883   891   968 V WindowManagerShell:         {m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=14#146)/@0x3f70cf2 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},
+10-22 17:54:06.883   891   968 V WindowManagerShell:         {m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#35)/@0xb4e6f43 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},
+10-22 17:54:06.883   891   968 V WindowManagerShell:         {m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1b008ad}#56)/@0x71df9c0 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0}
+10-22 17:54:06.883   891   968 V WindowManagerShell:     ]}
+10-22 17:54:06.883   891   968 V WindowManagerShell: Playing animation for (#33) android.os.BinderProxy@9294b60@0
+10-22 17:54:06.883   891   968 D ShellSplitScreen: startAnimation: transition=33 isSplitActive=false
+10-22 17:54:06.883   891   968 V ShellRecents: RecentsTransitionHandler.startAnimation: no controller found
+10-22 17:54:06.883   891   968 V ShellDesktopMode: DesktopMixedTransitionHandler: No pending desktop transition
+10-22 17:54:06.883   891   968 V WindowManagerShell: Transition doesn't have explicit remote, search filters for match for {id=33 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=14#146)/@0x3f70cf2 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#35)/@0xb4e6f43 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1b008ad}#56)/@0x71df9c0 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0}]}
+10-22 17:54:06.883   891   968 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@96d5082 windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@89f1393, appThread = android.app.IApplicationThread$Stub$Proxy@a644fd0, debugName = overlayBackTransition, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=undefined independent=true modes=[CLOSE,TO_BACK] flags=IN_TASK_WITH_EMBEDDED_ACTIVITY mustBeTask=false order=ANY topActivity=null launchCookie=null taskFragmentToken=android.os.BinderProxy@96d5082 windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-22 17:54:06.883   891   968 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@7e78bc9, appThread = android.app.IApplicationThread$Stub$Proxy@a3f2ce, debugName = LauncherToDream, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-22 17:54:06.883   891   968 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@31d55ef, appThread = android.app.IApplicationThread$Stub$Proxy@98698fc, debugName = QuickstepDisplayMove, filter = {types=[] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=false modes=[CHANGE] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=true}]} }}
+10-22 17:54:06.883   891   968 V WindowManagerShell:  Checking filter Pair{{types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@fd41b85, appThread = android.app.IApplicationThread$Stub$Proxy@b906dda, debugName = QuickstepLaunchHome, filter = {types=[] flags=0x0 notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity} launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null launchCookie=null windowingMode=undefined isCrossDisplayMove=false},{NOT atype=undefined independent=true modes=[] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null customAnim=true windowingMode=undefined isCrossDisplayMove=false}]} }}
+10-22 17:54:06.883   891   968 V WindowManagerShell:  Checking filter Pair{{types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@e8b5000, appThread = null, debugName = DesktopWindowLimitUnminimize, filter = {types=[OPEN,TO_FRONT] flags=0x0 notFlags=0x0 checks=[{atype=standard independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=true order=ANY topActivity=null launchCookie=null windowingMode=freeform isCrossDisplayMove=false}]} }}
+10-22 17:54:06.883   891   968 V WindowManagerShell:  Delegate animation for (#33) to null
+10-22 17:54:06.883   891   968 V WindowManagerShell: start default transition animation, info = {id=33 t=OPEN f=0x0 trk=0 r=[0@Point(0, 0)] c=[{m=OPEN f=MOVE_TO_TOP|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=14#146)/@0x3f70cf2 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=SHOW_WALLPAPER|FLAG_CHANGED_INTERACTIVE leash=Surface(name=Task=1#35)/@0xb4e6f43 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0 taskParent=-1 winMode=1 userId=0},{m=TO_BACK f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{1b008ad}#56)/@0x71df9c0 sb=Rect(0, 0 - 320, 640) eb=Rect(0, 0 - 320, 640) epz=Point(320, 640) d=0}]}
+10-22 17:54:06.884   891   968 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@55ebc9f animAttr=0x13 type=OPEN isEntrance=false
+10-22 17:54:06.884   891   968 V WindowManagerShell: loadAnimation: anim=android.view.animation.AnimationSet@efc83bb animAttr=0x12 type=OPEN isEntrance=true
+10-22 17:54:06.884   891   968 V WindowManagerShell:  animated by com.android.wm.shell.transition.DefaultTransitionHandler@5005de6
+10-22 17:54:06.888  4129  4129 D CompatChangeReporter: Compat change id reported: 242716250; UID 10235; state: ENABLED
+10-22 17:54:06.894  1021  1021 D BaseActivity: Launcher flags updated: [state_started] -[state_window_focused]
+10-22 17:54:06.903   641   740 I InputReader: Device removed: id=17, eventHubId=16, name='Monkey touch', descriptor='e1fe28b90f915c7d1febbd52c1ef84b3c4cbed9f', sources=TOUCHSCREEN
+10-22 17:54:06.911   641   740 I EventHub: Removing device '/dev/input/event13' due to inotify event
+10-22 17:54:06.911   641   663 D WindowManager: Direct invocation of sendNewConfiguration: Display{#0 state=ON size=320x640 ROTATION_0}
+10-22 17:54:06.912   641   663 W libbinder.IPCThreadState: Sending oneway calls to frozen process.
+10-22 17:54:06.912   891   968 V ShellDesktopMode: DesktopDisplayModeController: canDesktopFirstModeBeEnabledOnDefaultDisplay: isDefaultDisplayDesktopEligible=false
+10-22 17:54:06.912   891   968 V WindowManagerShell: Directly starting a new transition type=CHANGE wct=WindowContainerTransaction { changes= {android.os.BinderProxy@1eac2ee={isTaskMoveAllowed:false,}} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null } handler=null
+10-22 17:54:06.912   641  2081 V WindowManager: deferTransitionReady deferReadyDepth=1 stack=com.android.server.wm.WindowOrganizerController.applyTransaction:717 com.android.server.wm.WindowOrganizerController.applyTransaction:651 com.android.server.wm.WindowOrganizerController.lambda$startTransition$3:388 com.android.server.wm.WindowOrganizerController.$r8$lambda$PHnU0rj5Bcvaq0dL-Wi7kOJt8bo:0 com.android.server.wm.WindowOrganizerController$$ExternalSyntheticLambda5.onCollectStarted:0 
+10-22 17:54:06.912   641  2081 V WindowManager: continueTransitionReady deferReadyDepth=0 stack=com.android.server.wm.WindowOrganizerController.applyTransaction:864 com.android.server.wm.WindowOrganizerController.applyTransaction:651 com.android.server.wm.WindowOrganizerController.lambda$startTransition$3:388 com.android.server.wm.WindowOrganizerController.$r8$lambda$PHnU0rj5Bcvaq0dL-Wi7kOJt8bo:0 com.android.server.wm.WindowOrganizerController$$ExternalSyntheticLambda5.onCollectStarted:0 
+10-22 17:54:06.913   641   660 V WindowManager: Sent Transition (#34) createdAt=10-22 17:54:06.912
+10-22 17:54:06.913   641   660 V WindowManager:     startWCT=WindowContainerTransaction { changes= {RemoteToken{e9d70eb DefaultTaskDisplayArea@201422222}={isTaskMoveAllowed:false,}} hops= [] flags= 0 errorCallbackToken=null taskFragmentOrganizer=null }
+10-22 17:54:06.913   641   660 V WindowManager:     info={id=34 t=CHANGE f=0x0 trk=0 r=[] c=[]}
+10-22 17:54:06.913  1784  1784 I PkDeviceHelper: PkDeviceHelper.refreshDevices():87 refreshing devices
+10-22 17:54:06.913  1784  1784 I PkDeviceHelper: PkDeviceHelper.addDevice():125 device AT Translated Set 2 keyboard added
+10-22 17:54:06.914   891  1684 V WindowManagerShell: onTransitionReady(transaction=2753074038130)
+10-22 17:54:06.914   891   968 V WindowManagerShell: onTransitionReady (#34) android.os.BinderProxy@ae5a097: {id=34 t=CHANGE f=0x0 trk=0 r=[] c=[]}
+10-22 17:54:06.914   641   663 W PermissionService: getPermissionFlags: Unknown user -1
+10-22 17:54:06.914   641   663 W PermissionService: getPermissionFlags: Unknown user -1
+10-22 17:54:06.914   891   968 V WindowManagerShell: No transition roots in (#34) android.os.BinderProxy@ae5a097@0 so abort
+10-22 17:54:06.914   891   968 V WindowManagerShell: Transition was merged: (#34) android.os.BinderProxy@ae5a097@0 into (#33) android.os.BinderProxy@9294b60@0
+10-22 17:54:06.926  4129  4129 D nativeloader: Configuring clns-9 for other apk /data/app/~~fu1g4HBSwHaue22sbqWCNA==/mx.labandera.wear-P9bd5c2Pi2uMiRqE6wNWNQ==/base.apk. target_sdk_version=34, uses_libraries=, library_path=/data/app/~~fu1g4HBSwHaue22sbqWCNA==/mx.labandera.wear-P9bd5c2Pi2uMiRqE6wNWNQ==/lib/x86_64:/data/app/~~fu1g4HBSwHaue22sbqWCNA==/mx.labandera.wear-P9bd5c2Pi2uMiRqE6wNWNQ==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/mx.labandera.wear
+10-22 17:54:06.930  4129  4129 V GraphicsEnvironment: Currently set values for:
+10-22 17:54:06.930  4129  4129 V GraphicsEnvironment:   angle_gl_driver_selection_pkgs=[]
+10-22 17:54:06.930  4129  4129 V GraphicsEnvironment:   angle_gl_driver_selection_values=[]
+10-22 17:54:06.930  4129  4129 V GraphicsEnvironment: mx.labandera.wear is not listed in per-application setting
+10-22 17:54:06.930  4129  4129 V GraphicsEnvironment: No special selections for ANGLE, returning default driver choice
+10-22 17:54:06.930  4129  4129 V GraphicsEnvironment: Neither updatable production driver nor prerelease driver is supported.
+10-22 17:54:06.941   641  2081 D CorePackageUpdate: Couldn't find a persistent state for task= 14
+10-22 17:54:06.942  4129  4145 I DisplayManager: Choreographer implicitly registered for the refresh rate.
+10-22 17:54:06.952  4129  4129 D DesktopExperienceFlags: Toggle override initialized to: false
+10-22 17:54:06.956  4129  4129 D AppCompatDelegate: Checking for metadata for AppLocalesMetadataHolderService : Service not found
+10-22 17:54:06.958  4129  4145 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv1_CM_emulation.so
+10-22 17:54:06.958  4129  4145 I GFXSTREAM: [eglDisplay.cpp(297)] Opening libGLESv2_emulation.so
+10-22 17:54:06.960  4129  4145 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-22 17:54:06.963  4129  4145 W HWUI    : Failed to initialize 101010-2 format, error = EGL_SUCCESS
+10-22 17:54:06.963   891   968 V RecentTasksController: Notify recent tasks changed
+10-22 17:54:06.963  1021  1021 D RecentTasksList: invalidateLoadedTasks - previous requestLoadId: -1
+10-22 17:54:06.963   891   968 V RecentTasksController: generateList(getRecentTasks)
+10-22 17:54:06.963   891   968 V RecentTasksController: initializeDesksMap - allDeskIds: []
+10-22 17:54:06.963   891   968 V RecentTasksController: Task 14 is not an active desktop task
+10-22 17:54:06.963   891   968 V RecentTasksController: Added fullscreen task: 14
+10-22 17:54:06.963   891   968 V RecentTasksController: generateList - complete
+10-22 17:54:06.964  1021  1084 D PreloadThumbnailUseCase: Preloading thumbnails for task ids: [[id=14 windowingMode=1 user=0 lastActiveTime=2878362] null]
+10-22 17:54:06.989  4129  4129 I .labandera.wear: hiddenapi: Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (runtime_flags=0, domain=platform, api=unsupported) from Landroidx/appcompat/widget/ViewUtils; (domain=app, TargetSdkVersion=34) using reflection: allowed
+10-22 17:54:07.000  4129  4149 D TransportRuntime.JobInfoScheduler: Scheduling upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) with jobId=-757324815 in 86400000ms(Backend next call timestamp 0). Attempt 1
+10-22 17:54:07.000  4129  4149 D CompatChangeReporter: Compat change id reported: 253665015; UID 10235; state: ENABLED
+10-22 17:54:07.000   641  1818 D CompatChangeReporter: Compat change id reported: 253665015; UID 10235; state: ENABLED
+10-22 17:54:07.002  4129  4152 I DynamiteModule: Considering local module com.google.mlkit.dynamite.barcode:10000 and remote module com.google.mlkit.dynamite.barcode:0
+10-22 17:54:07.002  4129  4152 I DynamiteModule: Selected local version of com.google.mlkit.dynamite.barcode
+10-22 17:54:07.008  1186  1186 D BoundBrokerSvc: onRebind: Intent { act=com.google.android.gms.common.telemetry.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentApiService }
+10-22 17:54:07.020  4129  4129 D QuirkSettingsLoader: QuirkSettings$MetadataHolderService is not found.
+10-22 17:54:07.020  4129  4129 D CameraX : QuirkSettings from app metadata: null
+10-22 17:54:07.021  4129  4129 D CameraX : QuirkSettings by default: QuirkSettings{enabledWhenDeviceHasQuirk=true, forceEnabledQuirks=[], forceDisabledQuirks=[]}
+10-22 17:54:07.024  4129  4154 D DeviceQuirks: camera2 DeviceQuirks = CaptureSessionShouldUseMrirQuirk
+10-22 17:54:07.024  4129  4154 I CameraManagerGlobal: Connecting to camera service
+10-22 17:54:07.031  4129  4154 D CameraRepository: Added camera: 1
+10-22 17:54:07.032  4129  4149 D TransportRuntime.SQLiteEventStore: Storing event with priority=DEFAULT, name=FIREBASE_ML_SDK for destination cct
+10-22 17:54:07.033  4129  4154 D CameraQuirks: camera2 CameraQuirks = 
+10-22 17:54:07.034  4129  4129 W HWUI    : Unknown dataspace 0
+10-22 17:54:07.035  4129  4149 D TransportRuntime.JobInfoScheduler: Scheduling upload for context TransportContext(cct, DEFAULT, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) with jobId=-762305552 in 30000ms(Backend next call timestamp 1792712310871). Attempt 1
+10-22 17:54:07.036  4129  4154 I Camera2CameraInfo: Device Level: INFO_SUPPORTED_HARDWARE_LEVEL_3
+10-22 17:54:07.038  4129  4154 D CameraRepository: Added camera: 10
+10-22 17:54:07.038  4129  4154 D CameraQuirks: camera2 CameraQuirks = 
+10-22 17:54:07.038  4129  4149 D TransportRuntime.SQLiteEventStore: Storing event with priority=VERY_LOW, name=FIREBASE_ML_SDK for destination cct
+10-22 17:54:07.039  4129  4154 I Camera2CameraInfo: Device Level: INFO_SUPPORTED_HARDWARE_LEVEL_LIMITED
+10-22 17:54:07.039  4129  4154 D CameraValidator: Verifying camera lens facing on emu64xa, lensFacingInteger: null
+10-22 17:54:07.039   641  1818 W InputChannel-JNI: Channel already disposed.
+10-22 17:54:07.041  4129  4158 W libc    : Access denied finding property "vendor.mesa.virtgpu.kumquat"
+10-22 17:54:07.047  4129  4129 D VRI[MainActivity]: WindowInsets changed: 320x640 statusBars:[0,24,0,0] mandatorySystemGestures:[0,24,0,0] 
+10-22 17:54:07.048  4129  4129 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda14@a1d5ada
+10-22 17:54:07.048   641  1818 D CoreBackPreview: Window{366f23d u0 mx.labandera.wear/mx.labandera.wear.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@7b3900, mPriority=0, mIsAnimationCallback=false, mOverrideBehavior=0}
+10-22 17:54:07.048  4129  4129 I HWUI    : Using FreeType backend (prop=Auto)
+10-22 17:54:07.050   641  1818 D WindowManager: setClientSurface Surface(name=VRI-mx.labandera.wear/mx.labandera.wear.MainActivity#154)/@0x5d57539 for 366f23d mx.labandera.wear/mx.labandera.wear.MainActivity
+10-22 17:54:07.051  4129  4149 D TransportRuntime.JobInfoScheduler: Upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) is already scheduled. Returning...
+10-22 17:54:07.052  4129  4129 I Surface : Creating surface for consumer unnamed-4129-0 with slotExpansion=1 for 64 slots
+10-22 17:54:07.052  4129  4129 I Surface : Creating surface for consumer VRI[MainActivity]#0(BLAST Consumer)0 with slotExpansion=1 for 64 slots
+10-22 17:54:07.103   641  1818 W AppOps  : Noting op not finished: uid 10215 pkg com.google.android.gms code 113 startTime of in progress event=1792710383480
+10-22 17:54:07.107   641  1162 W AppOps  : Noting op not finished: uid 10215 pkg com.google.android.gms code 79 startTime of in progress event=1792710387198
+10-22 17:54:07.108  1186  1965 I ActivityScheduler: nextTriggerTime: 3116629, in 238100ms, detectorType: 39, FULL_TYPE alarmWindowMillis: 80000
+10-22 17:54:07.108  1186  1965 W AlarmManager: alarm window unlikely to be respected [CONTEXT service_id=231 ]
+10-22 17:54:07.108  1186  1965 W AlarmManager: java.lang.IllegalArgumentException: alarm "NetworkLocationActivityDetection" has short window length
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at cvbd.c(:com.google.android.gms@261136038@26.11.36 (260800-892401869):38)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at cvbc.c(:com.google.android.gms@261136038@26.11.36 (260800-892401869):18)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at gpfv.b(:com.google.android.gms@261136038@26.11.36 (260800-892401869):132)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at gney.v(:com.google.android.gms@261136038@26.11.36 (260800-892401869):61)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at gngq.q(:com.google.android.gms@261136038@26.11.36 (260800-892401869):136)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at gngq.u(:com.google.android.gms@261136038@26.11.36 (260800-892401869):107)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at gngw.L(:com.google.android.gms@261136038@26.11.36 (260800-892401869):74)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at gngb.q(:com.google.android.gms@261136038@26.11.36 (260800-892401869):17)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at gnfr.b(:com.google.android.gms@261136038@26.11.36 (260800-892401869):28)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at gneu.m(:com.google.android.gms@261136038@26.11.36 (260800-892401869):191)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at gnes.k(:com.google.android.gms@261136038@26.11.36 (260800-892401869):56)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at gnwi.run(:com.google.android.gms@261136038@26.11.36 (260800-892401869):7)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at android.os.Handler.handleCallback(Handler.java:1095)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at android.os.Handler.dispatchMessageImpl(Handler.java:135)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at android.os.Handler.dispatchMessage(Handler.java:125)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at cwwb.mr(:com.google.android.gms@261136038@26.11.36 (260800-892401869):1)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at cwwb.dispatchMessage(:com.google.android.gms@261136038@26.11.36 (260800-892401869):140)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at android.os.Looper.loopOnce(Looper.java:296)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at android.os.Looper.loop(Looper.java:397)
+10-22 17:54:07.108  1186  1965 W AlarmManager: 	at android.os.HandlerThread.run(HandlerThread.java:139)
+10-22 17:54:07.117  1557  1978 W AiAiEcho: LyftNotificationParser Ridesharing ETA not enabled
+10-22 17:54:07.117  1557  1978 I AiAiEcho: SmartspaceNotificationPredictor no parser can handle this notification or notification is invalid
+10-22 17:54:07.192   891   968 V WindowManagerShell: Transition animation finished (aborted=false), notifying core (#33) android.os.BinderProxy@9294b60@0
+10-22 17:54:07.194   641   660 V WindowManager: Finish Transition (#33): created at 10-22 17:54:06.858 collect-started=0.007ms request-sent=2.864ms started=3.466ms ready=21.953ms sent=22.552ms commit=11.812ms finished=335.523ms
+10-22 17:54:07.194   641   660 V WindowManager: Finish Transition (#34): created at 10-22 17:54:06.912 collect-started=0.024ms started=0.033ms ready=0.255ms sent=0.69ms finished=281.935ms
+10-22 17:54:07.194  1021  1021 D VRI[NexusLauncherActivity]: visibilityChanged oldVisibility=true newVisibility=false
+10-22 17:54:07.194   891  1432 D WallpaperService: onVisibilityChanged(false): com.android.systemui.wallpapers.ImageWallpaper$CanvasEngine@3329253
+10-22 17:54:07.195   891   968 V WindowManagerShell: Track 0 became idle
+10-22 17:54:07.195   891   968 V WindowManagerShell: All active transition animations finished
+10-22 17:54:07.209  1021  1021 D SmartspaceInteractor: notifySmartspaceEvent: SmartspaceTargetEvent{mSmartspaceTarget=null, mSmartspaceActionId='null', mEventType=7}
+10-22 17:54:07.443  4129  4134 I .labandera.wear: Compiler allocated 5239KB to compile void android.view.ViewRootImpl.performTraversals(long)
+10-22 17:54:07.682   641   660 I ActivityTaskManager: Displayed mx.labandera.wear/.MainActivity for user 0: +824ms
+10-22 17:54:07.693  4129  4129 D DynamicRangeResolver: Resolved dynamic range for use case androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12 to no compatible HDR dynamic ranges.
+10-22 17:54:07.693  4129  4129 D DynamicRangeResolver: DynamicRange@f468ac7{encoding=UNSPECIFIED, bitDepth=0}
+10-22 17:54:07.693  4129  4129 D DynamicRangeResolver: ->
+10-22 17:54:07.693  4129  4129 D DynamicRangeResolver: DynamicRange@801406{encoding=SDR, bitDepth=8}
+10-22 17:54:07.693  4129  4129 D CameraQuirks: camera2 CameraQuirks = 
+10-22 17:54:07.693  4129  4139 I HWUI    : Davey! duration=749ms; Flags=1, FrameTimelineVsyncId=146530, IntendedVsync=2878363780862, Vsync=2878463780858, InputEventId=0, HandleInputStart=2878464775069, AnimationStart=2878464780068, PerformTraversalsStart=2878464905289, DrawStart=2878480262839, FrameDeadline=2878380447528, FrameStartTime=2878464617209, FrameInterval=16666666, WorkloadTarget=16666666, AnimationTime=2878463780858, SyncQueued=2878483939802, SyncStart=2878484062742, IssueDrawCommandsStart=2878484149152, SwapBuffers=2879040031462, FrameCompleted=2879113856564, DequeueBufferDuration=1710, QueueBufferDuration=80689, GpuCompleted=2879113856564, SwapBuffersCompleted=2879102467356, DisplayPresentTime=0, CommandSubmissionCompleted=2879040031462, 
+10-22 17:54:07.693  4129  4129 D CameraQuirks: camera2 CameraQuirks = 
+10-22 17:54:07.695  4129  4129 D DeferrableSurface: Surface created[total_surfaces=1, used_surfaces=0](androidx.camera.core.processing.SurfaceEdge$SettableSurface@b970c63}
+10-22 17:54:07.696  4129  4129 D DeferrableSurface: Surface created[total_surfaces=2, used_surfaces=0](androidx.camera.core.SurfaceRequest$2@ee40bbf}
+10-22 17:54:07.696  4129  4129 D DeferrableSurface: New surface in use[total_surfaces=2, used_surfaces=1](androidx.camera.core.SurfaceRequest$2@ee40bbf}
+10-22 17:54:07.696  4129  4129 D DeferrableSurface: use count+1, useCount=1 androidx.camera.core.SurfaceRequest$2@ee40bbf
+10-22 17:54:07.697  4129  4129 D CompatChangeReporter: Compat change id reported: 236825255; UID 10235; state: ENABLED
+10-22 17:54:07.697  4129  4129 I Surface : Creating surface for consumer unnamed-4129-1 with slotExpansion=1 for 64 slots
+10-22 17:54:07.697  4129  4129 I Surface : Creating surface for consumer ImageReader-640x480f23m4-4129-0 with slotExpansion=1 for 64 slots
+10-22 17:54:07.697  4129  4129 I Surface : Creating surface for consumer unnamed-4129-2 with slotExpansion=1 for 64 slots
+10-22 17:54:07.697  4129  4129 I Surface : Creating surface for consumer ImageReader-640x480f23m4-4129-1 with slotExpansion=1 for 64 slots
+10-22 17:54:07.698  4129  4129 D DeferrableSurface: Surface created[total_surfaces=3, used_surfaces=1](androidx.camera.core.impl.ImmediateSurface@56e1b78}
+10-22 17:54:07.698  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Use case androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12154881594 ACTIVE
+10-22 17:54:07.699  4129  4129 I Choreographer: Skipped 38 frames!  The application may be doing too much work on its main thread.
+10-22 17:54:07.699  4129  4159 D DeviceQuirks: core DeviceQuirks = SurfaceOrderQuirk
+10-22 17:54:07.699  4129  4159 D UseCaseAttachState: Active and attached use case: [] for camera: 10
+10-22 17:54:07.699  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Use case androidx.camera.core.ImageAnalysis-532d6c0a-6e8e-4f77-9284-a5298d271ce1183642859 ACTIVE
+10-22 17:54:07.699  4129  4159 D UseCaseAttachState: Active and attached use case: [] for camera: 10
+10-22 17:54:07.699  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Use cases [androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12154881594, androidx.camera.core.ImageAnalysis-532d6c0a-6e8e-4f77-9284-a5298d271ce1183642859] now ATTACHED
+10-22 17:54:07.699  4129  4129 D PreviewView: Surface requested by Preview.
+10-22 17:54:07.700  4129  4159 D Camera2CameraControlImp: setActive: isActive = true
+10-22 17:54:07.700  4129  4129 D DeviceQuirks: view DeviceQuirks = 
+10-22 17:54:07.700  4129  4159 D UseCaseAttachState: All use case: [androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12154881594, androidx.camera.core.ImageAnalysis-532d6c0a-6e8e-4f77-9284-a5298d271ce1183642859] for camera: 10
+10-22 17:54:07.700  4129  4159 D UseCaseAttachState: Active and attached use case: [androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12154881594, androidx.camera.core.ImageAnalysis-532d6c0a-6e8e-4f77-9284-a5298d271ce1183642859] for camera: 10
+10-22 17:54:07.701  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Resetting Capture Session
+10-22 17:54:07.701  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Skipping Capture Session state check due to current camera state: INITIALIZED and previous session status: false
+10-22 17:54:07.701  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Releasing session in state INITIALIZED
+10-22 17:54:07.701  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Attempting to force open the camera.
+10-22 17:54:07.701  4129  4159 D CameraStateRegistry: tryOpenCamera(Camera@9734c91[id=10]) [Available Cameras: 1, Already Open: false (Previous state: null)] --> SUCCESS
+10-22 17:54:07.702  4129  4159 D CameraStateRegistry: Recalculating open cameras:
+10-22 17:54:07.702  4129  4159 D CameraStateRegistry: Camera                                       State                 
+10-22 17:54:07.702  4129  4159 D CameraStateRegistry: -------------------------------------------------------------------
+10-22 17:54:07.702  4129  4159 D CameraStateRegistry: Camera@d2d09cc[id=1]                         UNKNOWN               
+10-22 17:54:07.702  4129  4159 D CameraStateRegistry: Camera@9734c91[id=10]                        OPENING               
+10-22 17:54:07.702  4129  4159 D CameraStateRegistry: -------------------------------------------------------------------
+10-22 17:54:07.702  4129  4159 D CameraStateRegistry: Open count: 1 (Max allowed: 1)
+10-22 17:54:07.702  4129  4129 D PreviewView: Preview transformation info updated. TransformationInfo{getCropRect=Rect(0, 0 - 320, 240), getRotationDegrees=90, getTargetRotation=-1, hasCameraTransform=true, getSensorToBufferTransform=Matrix{[0.22222222, 0.0, -53.333332][0.0, 0.22222222, -0.0][0.0, 0.0, 1.0]}, isMirroring=true}
+10-22 17:54:07.702  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Opening camera.
+10-22 17:54:07.702  4129  4129 D PreviewTransform: Transformation info set: TransformationInfo{getCropRect=Rect(0, 0 - 320, 240), getRotationDegrees=90, getTargetRotation=-1, hasCameraTransform=true, getSensorToBufferTransform=Matrix{[0.22222222, 0.0, -53.333332][0.0, 0.22222222, -0.0][0.0, 0.0, 1.0]}, isMirroring=true} 320x240 true
+10-22 17:54:07.702  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Transitioning camera internal state: INITIALIZED --> OPENING
+10-22 17:54:07.702  4129  4159 D CameraStateMachine: New public camera state CameraState{type=OPENING, error=null} from OPENING and null
+10-22 17:54:07.702  4129  4159 D CameraStateMachine: Publishing new public camera state CameraState{type=OPENING, error=null}
+10-22 17:54:07.702  4129  4159 D UseCaseAttachState: All use case: [androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12154881594, androidx.camera.core.ImageAnalysis-532d6c0a-6e8e-4f77-9284-a5298d271ce1183642859] for camera: 10
+10-22 17:54:07.703  1186  2489 I FontLog : (REDACTED) Received query %s, URI %s
+10-22 17:54:07.703  1186  2489 I FontLog : (REDACTED) Query [%s] resolved to %s
+10-22 17:54:07.703   577  4113 I CameraService: CameraService::connect call (PID 4129 "mx.labandera.wear", camera ID 10) and Camera API version 2
+10-22 17:54:07.703  1186  2489 I FontLog : (REDACTED) Fetch %s end status %s
+10-22 17:54:07.704  1186  2489 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+10-22 17:54:07.704   641   641 V WindowManager: AppCompatCamera: Camera 10 is open for package mx.labandera.wear
+10-22 17:54:07.706  1186  2489 I FontLog : (REDACTED) Pulling font file for id = %d, cache size = %d
+10-22 17:54:07.707  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Use case androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12154881594 ACTIVE
+10-22 17:54:07.707  4129  4159 D UseCaseAttachState: Active and attached use case: [androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12154881594, androidx.camera.core.ImageAnalysis-532d6c0a-6e8e-4f77-9284-a5298d271ce1183642859] for camera: 10
+10-22 17:54:07.707  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Use case androidx.camera.core.ImageAnalysis-532d6c0a-6e8e-4f77-9284-a5298d271ce1183642859 ACTIVE
+10-22 17:54:07.708  4129  4159 D UseCaseAttachState: Active and attached use case: [androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12154881594, androidx.camera.core.ImageAnalysis-532d6c0a-6e8e-4f77-9284-a5298d271ce1183642859] for camera: 10
+10-22 17:54:07.708  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} CameraDevice.onOpened()
+10-22 17:54:07.708  4129  4159 D Camera2CameraImpl: {Camera@9734c91[id=10]} Transitioning camera internal state: OPENING --> OPENED
+10-22 17:54:07.708  4129  4159 D CameraStateRegistry: Recalculating open cameras:
+10-22 17:54:07.708  4129  4159 D CameraStateRegistry: Camera                                       State                 
+10-22 17:54:07.708  4129  4159 D CameraStateRegistry: -------------------------------------------------------------------
+10-22 17:54:07.708  4129  4159 D CameraStateRegistry: Camera@d2d09cc[id=1]                         UNKNOWN               
+10-22 17:54:07.708  4129  4159 D CameraStateRegistry: Camera@9734c91[id=10]                        OPEN                  
+10-22 17:54:07.708  4129  4159 D CameraStateRegistry: -------------------------------------------------------------------
+10-22 17:54:07.708  4129  4159 D CameraStateRegistry: Open count: 1 (Max allowed: 1)
+10-22 17:54:07.708  4129  4159 D CameraStateMachine: New public camera state CameraState{type=OPEN, error=null} from OPEN and null
+10-22 17:54:07.708  4129  4159 D CameraStateMachine: Publishing new public camera state CameraState{type=OPEN, error=null}
+10-22 17:54:07.708  4129  4159 D UseCaseAttachState: All use case: [androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12154881594, androidx.camera.core.ImageAnalysis-532d6c0a-6e8e-4f77-9284-a5298d271ce1183642859] for camera: 10
+10-22 17:54:07.712  4129  4159 D UseCaseAttachState: Active and attached use case: [androidx.camera.core.Preview-7df39967-a4ce-4ea8-975a-8728fd1d6d12154881594, androidx.camera.core.ImageAnalysis-532d6c0a-6e8e-4f77-9284-a5298d271ce1183642859] for camera: 10
+10-22 17:54:07.713  4129  4129 I Surface : Creating surface for consumer unnamed-4129-3 with slotExpansion=1 for 64 slots
+10-22 17:54:07.713  4129  4129 I Surface : Creating surface for consumer 2c77acb SurfaceView[mx.labandera.wear/mx.labandera.wear.MainActivity]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+10-22 17:54:07.713  4129  4129 D SurfaceViewImpl: Surface created.
+10-22 17:54:07.713  4129  4129 D SurfaceViewImpl: Surface changed. Size: 320x240
+10-22 17:54:07.714  4129  4129 D SurfaceViewImpl: Surface set on Preview.
+10-22 17:54:07.715  4129  4154 D SyncCaptureSessionBase: [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@add17ee] getSurface done with results: [Surface(name=null mNativeObject=137314651255664)/@0xfd35784, Surface(name=null mNativeObject=137314651285328)/@0xf067f0]
+10-22 17:54:07.715  4129  4154 D CaptureSession: Opening capture session.
+10-22 17:54:07.715  4129  4154 D Camera2CaptureRequestBuilder: template type = 1
+10-22 17:54:07.716  4129  4154 D SyncCaptureSessionImpl: [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@add17ee] start openCaptureSession
+10-22 17:54:07.716  4129  4154 D DeferrableSurface: use count+1, useCount=2 androidx.camera.core.SurfaceRequest$2@ee40bbf
+10-22 17:54:07.716  4129  4154 D DeferrableSurface: New surface in use[total_surfaces=3, used_surfaces=2](androidx.camera.core.impl.ImmediateSurface@56e1b78}
+10-22 17:54:07.716  4129  4154 D DeferrableSurface: use count+1, useCount=1 androidx.camera.core.impl.ImmediateSurface@56e1b78
+10-22 17:54:07.716   577  4113 I Surface : Creating surface for consumer 2c77acb SurfaceView[mx.labandera.wear/mx.labandera.wear.MainActivity]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+10-22 17:54:07.716   577  4113 I Surface : Creating surface for consumer 2c77acb SurfaceView[mx.labandera.wear/mx.labandera.wear.MainActivity]#1(BLAST Consumer)1 with slotExpansion=1 for 64 slots
+10-22 17:54:07.716   577  4113 W cameraserver: createConfiguredSurface: Camera 10: Overriding format 0x4 to IMPLEMENTATION_DEFINED
+10-22 17:54:07.717   577  4113 I Surface : Creating surface for consumer ImageReader-640x480f23m4-4129-0 with slotExpansion=1 for 64 slots
+10-22 17:54:07.717   577  4113 I Surface : Creating surface for consumer ImageReader-640x480f23m4-4129-0 with slotExpansion=1 for 64 slots
+10-22 17:54:07.717   511   511 D camera.provider.ranchu: CameraDeviceSession:configureStreams:176 cfg={ .streams.size=2, .operationMode=0, .cfg.sessionParams.size()=64,  .streamConfigCounter=1, .multiResolutionInputImage=false }
+10-22 17:54:07.717   511   511 D camera.provider.ranchu: CameraDeviceSession:configureStreams:199 stream={ .id=0, .streamType=0, .width=320, .height=240, .format=IMPLEMENTATION_DEFINED, .usage=0x900, .dataSpace={ .low=0x0, .s=0, .t=0, .r=0 }, .rotation=0, .physicalCameraId='', .bufferSize=0, .groupId=-1, .dynamicRangeProfile=0x1 }
+10-22 17:54:07.717   511   511 D camera.provider.ranchu: CameraDeviceSession:configureStreams:199 stream={ .id=1, .streamType=0, .width=640, .height=480, .format=YCBCR_420_888, .usage=0x3, .dataSpace={ .low=0x0, .s=2, .t=3, .r=1 }, .rotation=0, .physicalCameraId='', .bufferSize=0, .groupId=-1, .dynamicRangeProfile=0x1 }
+10-22 17:54:07.772   641   663 V WindowManager: AppCompatCamera: Display rotation policy is notified that Camera is closed, updating rotation.
+10-22 17:54:07.772   641   663 D WindowManager: AppCompatCamera: Active camera compat treatments: {}
+10-22 17:54:07.772  4129  4154 D SyncCaptureSessionImpl: [androidx.camera.camera2.internal.SynchronizedCaptureSessionImpl@add17ee] Session onConfigured()
+10-22 17:54:07.772  4129  4154 D CaptureSession: Attempting to send capture request onConfigured
+10-22 17:54:07.772  4129  4154 D CaptureSession: Issuing request for session.
+10-22 17:54:07.772  4129  4154 D Camera2CaptureRequestBuilder: createCaptureRequest
+10-22 17:54:07.773  4129  4154 D CaptureSession: CameraCaptureSession.onConfigured() mState=OPENED
+10-22 17:54:07.773   577  4168 I CameraService: Start camera streaming for mx.labandera.wear (PID 4129, UID 10235)
+10-22 17:54:07.773  4129  4154 D CaptureSession: CameraCaptureSession.onReady() OPENED
+10-22 17:54:07.775   499   499 I SurfaceFlinger: Display 4619827259835644672 policy changed
+10-22 17:54:07.775   499   499 I SurfaceFlinger: Previous: {defaultModeId=0, allowGroupSwitching=false, primaryRanges={physical=[0.00 Hz, inf Hz], render=[0.00 Hz, 60.00 Hz]}, appRequestRanges={physical=[0.00 Hz, inf Hz], render=[0.00 Hz, inf Hz]} idleScreenConfig=nullptr}
+10-22 17:54:07.775   499   499 I SurfaceFlinger: Current:  DisplayManagerPolicy{defaultModeId=0, allowGroupSwitching=false, primaryRanges={physical=[30.00 Hz, inf Hz], render=[30.00 Hz, 60.00 Hz]}, appRequestRanges={physical=[30.00 Hz, inf Hz], render=[30.00 Hz, 60.00 Hz]} idleScreenConfig=nullptr}
+10-22 17:54:07.775   499   499 I SurfaceFlinger: 0 mode changes were performed under the previous policy
+10-22 17:54:07.775   499   499 D SurfaceFlinger: setDesiredMode 4619827259835644672 {mode={fps=60.00 Hz, modePtr={id=0, vsyncRate=60.00 Hz, peakRefreshRate=60.00 Hz}}, emitEvent=true, force=false}
+10-22 17:54:08.644   641   664 I Choreographer: Skipped 51 frames!  The application may be doing too much work on its main thread.
+10-22 17:54:08.644  1021  1021 I Choreographer: Skipped 51 frames!  The application may be doing too much work on its main thread.
+10-22 17:54:08.644   641  1799 W AppOps  : Noting op not finished: uid 10215 pkg com.google.android.gms code 113 startTime of in progress event=1792710383480
+10-22 17:54:08.846   891  1086 I Choreographer: Skipped 63 frames!  The application may be doing too much work on its main thread.
+10-22 17:54:08.846   466   485 W libbinder.Binder: Binder transaction to android.hardware.graphics.composer3.IComposerClient, function: executeCommands, code: 5, took 1070ms. Data bytes: 196 Reply bytes: 240 Flags: 16
+10-22 17:54:08.846   641   663 V WindowManager: CameraOpen: cameraApp=ProcessRecord{45a06ca 4129:mx.labandera.wear/u0a235} cameraInfo.mPid=4129 cameraTask=Task{2c4111f #14 type=standard A=10235:mx.labandera.wear} cameraAppInfo.mTaskId=14
+10-22 17:54:08.846   641   663 V WindowManager: AppCompatCamera: Policy is notified that Camera 10 is opened for package: mx.labandera.wear.
+10-22 17:54:08.846   641   663 V WindowManager: AppCompatCamera: Activity is not eligible for camera compat treatment: ActivityRecord{15785150 u0 mx.labandera.wear/.MainActivity t14}.
+10-22 17:54:08.847   510   553 W libbinder.Binder: Binder transaction to android.hardware.graphics.allocator.IAllocator, function: allocate2, code: 2, took 1071ms. Data bytes: 292 Reply bytes: 140 Flags: 16
+10-22 17:54:08.848  4129  4139 W libbinder.Binder: Binder transaction to android.gui.IGraphicBufferProducer, function: UNKNOWN_FUNCTION_NAME, code: 2, took 1072ms. Data bytes: 112 Reply bytes: 28 Flags: 16
+10-22 17:54:08.848  4129  4139 I HWUI    : Davey! duration=1137ms; Flags=0, FrameTimelineVsyncId=147104, IntendedVsync=2879130447498, Vsync=2879130447498, InputEventId=0, HandleInputStart=2879132266317, AnimationStart=2879132266827, PerformTraversalsStart=2879132331367, DrawStart=2879135340660, FrameDeadline=2879163780830, FrameStartTime=2879132264897, FrameInterval=16666666, WorkloadTarget=16666666, AnimationTime=2879130447498, SyncQueued=2879135567280, SyncStart=2879135580029, IssueDrawCommandsStart=2879135660630, SwapBuffers=2879193654160, FrameCompleted=2880267632174, DequeueBufferDuration=2370, QueueBufferDuration=250370, GpuCompleted=2880267632174, SwapBuffersCompleted=2880267503214, DisplayPresentTime=0, CommandSubmissionCompleted=2879193654160, 
+10-22 17:54:08.849   641   748 I ImeTracker: mx.labandera.wear:1d311ea: onRequestHide at ORIGIN_SERVER reason HIDE_UNSPECIFIED_WINDOW fromUser false userId 0 displayId 0
+10-22 17:54:08.849   891   891 I Choreographer: Skipped 64 frames!  The application may be doing too much work on its main thread.
+10-22 17:54:08.849  4129  4129 I Choreographer: Skipped 64 frames!  The application may be doing too much work on its main thread.
+10-22 17:54:08.851   641  1799 D InputMethodManagerService: Attach new input but force hide
+10-22 17:54:08.851   641  1799 I ImeTracker: mx.labandera.wear:46dfc8da: onRequestHide at ORIGIN_SERVER reason HIDE_SOFT_INPUT fromUser false userId 0 displayId 0
+10-22 17:54:08.851   641  1799 I ImeTracker: mx.labandera.wear:46dfc8da: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-22 17:54:08.851   641  1799 W InputChannel-JNI: Channel already disposed.
+10-22 17:54:08.852  4129  4129 D InsetsController: hide(ime())
+10-22 17:54:08.852  4129  4129 I ImeTracker: mx.labandera.wear:1d311ea: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+10-22 17:54:08.853  1784  1784 I GoogleInputMethodService: GoogleInputMethodService.onFinishInput():2259 
+10-22 17:54:08.854  1784  1784 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():103 repeatCheckTimes = 0, locked = false
+10-22 17:54:08.854   641  1799 I ImeTracker: system_server:51a86ea1: onRequestHide at ORIGIN_SERVER reason IME_REQUESTED_CHANGED_LISTENER fromUser false displayId 0
+10-22 17:54:08.854  1784  1784 I GoogleInputMethodService: GoogleInputMethodService.onStartInput():1446 onStartInput(EditorInfo{EditorInfo{packageName=mx.labandera.wear, inputType=0, inputTypeString=NULL, enableLearning=false, autoCorrection=false, autoComplete=false, imeOptions=0, privateImeOptions=null, actionName=UNSPECIFIED, actionLabel=null, initialSelStart=-1, initialSelEnd=-1, initialCapsMode=0, label=null, fieldId=0, fieldName=null, extras=null, hintText=null, hintLocales=[]}}, false)
+10-22 17:54:08.854   641   663 I ImeTracker: system_server:51a86ea1: onCancelled at PHASE_SERVER_SHOULD_HIDE
+10-22 17:54:08.854  1784  1784 W AndroidIME: LatinIMEBase.updateInputViewCoverNavigation():327 Null input view, cannot update padding!
+10-22 17:54:08.855  1784  1784 I Module  : DeviceLockedStatusModuleProvider$Module.updateDeviceLockedStatus():103 repeatCheckTimes = 1, locked = false
+10-22 17:54:08.855   641  1799 W PackageConfigPersister: App-specific configuration not found for packageName: mx.labandera.wear and userId: 0
+10-22 17:54:08.856  4129  4154 D StreamStateObserver: Update Preview stream state to STREAMING
+10-22 17:54:08.858  4129  4178 D nativeloader: Load /data/app/~~fu1g4HBSwHaue22sbqWCNA==/mx.labandera.wear-P9bd5c2Pi2uMiRqE6wNWNQ==/base.apk!/lib/x86_64/libbarhopper_v3.so using class loader ns clns-9 (caller=/data/app/~~fu1g4HBSwHaue22sbqWCNA==/mx.labandera.wear-P9bd5c2Pi2uMiRqE6wNWNQ==/base.apk): ok
+10-22 17:54:08.869  4129  4178 I tflite  : Initialized TensorFlow Lite runtime.
+10-22 17:54:08.875  4129  4178 I tflite  : Created TensorFlow Lite XNNPACK delegate for CPU.
+10-22 17:54:08.875  4129  4178 I tflite  : Replacing 43 out of 43 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 1 partitions for the whole graph.
+10-22 17:54:08.876  4129  4178 I tflite  : Replacing 42 out of 47 node(s) with delegate (TfLiteXNNPackDelegate) node, yielding 11 partitions for the whole graph.
+10-22 17:54:08.876  4129  4178 I native  : I0000 00:00:1792713248.876447    4178 oned_decoder_client.cc:695] barhopper::deep_learning::OnedDecoderClient is created successfully.
+10-22 17:54:08.926  4129  4149 D TransportRuntime.SQLiteEventStore: Storing event with priority=VERY_LOW, name=FIREBASE_ML_SDK for destination cct
+10-22 17:54:08.927  4129  4149 D TransportRuntime.JobInfoScheduler: Upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) is already scheduled. Returning...
+10-22 17:54:09.007   891   902 W System  : A resource failed to call release. 
+10-22 17:54:09.063  4129  4149 D TransportRuntime.SQLiteEventStore: Storing event with priority=VERY_LOW, name=FIREBASE_ML_SDK for destination cct
+10-22 17:54:09.064  4129  4149 D TransportRuntime.JobInfoScheduler: Upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) is already scheduled. Returning...
+10-22 17:54:09.065  4129  4149 D TransportRuntime.SQLiteEventStore: Storing event with priority=VERY_LOW, name=FIREBASE_ML_SDK for destination cct
+10-22 17:54:09.065  4129  4149 D TransportRuntime.JobInfoScheduler: Upload for context TransportContext(cct, VERY_LOW, MSRodHRwczovL2ZpcmViYXNlbG9nZ2luZy5nb29nbGVhcGlzLmNvbS92MGNjL2xvZy9iYXRjaD9mb3JtYXQ9anNvbl9wcm90bzNc) is already scheduled. Returning...
+10-22 17:54:09.117   641   790 E Nl80211Native: getChannelsMhzForBand: Wiphy index not recorded for band 8
+10-22 17:54:09.117   641   790 E Nl80211Native: getChannelsMhzForBand: Wiphy index not recorded for band 16
+10-22 17:54:09.117   641   790 D Nl80211Native: Ignoring unsupported scan type 2
+10-22 17:54:09.118   641   790 I Nl80211Proxy: Sending Nl80211 message: GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{352}, nlmsg_type{30()}, nlmsg_flags{5(NLM_F_REQUEST|NLM_F_ACK)}, nlmsg_seq{141}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{33}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{-32723}, nla_value{04000000}, }, StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{0F000000}, }, StructNlAttr{ nla_len{308}, nla_type{-32724}, nla_value{080000006C09000008000100710900000800020076090000080003007B09000008000400800900000800050085090000080006008A090000080007008F0900000800080094090000080009009909000008000A009E09000008000B00A309000008000C00A809000008000D00B409000008000E003C14000008000F005014000008001000641400000800110078140000080012008C14000008001300A014000008001400B414000008001500C8140000080016007C150000080017009015000008001800A415000008001900B815000008001A00CC15000008001B00E015000008001C00F415000008001D000816000008001E001C16000008001F0030160000080020004416000008002100711600000800220085160000080023009916000008002400AD16000008002500C1160000}, }, StructNlAttr{ nla_len{8}, nla_type{158}, nla_value{08000000}, }]} }
+10-22 17:54:09.118   641   790 I Nl80211Proxy: Received NLMSG_ERROR with error 0 for message GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{352}, nlmsg_type{30()}, nlmsg_flags{5(NLM_F_REQUEST|NLM_F_ACK)}, nlmsg_seq{141}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{33}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{-32723}, nla_value{04000000}, }, StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{0F000000}, }, StructNlAttr{ nla_len{308}, nla_type{-32724}, nla_value{080000006C09000008000100710900000800020076090000080003007B09000008000400800900000800050085090000080006008A090000080007008F0900000800080094090000080009009909000008000A009E09000008000B00A309000008000C00A809000008000D00B409000008000E003C14000008000F005014000008001000641400000800110078140000080012008C14000008001300A014000008001400B414000008001500C8140000080016007C150000080017009015000008001800A415000008001900B815000008001A00CC15000008001B00E015000008001C00F415000008001D000816000008001E001C16000008001F0030160000080020004416000008002100711600000800220085160000080023009916000008002400AD16000008002500C1160000}, }, StructNlAttr{ nla_len{8}, nla_type{158}, nla_value{08000000}, }]} }
+10-22 17:54:09.687   641  1818 D WindowManager: setClientSurface Surface(name=VRI-ScreenDecorOverlay#107)/@0xf18cebf for 2fe5b9b ScreenDecorOverlay
+10-22 17:54:09.687   891  1086 D WindowOnBackDispatcher: setTopOnBackInvokedCallback (unwrapped): null
+10-22 17:54:09.687   891  1433 I Surface : Creating surface for consumer unnamed-891-8 with slotExpansion=1 for 64 slots
+10-22 17:54:09.688   891  1433 I Surface : Creating surface for consumer VRI[ScreenDecorOverlay]#8(BLAST Consumer)8 with slotExpansion=1 for 64 slots
+10-22 17:54:09.688   641  1818 D CoreBackPreview: Window{e79c596 u0 Splash Screen mx.labandera.wear EXITING}: Setting back callback null
+10-22 17:54:10.096  1021  1021 D BaseActivity: Launcher flags updated: [] -[state_started]
+10-22 17:54:10.097  1021  1021 D BaseDepthController: setSurface:
+10-22 17:54:10.097  1021  1021 D BaseDepthController: 	mWaitingOnSurfaceValidity: false
+10-22 17:54:10.097  1021  1021 D BaseDepthController: 	mBaseSurface: null
+10-22 17:54:10.097  1021  1021 D BaseDepthController: mSurface is null and mCurrentBlur is: 0
+10-22 17:54:10.097  1021  1021 D LauncherStateManager: StateManager.goToState: fromState: Normal, toState: Normal, partial trace:
+10-22 17:54:10.097  1021  1021 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 9bf9d747b28c192bd799fb0161a08498ac2b938f666e7966c0095b4da2c9b843:26)
+10-22 17:54:10.097  1021  1021 D LauncherStateManager: 	at com.android.launcher3.statemanager.StateManager.moveToRestState(go/retraceme 9bf9d747b28c192bd799fb0161a08498ac2b938f666e7966c0095b4da2c9b843:35)
+10-22 17:54:10.097  1021  1021 D LauncherStateManager: 	at com.android.launcher3.statemanager.StatefulActivity.onStop(go/retraceme 9bf9d747b28c192bd799fb0161a08498ac2b938f666e7966c0095b4da2c9b843:31)
+10-22 17:54:10.097  1021  1021 D LauncherStateManager: StateManager.onRepeatStateSetAborted: state: Normal
+10-22 17:54:10.097  1021  1021 D KeyboardStateManager: hideKeyboard
+10-22 17:54:10.097  1021  1021 D KeyboardStateManager: isImeShown: false
+10-22 17:54:10.097  1021  1021 D StatsLog: LAUNCHER_ONSTOP
+10-22 17:54:10.098  1021  1021 D StatsLog: LAUNCHER_GOOGLE_SEARCH_RESTORE_LIST_SIZE_AFTER_ACTIVITY_RESTART
+10-22 17:54:10.325  1021  1039 W s.nexuslauncher: Reducing the number of considered missed Gc histogram windows from 282 to 100
+10-22 17:54:10.515  4129  4140 I HWUI    : Davey! duration=819ms; Flags=0, FrameTimelineVsyncId=147453, IntendedVsync=2880697114102, Vsync=2880880447428, InputEventId=0, HandleInputStart=2881107318613, AnimationStart=2881107319453, PerformTraversalsStart=2881107466983, DrawStart=2881107549783, FrameDeadline=2881330447410, FrameStartTime=2880895623504, FrameInterval=16666666, WorkloadTarget=16666666, AnimationTime=2880880447428, SyncQueued=2881107796753, SyncStart=2881109644275, IssueDrawCommandsStart=2881109674015, SwapBuffers=2881110647136, FrameCompleted=2881518122251, DequeueBufferDuration=201574012, QueueBufferDuration=1565451, GpuCompleted=2881518122251, SwapBuffersCompleted=2881516854261, DisplayPresentTime=0, CommandSubmissionCompleted=2881110647136, 
+10-22 17:54:10.515  1021  1041 W System  : A resource failed to call release. 
+10-22 17:54:10.516  1021  1041 W System  : A resource failed to call release. 
+10-22 17:54:10.516  1021  1041 W System  : A resource failed to call release. 
+10-22 17:54:10.516  1021  1041 W System  : A resource failed to call release. 
+10-22 17:54:10.516  1021  1041 W System  : A resource failed to call release. 
+10-22 17:54:10.516  1021  1041 W System  : A resource failed to call release. 
+10-22 17:54:10.516  1021  1041 W System  : A resource failed to call release. 
+10-22 17:54:10.516  1021  1041 W System  : A resource failed to call release. 
+10-22 17:54:10.516  1021  1041 W System  : A resource failed to call release. 
+10-22 17:54:10.517   641  1591 E TaskPersister: File error accessing recents directory (directory doesn't exist?).
+10-22 17:54:10.933   641   792 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-22 17:54:10.934   641   792 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-22 17:54:10.934   641   792 D InetDiagMessage: Destroyed live tcp sockets for uids={10175} in 1ms
+10-22 17:54:10.934   641   792 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-22 17:54:10.934   641   792 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-22 17:54:10.934   641   792 D InetDiagMessage: Destroyed live tcp sockets for uids={20175} in 0ms
+10-22 17:54:12.596  4129  4177 I HWUI    : Davey! duration=1024ms; Flags=0, FrameTimelineVsyncId=147797, IntendedVsync=2882363780702, Vsync=2882547114028, InputEventId=0, HandleInputStart=2882558451431, AnimationStart=2882558452171, PerformTraversalsStart=2882558452561, DrawStart=2882558494571, FrameDeadline=2882580447360, FrameStartTime=2882558241641, FrameInterval=16666666, WorkloadTarget=16666666, AnimationTime=2882547114028, SyncQueued=2882558565921, SyncStart=2882771458881, IssueDrawCommandsStart=2882771760231, SwapBuffers=2883186865802, FrameCompleted=2883601366653, DequeueBufferDuration=1171, QueueBufferDuration=169160, GpuCompleted=2883389356285, SwapBuffersCompleted=2883601366653, DisplayPresentTime=0, CommandSubmissionCompleted=2883186865802, 
+10-22 17:54:12.809  4129  4183 D ProfileInstaller: Installing profile for mx.labandera.wear
+10-22 17:54:13.013  1186  1186 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.common.telemetry.service.START dat=chimera-action:/... xflg=0x4 cmp=com.google.android.gms/.chimera.PersistentApiService }
+10-22 17:54:13.230  4129  4177 I HWUI    : Davey! duration=828ms; Flags=0, FrameTimelineVsyncId=147941, IntendedVsync=2883613780652, Vsync=2883813780644, InputEventId=0, HandleInputStart=2883813932322, AnimationStart=2883813932843, PerformTraversalsStart=2883813933152, DrawStart=2883814037592, FrameDeadline=2884047113968, FrameStartTime=2883813858023, FrameInterval=16666666, WorkloadTarget=16666666, AnimationTime=2883813780644, SyncQueued=2883814101353, SyncStart=2884018213025, IssueDrawCommandsStart=2884018237096, SwapBuffers=2884432548716, FrameCompleted=2884646444427, DequeueBufferDuration=970, QueueBufferDuration=155720, GpuCompleted=2884646444427, SwapBuffersCompleted=2884434359698, DisplayPresentTime=0, CommandSubmissionCompleted=2884432548716, 
+10-22 17:54:14.673  4129  4141 I HWUI    : Davey! duration=825ms; Flags=0, FrameTimelineVsyncId=148085, IntendedVsync=2884863786137, Vsync=2885047119452, InputEventId=0, HandleInputStart=2885061773518, AnimationStart=2885061774178, PerformTraversalsStart=2885061774478, DrawStart=2885061813808, FrameDeadline=2885297113918, FrameStartTime=2885061699528, FrameInterval=16666665, WorkloadTarget=16666666, AnimationTime=2885047119452, SyncQueued=2885061855548, SyncStart=2885264732080, IssueDrawCommandsStart=2885264753680, SwapBuffers=2885265141111, FrameCompleted=2885892021900, DequeueBufferDuration=212447368, QueueBufferDuration=53299, GpuCompleted=2885891940720, SwapBuffersCompleted=2885892021900, DisplayPresentTime=0, CommandSubmissionCompleted=2885265141111, 
+10-22 17:54:15.090  4129  4177 I HWUI    : Davey! duration=814ms; Flags=0, FrameTimelineVsyncId=148134, IntendedVsync=2885280447252, Vsync=2885463780578, InputEventId=0, HandleInputStart=2885477253460, AnimationStart=2885477253970, PerformTraversalsStart=2885477254279, DrawStart=2885477305799, FrameDeadline=2885913786033, FrameStartTime=2885477077279, FrameInterval=16666666, WorkloadTarget=16666666, AnimationTime=2885463780578, SyncQueued=2885477358260, SyncStart=2885892069691, IssueDrawCommandsStart=2885892096780, SwapBuffers=2886094869983, FrameCompleted=2886509980465, DequeueBufferDuration=1111, QueueBufferDuration=53160, GpuCompleted=2886509980465, SwapBuffersCompleted=2886307295832, DisplayPresentTime=0, CommandSubmissionCompleted=2886094869983, 
+10-22 17:54:15.775   641   730 D ActivityManager: freezing 1661 com.google.android.apps.photos
+10-22 17:54:15.779   641   792 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET, states=14
+10-22 17:54:15.779   641   792 D InetDiagMessage: Destroyed 0 sockets, proto=IPPROTO_TCP, family=AF_INET6, states=14
+10-22 17:54:15.779   641   792 D InetDiagMessage: Destroyed live tcp sockets for uids={10175} in 0ms
+10-22 17:54:15.924  1011  1207 D SatelliteController: isInCarrierRoamingNbIotNtn: satellite is disabled
+10-22 17:54:15.924  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-22 17:54:15.924  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:15.924  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:15.924  1011  1207 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-22 17:54:15.924  1011  1207 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-22 17:54:15.925  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-22 17:54:15.925  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:15.925  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:15.925  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-22 17:54:15.925  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-22 17:54:15.925  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:15.925  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:15.925  1011  1207 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-22 17:54:15.925  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: Checking connect type from PLMN config for subId: 1
+10-22 17:54:15.925  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:15.925  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:15.925  1011  1207 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-22 17:54:15.925  1011  1207 D SatelliteController: getSatellitePerPlmnConfiguration: invalid subId or not supported via carrier.
+10-22 17:54:15.925  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: config: null
+10-22 17:54:15.925  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:15.925  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:15.925  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectTypeViaConfigUpdater: return null (satelliteConfig is null)
+10-22 17:54:15.925  1011  1207 D SatelliteController: getCarrierRoamingNtnConnectType: Falling back to global carrier config connect type: 0
+10-22 17:54:15.925  1011  1207 D TelephonyConfigUpdateInstallReceiver: getConfigParser: domain=satellite
+10-22 17:54:15.925  1011  1207 V SatelliteController: satelliteConfigParser is not ready
+10-22 17:54:15.925  1011  1207 D SatelliteController: isSatelliteAttachSupportedViaConfigupdater: return null (satelliteConfig is null)
+10-22 17:54:16.783   641   786 D WifiNative: Scan result ready event
+10-22 17:54:16.783   641   790 I Nl80211Proxy: Sending Nl80211 message: GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{20}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{142}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{5}, version{1}, reserved{0} }}, attributes{[]} }
+10-22 17:54:16.783   641   790 I Nl80211Proxy: Received NLMSG_DONE for message GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{20}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{142}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{5}, version{1}, reserved{0} }}, attributes{[]} }
+10-22 17:54:16.783   641   790 W Nl80211Utils: Malformed NEW_INTERFACE response: missing attributes
+10-22 17:54:16.783   641   790 I Nl80211Proxy: Sending Nl80211 message: GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{28}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{143}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{32}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{0F000000}, }]} }
+10-22 17:54:16.783   641   790 I Nl80211Proxy: Received NLMSG_DONE for message GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{28}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{143}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{32}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{0F000000}, }]} }
+10-22 17:54:16.783  1186  2363 I WifiScanner: onFullResults
+10-22 17:54:16.783  1186  2489 I WifiScanner: onFullResults
+10-22 17:54:16.784   641   786 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+10-22 17:54:16.784   641   786 D WifiScoreReport: setShouldReduceNetworkScore=false mNetworkAgent is null? true
+10-22 17:54:16.784   641   786 D WifiClientModeImpl[7415:wlan0]: CMD_START_CONNECT  my state DisconnectedState nid=0 roam=false
+10-22 17:54:16.784   641   789 W LastMileLogger: Failed to open free_buffer pseudo-file: /sys/kernel/debug/tracing/instances/wifi/free_buffer: open failed: ENOENT (No such file or directory)
+10-22 17:54:16.784   641   789 W LastMileLogger: Failed to arm fail-safe.
+10-22 17:54:16.784   641   786 E Nl80211Native: Cannot abort scan when iface isn't scanning: wlan0
+10-22 17:54:16.784   641   786 D SupplicantStaIfaceHalAidlBase: connectToNetwork "AndroidWifi"NONE, actualSsid=null
+10-22 17:54:16.784   641   786 D SupplicantStaIfaceHalAidlBase: Network is already saved, will not trigger remove and add.
+10-22 17:54:16.784   875   875 I wpa_supplicant: wlan0: SME: Trying to authenticate with 02:15:b2:00:00:01 (SSID='AndroidWifi' freq=2437 MHz)
+10-22 17:54:16.785   875   875 I wpa_supplicant: assoc key_mgmt 0x4 network key_mgmt 0x4
+10-22 17:54:16.785   641   786 D WifiCountryCode: evaluateAllCmmStateAndApplyIfAllReady: {ConcreteClientModeManager{id=7337 iface=wlan0 role=ROLE_CLIENT_PRIMARY}=false}
+10-22 17:54:16.785   641   786 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendStickyBroadcast:1775 com.android.server.wifi.ClientModeImpl.sendNetworkChangeBroadcast:3298 com.android.server.wifi.ClientModeImpl.lambda$sendNetworkChangeBroadcastWithCurrentState$16:3275 com.android.server.wifi.ClientModeImpl.$r8$lambda$Mjx94RT82nKyrzK5lEIlrXrNMhg:0 com.android.server.wifi.ClientModeImpl$$ExternalSyntheticLambda14.send:0 
+10-22 17:54:16.785   641   786 D WifiClientModeImpl[7415:wlan0]: Start Connecting Watchdog 6
+10-22 17:54:16.785   641   786 I WifiClientModeImpl[7415:wlan0]: Update current security type to 0
+10-22 17:54:16.961   641   663 W ActivityTaskManager: Launch timeout has expired, giving up wake lock!
+10-22 17:54:17.377   641   641 W Looper  : Slow delivery took 260ms main app=system_server main=true group=FOREGROUND h=com.android.server.notification.NotificationManagerService$WorkerHandler c=com.android.server.notification.NotificationManagerService$NotificationListeners$1$$ExternalSyntheticLambda0@b1f2589 m=0
+10-22 17:54:17.592  4129  4141 I HWUI    : Davey! duration=831ms; Flags=0, FrameTimelineVsyncId=148509, IntendedVsync=2888180447136, Vsync=2888380447128, InputEventId=0, HandleInputStart=2888382173138, AnimationStart=2888382173808, PerformTraversalsStart=2888382174108, DrawStart=2888382221648, FrameDeadline=2888413780460, FrameStartTime=2888382106408, FrameInterval=16666666, WorkloadTarget=16666666, AnimationTime=2888380447128, SyncQueued=2888382279878, SyncStart=2888382294028, IssueDrawCommandsStart=2888382443338, SwapBuffers=2888384059989, FrameCompleted=2889012167650, DequeueBufferDuration=1590, QueueBufferDuration=74440, GpuCompleted=2889012167650, SwapBuffersCompleted=2888798328030, DisplayPresentTime=0, CommandSubmissionCompleted=2888384059989, 
+10-22 17:54:17.592   875   875 I wpa_supplicant: wlan0: Trying to associate with 02:15:b2:00:00:01 (SSID='AndroidWifi' freq=2437 MHz)
+10-22 17:54:17.592   875   875 I wpa_supplicant: assoc key_mgmt 0x4 network key_mgmt 0x4
+10-22 17:54:17.593   641   786 I WifiClientModeImpl[7415:wlan0]: Update current security type to 0
+10-22 17:54:17.600  4129  4135 I .labandera.wear: Background concurrent mark compact GC freed 7088KB AllocSpace bytes, 4(1004KB) LOS objects, 49% free, 4503KB/9006KB, paused 55us,685us total 223.526ms
+10-22 17:54:18.011   982  1144 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 15 up
+10-22 17:54:18.012   875   875 I wpa_supplicant: assoc key_mgmt 0x4 network key_mgmt 0x4
+10-22 17:54:18.012   875   875 I wpa_supplicant: wlan0: Associated with 02:15:b2:00:00:01
+10-22 17:54:18.012   875   875 I wpa_supplicant: wlan0: CTRL-EVENT-CONNECTED - Connection to 02:15:b2:00:00:01 completed [id=0 id_str=%7B%22configKey%22%3A%22%5C%22AndroidWifi%5C%22NONE%22%2C%22creatorUid%22%3A%2210194%22%7D]
+10-22 17:54:18.012   875   875 I wpa_supplicant: assoc key_mgmt 0x4 network key_mgmt 0x4
+10-22 17:54:18.012   875   875 I wpa_supplicant: wlan0: CTRL-EVENT-SUBNET-STATUS-UPDATE status=0
+10-22 17:54:18.019   641   786 E Nl80211Native: Failed to get BSSID from association event 38
+10-22 17:54:18.019   641   786 I Nl80211Proxy: Sending Nl80211 message: GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{20}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{144}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{5}, version{1}, reserved{0} }}, attributes{[]} }
+10-22 17:54:18.078   982  1144 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 15 up
+10-22 17:54:18.215   641   786 I Nl80211Proxy: Received NLMSG_DONE for message GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{20}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{144}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{5}, version{1}, reserved{0} }}, attributes{[]} }
+10-22 17:54:18.215   641   786 W Nl80211Utils: Malformed NEW_INTERFACE response: missing attributes
+10-22 17:54:18.215   641   786 I Nl80211Proxy: Sending Nl80211 message: GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{28}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{145}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{32}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{0F000000}, }]} }
+10-22 17:54:18.215   641   786 I Nl80211Proxy: Received NLMSG_DONE for message GenericNetlinkMsg{ nlHeader{StructNlMsgHdr{ nlmsg_len{28}, nlmsg_type{30()}, nlmsg_flags{769(NLM_F_REQUEST|NLM_F_DUMP)}, nlmsg_seq{145}, nlmsg_pid{0} }}, genNlHeader{StructGenNlMsgHdr{ command{32}, version{1}, reserved{0} }}, attributes{[StructNlAttr{ nla_len{8}, nla_type{3}, nla_value{0F000000}, }]} }
+10-22 17:54:18.215   641   786 I WifiClientModeImpl[7415:wlan0]: Update current security type to 0
+10-22 17:54:18.216   641   786 I WifiClientModeImpl[7415:wlan0]: Update current security type to 0 from network connection event.
+10-22 17:54:18.216   641   786 I ApplicationQosPolicyRequestHandler: Queueing all policies on iface=wlan0. numPolicies=0
+10-22 17:54:18.216   641   786 I ApplicationQosPolicyRequestHandler: 0 policies contain QosCharacteristics
+10-22 17:54:18.216   641   786 I ConnectivityService: Update score for net 106 : +IS_UNMETERED
+10-22 17:54:18.217   641   786 D ConnectivityService: registerNetworkAgent NetworkAgentInfo{network{106}  handle{458672230413}  ni{WIFI CONNECTING extra: } created=2026-10-22T23:54:18.216Z Score(Policies : IS_UNMETERED ; KeepConnected : 0)   lp{{InterfaceName: wlan0 LinkAddresses: [ ] DnsAddresses: [ ] Domains: null MTU: 0 Routes: [ ]}}  nc{[ Transports: WIFI Capabilities: NOT_METERED&INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_ROAMING&NOT_CONGESTED&NOT_SUSPENDED&NOT_VCN_MANAGED&NOT_BANDWIDTH_CONSTRAINED LinkUpBandwidth>=12000Kbps LinkDnBandwidth>=30000Kbps Specifier: <WifiNetworkAgentSpecifier [WifiConfiguration=, SSID="AndroidWifi", BSSID=02:15:b2:00:00:01, band=1, mMatchLocalOnlySpecifiers=false]> TransportInfo: <SSID: "AndroidWifi", BSSID: 02:15:b2:00:00:01, MAC: 02:15:b2:00:00:00, IP: null, Security type: 0, Supplicant state: ASSOCIATED, Wi-Fi standard: legacy, RSSI: -50, Link speed: -1Mbps, Tx Link speed: -1Mbps, Max Supported Tx Link speed: 54Mbps, Calculated Tx : 0Mbps, Rx Link speed: -1Mbps, Max Supported Rx Link speed: 54Mbps, Calculated Rx : 0Mbps, Frequency: 2437MHz, Net ID: 0, Metered hint: false, score: 0, isUsable: true, CarrierMerged: false, SubscriptionId: -1, IsPrimary: 1, Trusted: true, Restricted: false, Ephemeral: false, OEM paid: false, OEM private: false, OSU AP: false, FQDN: <none>, Provider friendly name: <none>, Requesting package name: <none>"AndroidWifi"openMLO Information: , Is TID-To-Link negotiation supported by the AP: false, AP MLD Address: <none>, AP MLO Link Id: <none>, AP MLO Affiliated links: <none>, Vendor Data: <none>> SignalStrength: -50 AllowedUids: <{10194}> OwnerUid: 10194 AdminUids: [10194] SSID: "AndroidWifi" UnderlyingNetworks: Null]}  factorySerialNumber=6}
+10-22 17:54:18.217   641   792 D ConnectivityService: Message EVENT_NETWORK_SCORE_CHANGED enqueued for agent with netId 106
+10-22 17:54:18.217   641   786 W ContextImpl: Calling a method in the system process without a qualified user: android.app.ContextImpl.sendStickyBroadcast:1775 com.android.server.wifi.ClientModeImpl.sendNetworkChangeBroadcast:3298 com.android.server.wifi.ClientModeImpl.lambda$sendNetworkChangeBroadcastWithCurrentState$16:3275 com.android.server.wifi.ClientModeImpl.$r8$lambda$Mjx94RT82nKyrzK5lEIlrXrNMhg:0 com.android.server.wifi.ClientModeImpl$$ExternalSyntheticLambda14.send:0 
+10-22 17:54:18.218   641   792 D ConnectivityService: [106 WIFI] EVENT_NETWORK_INFO_CHANGED, going from CONNECTING to CONNECTING
+10-22 17:54:18.218   641   792 D ConnectivityService: Adding iface wlan0 to network 106
+10-22 17:54:18.219   982  4184 D NetworkMonitor/106: checkAndRenewResourceConfig: update captive portal https urls to [https://www.google.com/generate_204]
+10-22 17:54:18.219   982  4184 D NetworkMonitor/106: checkAndRenewResourceConfig: update captive portal http urls to [http://connectivitycheck.gstatic.com/generate_204]
+10-22 17:54:18.219   982  4184 D NetworkMonitor/106: checkAndRenewResourceConfig: update captive portal fallback urls to[http://www.google.com/gen_204, http://play.googleapis.com/generate_204]
+10-22 17:54:18.219   982  4184 D NetworkMonitor: Starting on network 106 with capport HTTPS URL [https://www.google.com/generate_204] and HTTP URL [http://connectivitycheck.gstatic.com/generate_204]
+10-22 17:54:18.418   641   786 I WifiClientModeImpl[7415:wlan0]: Update current security type to 0
+10-22 17:54:18.499   641   786 I HalDevMgr: bestIfaceCreationProposal is null, requestIface=STA, existingIface=[name=wlan0 type=STA]
+10-22 17:54:18.834   641   792 D ConnectivityService: Setting DNS servers for network 106 to []
+10-22 17:54:18.834   641   792 D DnsManager: sendDnsConfigurationForNetwork(ResolverParamsParcel{netId: 106, sampleValiditySeconds: 1800, successThreshold: 25, minSamples: 8, maxSamples: 64, baseTimeoutMsec: 0, retryCount: 0, servers: [], domains: [], tlsName: , tlsServers: [], tlsFingerprints: [], caCertificate: , tlsConnectTimeoutMs: 0, resolverOptions: null, transportTypes: [1], meteredNetwork: false, dohParams: null, interfaceNames: [wlan0]})
+10-22 17:54:18.835   641   641 W Looper  : Drained
+10-22 17:54:18.837   982  1144 D IpClient/wlan0: routeUpdated: fe80::/64 -> :: wlan0 mtu 0
+10-22 17:54:18.837   982  1144 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 15 up
+10-22 17:54:18.837   982  1144 D IpClient/wlan0: addressUpdated: fe80::fa7b:3c13:a9b4:f5b/64 on ifindex 15 flags 0x000008C4 scope 253
+10-22 17:54:18.837   982  1144 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 15 up
+10-22 17:54:18.837   982  1144 D IpClient/wlan0: interfaceLinkStateChanged: ifindex 15 up
+10-22 17:54:18.839   982  1144 D IpClient.wlan0: set max DTIM multiplier to 1
+10-22 17:54:18.839   641   786 E WifiStaIfaceAidlImpl: setDtimMultiplier failed with service-specific exception: android.os.ServiceSpecificException:  (code 4)
+10-22 17:54:19.049   509   509 I adbd    : adbd service requested 'shell,v2,TERM=xterm-256color:export ANDROID_LOG_TAGS=''; exec logcat '-d''
+10-22 17:54:19.049   982  1144 D DhcpClient: l2key: W778cdb136189a9fa lease address: /10.0.2.16 lease expiry: 1792798873662 current time: 1792713259049
+10-22 17:54:19.049   982  1144 D DhcpClient: Broadcasting DHCPREQUEST ciaddr=0.0.0.0 request=10.0.2.16 serverid=null
+10-22 17:54:19.252   982  1144 D DhcpClient: Received packet: 02:15:b2:00:00:00 ACK: your new IP /10.0.2.16, netmask /255.255.255.0, gateways [/10.0.2.2] DNS servers: /10.0.2.3 , lease time 86400, domain null
+10-22 17:54:19.253   982  1144 D DhcpClient: Confirmed lease: com.android.networkstack.android.net.DhcpResults@8587a94b DHCP server /10.0.2.2 Vendor info null lease 86400 seconds Servername 
+10-22 17:54:19.267   982  1144 D IpClient/wlan0: addressUpdated: 10.0.2.16/24 on ifindex 15 flags 0x00000000 scope 0
+10-22 17:54:19.271   982  1144 D DhcpClient: Scheduling renewal in 43199s
+10-22 17:54:19.271   982  1144 D DhcpClient: Scheduling rebind in 75599s
+10-22 17:54:19.271   982  1144 D DhcpClient: Scheduling expiry in 86399s
