@@ -63,10 +63,16 @@ jwt_exp_diff() { # $1=token -> exp-iat
 }
 
 restart_backend() {
-  pkill -f "nodemon[.]js" 2>/dev/null
-  pkill -f "bin[.]js src/index[.]ts" 2>/dev/null
-  sleep 2
-  (cd "$ROOT/backend" && nohup pnpm dev > /tmp/labandera-backend.log 2>&1 &)
+  # Si el backend corre bajo pm2, reiniciarlo (los contadores de rate limit
+  # viven en memoria y se limpian con el reinicio)
+  if command -v pm2 >/dev/null && pm2 pid backend >/dev/null 2>&1; then
+    pm2 restart backend >/dev/null
+  else
+    pkill -f "nodemon[.]js" 2>/dev/null
+    pkill -f "bin[.]js src/index[.]ts" 2>/dev/null
+    sleep 2
+    (cd "$ROOT/backend" && nohup pnpm dev > /tmp/labandera-backend.log 2>&1 &)
+  fi
   for i in $(seq 1 45); do
     sleep 2
     c=$(curl -s -o /dev/null -w "%{http_code}" "$BASE/api/articles")
@@ -81,7 +87,10 @@ PSQL "DELETE FROM \"Article\" WHERE slug IN ('articulo-prueba-caja-negra','artic
 PSQL "DELETE FROM \"Category\" WHERE name IN ('Categoría Práctica 7','Categoría Práctica 7 editada')"
 PSQL "DELETE FROM \"TotpBackupCode\" WHERE \"userId\" IN (SELECT id FROM \"User\" WHERE email LIKE '%@labandera.test')"
 PSQL "DELETE FROM \"User\" WHERE email LIKE '%@labandera.test'"
-echo "[prep] BD limpia de datos de ejecuciones previas"
+# Desactivar 2FA en las cuentas seed (deben loguear con token directo)
+PSQL "UPDATE \"User\" SET \"totpEnabled\" = false, \"totpSecret\" = NULL, \"totpEnabledAt\" = NULL WHERE email IN ('admin@labandera.mx','editor@labandera.mx','usuario@labandera.mx')"
+PSQL "DELETE FROM \"TotpBackupCode\" WHERE \"userId\" IN (SELECT id FROM \"User\" WHERE email IN ('admin@labandera.mx','editor@labandera.mx','usuario@labandera.mx'))"
+echo "[prep] BD limpia de datos de ejecuciones previas y 2FA de seed desactivado"
 
 # --- prepárame los tokens ---------------------------------------------------
 echo "== Preparación: login de cuentas seed =="
