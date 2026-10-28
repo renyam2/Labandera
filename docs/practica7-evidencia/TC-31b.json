@@ -1,0 +1,10 @@
+{
+  "tc": "TC-31b",
+  "requisito": "REQ-PER-02",
+  "descripcion": "Registro con email ya existente (admin@labandera.mx)",
+  "esperado": "400",
+  "http_status": 400,
+  "cuerpo": "{\"message\":\"Email ya registrado\"}",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T01:41:36Z"
+}

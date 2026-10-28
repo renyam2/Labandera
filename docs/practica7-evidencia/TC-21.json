@@ -1,0 +1,1 @@
+{"message":"Datos de petición inválidos","errors":[{"field":"categoryId","message":"categoryId debe ser un UUID válido"}]}

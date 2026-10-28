@@ -1,0 +1,11 @@
+{
+  "tc": "TC-35",
+  "requisito": "REQ-NAV-02",
+  "descripcion": "Sesión Editor abre /upload",
+  "esperado": "muestra formulario de artículo",
+  "url_final": "http://localhost:5173/upload",
+  "check_ok": true,
+  "captura": "imgs/TC-35.png",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T01:23:16.541Z"
+}

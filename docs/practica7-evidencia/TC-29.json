@@ -1,0 +1,11 @@
+{
+  "tc": "TC-29",
+  "requisito": "REQ-PER-01",
+  "descripcion": "DELETE -> fila desaparece de BD",
+  "esperado": "0",
+  "http_status": 200,
+  "cuerpo": "{\"message\":\"Art\u00edculo eliminado\"}",
+  "observado": "0",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T01:59:45Z"
+}

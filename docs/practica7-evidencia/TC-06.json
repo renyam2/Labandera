@@ -1,0 +1,11 @@
+{
+  "tc": "TC-06",
+  "requisito": "REQ-OP-02",
+  "descripcion": "Login con 2FA: requires2fa + pendingToken",
+  "esperado": "true|no-vacío",
+  "http_status": 200,
+  "cuerpo": "{\"requires2fa\":true,\"pendingToken\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjQwMTNiNzgwLWQzNjItNDQ2MS1iNGM3LTUzOThmNTUxZGYzYyIsInJvbGVzIjpbIlVzdWFyaW8iXSwibWZhIjoicGVuZGluZyIsImlhdCI6MTc5Mjg5MzU4NCwiZXhwIjoxNzkyODkzODg0fQ.almowQG417AON9SWGr01b_BSaLxJKqWutqZ8oe-osLI\",\"otpauthUri\":\"otpauth://totp/Labandera:regen-1792893583%40labandera.test?secret=CBBF4KKLMAFQKURQ&period=30&digits=6&algorithm=SHA1&issuer=Labandera\"}",
+  "observado": "True|no-vacío",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T01:59:44Z"
+}

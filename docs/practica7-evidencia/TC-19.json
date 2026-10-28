@@ -1,0 +1,11 @@
+{
+  "tc": "TC-19",
+  "requisito": "REQ-VAL-02",
+  "descripcion": "Login con email inexistente",
+  "esperado": "401|mismo mensaje que TC-18",
+  "http_status": 401,
+  "cuerpo": "{\"message\":\"Credenciales inv\u00e1lidas\"}",
+  "observado": "401|Credenciales inválidas (igual que TC-18: sí)",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T01:59:43Z"
+}

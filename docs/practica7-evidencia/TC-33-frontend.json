@@ -1,0 +1,11 @@
+{
+  "tc": "TC-33",
+  "requisito": "REQ-NAV-02",
+  "descripcion": "Sin sesión abre /upload",
+  "esperado": "redirige a /login",
+  "url_final": "http://localhost:5173/login",
+  "check_ok": true,
+  "captura": "imgs/TC-33.png",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T01:23:12.938Z"
+}

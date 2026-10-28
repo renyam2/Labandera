@@ -1,0 +1,12 @@
+{
+  "tc": "TC-28",
+  "requisito": "REQ-PER-01",
+  "descripcion": "PUT -> BD refleja cambio",
+  "esperado": "200|BD: 'T28 editado'",
+  "http_status": 200,
+  "cuerpo": "{\"id\":\"2396c4a5-2034-4a59-9f46-a48c943ccd7f\",\"title\":\"T28 editado\",\"slug\":\"regen28b-1792893619\",\"summary\":\"s\",\"content\":\"b\",\"state\":null,\"published\":false,\"authorId\":\"1d98b9de-76ac-4d02-9625-5c8ff6ff0423\",\"categoryId\":\"ed571bb9-a529-4833-b1c4-65ce74443e16\",\"createdAt\":\"2026-10-25T02:00:19.036Z\",\"updatedAt\":\"2026-10-25T02:00:19.052Z\"}",
+  "consulta_bd": "SELECT \"title\" FROM \"Article\" WHERE \"id\"='2396c4a5-2034-4a59-9f46-a48c943ccd7f'",
+  "resultado_bd": "T28 editado",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T02:00:19Z"
+}

@@ -1,0 +1,11 @@
+{
+  "tc": "TC-05",
+  "requisito": "REQ-OP-02",
+  "descripcion": "Login admin: exp-iat del JWT",
+  "esperado": "200|604800",
+  "http_status": 200,
+  "cuerpo": "{\"token\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFkOThiOWRlLTc2YWMtNGQwMi05NjI1LTVjOGZmNmZmMDQyMyIsInJvbGVzIjpbIkFkbWluaXN0cmFkb3IiXSwiaWF0IjoxNzkyODkzNTgzLCJleHAiOjE3OTM0OTgzODN9.OGDpP3XDSxjQbM-GLKm5JrZZUoiUAyVmSv3vZXn40K0\",\"user\":{\"id\":\"1d98b9de-76ac-4d02-9625-5c8ff6ff0423\",\"name\":\"Admin Test\",\"email\":\"admin@labandera.mx\",\"roles\":[\"Administrador\"]}}",
+  "observado": "200|604800",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T01:59:43Z"
+}

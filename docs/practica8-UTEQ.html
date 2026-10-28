@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Práctica 8 — Pyramid Testing — UTEQ</title>
+<style>
+body { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 11pt; line-height: 1.4; }
+h1 { font-size: 18pt; } h2 { font-size: 15pt; } h3 { font-size: 12pt; }
+table { border-collapse: collapse; width: 100%; margin: 8pt 0; }
+th, td { border: 1px solid #444; padding: 3pt 5pt; font-size: 9.5pt; text-align: left; }
+th { background: #e8e8e8; }
+code { font-family: 'Liberation Mono', monospace; font-size: 9pt; }
+</style></head>
+<body>
+
+<div style="page-break-after: always; text-align: center; padding-top: 60mm;">
+  <h1>UNIVERSIDAD TECNOLÓGICA DE QUERÉTARO</h1>
+  <h2>(UTEQ)</h2>
+  <p>Ingeniería en Desarrollo y Gestión de Software</p>
+  <h3>Desarrollo para dispositivos inteligentes</h3>
+  <h3>Práctica 8: Evaluación de la calidad técnica mediante pruebas unitarias, de integración y E2E (Pyramid Testing)</h3>
+  <p><br/><br/></p>
+  <p><strong>Alumno:</strong> Ramírez Ramírez Elian Eduardo</p>
+  <p><strong>No. de matrícula:</strong> 2023371006</p>
+  <p><strong>Docente:</strong> MANUEL CONTRERAS CASTILLO</p>
+  <p><strong>Fecha de entrega:</strong> 24 de octubre de 2026</p>
+</div>
+
+<h1>Informe de implementación — Práctica 8: Evaluación de la calidad técnica mediante pruebas unitarias, de integración y E2E (Pyramid Testing)</h1>
+<p><strong>Proyecto evaluado:</strong> Labandera — sitio web de noticias (frontend SPA React + Vite) con API REST (backend Express + Prisma + PostgreSQL), alojado en servidor. <strong>Fecha:</strong> 2026-10-24 <strong>Documento de referencia:</strong> <code>docs/practica8-pyramid.md</code> (auditoría completa con matrices de resultados).</p>
+
+<h2>Funcionalidad crítica seleccionada</h2>
+<p><strong>Autenticación y control de acceso con 2FA (TOTP + códigos de respaldo).</strong> Justificación: es la lógica de negocio más sensible del proyecto (protege todas las rutas privadas), tiene lógica propia (<code>totp.service.ts</code>) e interactúa con componentes reales (Express, Prisma/PostgreSQL, JWT, rate-limiting). Todos los datos de prueba son ficticios (dominios <code>@labandera.test</code>, contraseñas de prueba, secretos generados al vuelo).</p>
+
+<h2>Fase 1. Diagnóstico de la estrategia actual</h2>
+<p>Pruebas existentes en <code>backend/tests/</code> (antes de esta práctica):</p>
+<table>
+<tr><th>Archivo</th><th>Nivel</th><th># pruebas</th><th>¿Se ejecuta automático?</th></tr>
+<tr><td><code>tests/totp.service.test.ts</code></td><td>Unitaria</td><td>5</td><td>Sí (<code>pnpm test</code>)</td></tr>
+<tr><td><code>tests/auth.test.ts</code></td><td>Integración (supertest + BD real)</td><td>7</td><td>Sí</td></tr>
+<tr><td><code>tests/rbac.test.ts</code></td><td>Integración (supertest + BD real)</td><td>5</td><td>Sí</td></tr>
+<tr><td><code>tests/totp.test.ts</code></td><td>Integración (supertest + BD real)</td><td>11</td><td>Sí</td></tr>
+<tr><td>Frontend / E2E</td><td>E2E</td><td>0</td><td>No existe</td></tr>
+</table>
+<p><strong>Total inicial: 28 pruebas (5 unitarias, 23 de integración, 0 E2E).</strong> Todas se ejecutan con <code>pnpm test</code> (vitest) en el backend; no hay CI configurado.</p>
+
+<h2>Fase 2. Pruebas unitarias (nuevas)</h2>
+<p>Archivo: <code>backend/tests/unit-practica8.test.ts</code> (5 pruebas sobre <code>totp.service</code>, sin servidor ni BD).</p>
+<table>
+<tr><th>Caso</th><th>Prueba</th><th>Esperado</th><th>Obtenido</th></tr>
+<tr><td>Válido</td><td><code>verifyTotpCode</code> con código TOTP correcto</td><td><code>true</code></td><td>✅ <code>true</code></td></tr>
+<tr><td>Límite</td><td>Código <code>'000000'</code> (borde), longitud 5 y 7</td><td><code>false</code> en los 3</td><td>✅ <code>false</code></td></tr>
+<tr><td>Inválido/error</td><td>Secreto vacío y código con letras</td><td><code>false</code>, sin excepción</td><td>✅ <code>false</code></td></tr>
+<tr><td>Doble de prueba</td><td><code>generateBackupCodes(3)</code> con <code>Math.random</code> espionado (determinístico)</td><td><code>['00000000','00000000','00000000']</code></td><td>✅ coincide</td></tr>
+<tr><td>Doble de prueba</td><td><code>buildOtpauthUri</code> con datos ficticios</td><td>URI otpauth exacta</td><td>✅ coincide</td></tr>
+</table>
+<p>Aislamiento de dependencias: <code>vi.spyOn(Math, 'random')</code> elimina la aleatoriedad; no hay acceso a BD ni red.</p>
+
+<h2>Fase 3. Pruebas de integración (nuevas)</h2>
+<p>Archivo: <code>backend/tests/integration-practica8.test.ts</code>. Configuración: <strong>sin mocks</strong> — supertest contra la app Express real + Prisma + PostgreSQL de desarrollo (<code>.env</code>). Datos de prueba: usuario <code>test-p8-&lt;ts&gt;@labandera.test</code>, contraseña <code>Prueba#123</code>.</p>
+<table>
+<tr><th>Prueba</th><th>Flujo</th><th>Esperado</th><th>Obtenido</th></tr>
+<tr><td>Flujo correcto</td><td>registro → login (<code>requires2fa</code>) → <code>verify-2fa</code> con TOTP → <code>GET /api/articles</code> con token completo</td><td>200 en cada paso, token completo válido</td><td>✅</td></tr>
+<tr><td>Manejo de error</td><td>login con contraseña incorrecta con 2FA activo</td><td>401 y sin <code>pendingToken</code></td><td>✅</td></tr>
+</table>
+
+<h2>Fase 4. E2E</h2>
+<p><strong>Ejecución:</strong> script <code>backend/scripts/e2e-practica8.mjs</code> contra el servidor real (<code>pnpm dev</code>) y BD real, usuario ficticio.</p>
+<table>
+<tr><th>#</th><th>Paso</th><th>Esperado</th><th>Real</th></tr>
+<tr><td>1</td><td>Registro de usuario</td><td>201</td><td>201</td></tr>
+<tr><td>2</td><td>Setup 2FA (secreto + URI otpauth)</td><td>200</td><td>200</td></tr>
+<tr><td>3</td><td>Activar 2FA con TOTP válido</td><td>201 + 10 respaldos</td><td>201 + 10</td></tr>
+<tr><td>4</td><td>Login</td><td>200, <code>requires2fa=true</code></td><td>200, <code>true</code></td></tr>
+<tr><td>5</td><td><code>verify-2fa</code> con TOTP</td><td>200, token completo</td><td>200</td></tr>
+<tr><td>6</td><td>Acceso a área privada (<code>/api/articles</code>)</td><td>200</td><td>200</td></tr>
+<tr><td>7</td><td><code>verify-2fa</code> con código inválido</td><td>401 (o 429 por rate-limit)</td><td>401</td></tr>
+</table>
+<p><strong>Limitación (declarada):</strong> el E2E automatiza el flujo completo a nivel API contra el servidor real, pero <strong>no automatiza la UI del frontend</strong> (LoginPage/SecurityPage). No se clasificó como E2E de UI automatizado.</p>
+<p><strong>Procedimiento automatizable pendiente (Playwright):</strong></p>
+<ol>
+<li><code>pnpm add -D @playwright/test</code> en <code>frontend/</code>; <code>npx playwright install chromium</code>.</li>
+<li>Test: abrir <code>http://localhost:5173/login</code> → registrar usuario ficticio → ir a Seguridad → interceptar la llamada a <code>/api/auth/totp/setup</code> para obtener el secreto y generar el código con <code>otplib</code> → completar login con el código → verificar que aparece el área privada y que <code>totpEnabled=true</code> en la página de seguridad.</li>
+<li>Ejecutar con <code>npx playwright test</code> usando el backend en modo test.</li>
+</ol>
+
+<h2>Fase 5. Auditoría y conclusión técnica</h2>
+<h3>Pirámide de pruebas actual (tras la práctica)</h3>
+<table>
+<tr><th>Nivel</th><th># pruebas</th><th>%</th></tr>
+<tr><td>Unitarias</td><td>10 (5 previas + 5 nuevas)</td><td>27.8 %</td></tr>
+<tr><td>Integración</td><td>25 (23 previas + 2 nuevas)</td><td>69.4 %</td></tr>
+<tr><td>E2E</td><td>0 automatizadas (1 flujo E2E manual/script)</td><td>0 %</td></tr>
+<tr><th>Total</th><th>35</th><th>100 %</th></tr>
+</table>
+<p>Salida de ejecución: <code>docs/practica8-evidencia/salida-tests.txt</code> → <strong>35/35 pasadas</strong>, 6 archivos, ~7 s.</p>
+
+<h3>Capa más débil</h3>
+<p><strong>E2E (0 %).</strong> La pirámide está "invertida" en la base: toda la validación se concentra en integración (69 %), que es lenta (depende de BD real) y no cubre el contrato entre frontend y backend: un defecto en la UI de login/2FA (p. ej., no enviar el <code>pendingToken</code>) pasaría desapercibido. Además, la capa unitaria (28 %) no cubre los controladores ni middlewares (<code>verificarToken</code>, rate-limiting, validación Zod).</p>
+
+<h3>Mejoras priorizadas por riesgo</h3>
+<ol>
+<li><strong>E2E con Playwright del flujo login + 2FA</strong> (riesgo alto: es la funcionalidad crítica y hoy no se prueba de punta a punta con UI). Procedimiento definido en Fase 4.</li>
+<li><strong>CI que ejecute <code>pnpm test</code> en cada commit/PR</strong> (riesgo alto: hoy las pruebas solo corren manualmente; sin CI, regresiones de auth pueden llegar a producción). Incluir además una BD de pruebas dedicada (no la de desarrollo) para que la integración sea reproducible.</li>
+</ol>
+
+<h3>Cuándo ejecutar qué</h3>
+<ul>
+<li><strong>En cada cambio de código:</strong> unitarias + integración (<code>pnpm test</code>, ~7 s). Suficiente para detectar regresiones de lógica y contratos de API.</li>
+<li><strong>Antes de una entrega:</strong> la suite completa + el E2E del flujo crítico (script <code>e2e-practica8.mjs</code> contra un entorno de staging con BD limpia), y verificación manual de la UI de login/2FA hasta que exista el E2E de Playwright.</li>
+</ul>
+
+<h2>Evidencia</h2>
+<ul>
+<li>Código de pruebas: <code>backend/tests/unit-practica8.test.ts</code>, <code>backend/tests/integration-practica8.test.ts</code>.</li>
+<li>Salida de ejecución: <code>docs/practica8-evidencia/salida-tests.txt</code>.</li>
+<li>Registro E2E: <code>docs/practica8-evidencia/e2e-p8.log</code>.</li>
+<li>Script E2E: <code>backend/scripts/e2e-practica8.mjs</code>.</li>
+</ul>
+
+</body></html>

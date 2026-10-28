@@ -1,0 +1,11 @@
+{
+  "tc": "TC-36",
+  "requisito": "REQ-NAV-02",
+  "descripcion": "Sesión Editor abre /estadisticas",
+  "esperado": "redirige a /",
+  "url_final": "http://localhost:5173/",
+  "check_ok": true,
+  "captura": "imgs/TC-36.png",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T01:23:18.422Z"
+}

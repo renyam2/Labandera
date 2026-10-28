@@ -1,0 +1,11 @@
+{
+  "tc": "TC-34",
+  "requisito": "REQ-NAV-02",
+  "descripcion": "Sesión Usuario abre /upload",
+  "esperado": "redirige a /",
+  "url_final": "http://localhost:5173/",
+  "check_ok": true,
+  "captura": "imgs/TC-34.png",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T01:23:14.746Z"
+}

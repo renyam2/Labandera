@@ -1,0 +1,11 @@
+{
+  "tc": "TC-37",
+  "requisito": "REQ-NAV-02",
+  "descripcion": "Sesión Admin abre /estadisticas",
+  "esperado": "muestra página de estadísticas",
+  "url_final": "http://localhost:5173/estadisticas",
+  "check_ok": true,
+  "captura": "imgs/TC-37.png",
+  "veredicto": "ACEPTADO",
+  "fecha": "2026-10-25T01:23:20.973Z"
+}

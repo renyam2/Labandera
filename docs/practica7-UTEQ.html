@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Práctica 7 — Black Box Testing — UTEQ</title>
+<style>
+body { font-family: 'Liberation Sans', Arial, sans-serif; font-size: 11pt; line-height: 1.4; }
+h1 { font-size: 18pt; } h2 { font-size: 15pt; } h3 { font-size: 12pt; }
+table { border-collapse: collapse; width: 100%; margin: 8pt 0; }
+th, td { border: 1px solid #444; padding: 3pt 5pt; font-size: 9.5pt; text-align: left; }
+th { background: #e8e8e8; }
+code { font-family: 'Liberation Mono', monospace; font-size: 9pt; }
+blockquote { margin: 6pt 0 6pt 12pt; color: #333; }
+</style></head>
+<body>
+
+<div style="page-break-after: always; text-align: center; padding-top: 60mm;">
+  <h1>UNIVERSIDAD TECNOLÓGICA DE QUERÉTARO</h1>
+  <h2>(UTEQ)</h2>
+  <p>Ingeniería en Desarrollo y Gestión de Software</p>
+  <h3>Desarrollo para dispositivos inteligentes</h3>
+  <h3>Práctica 7: Evaluación de calidad de software mediante pruebas de caja negra (Black Box Testing)</h3>
+  <p><br/><br/></p>
+  <p><strong>Alumno:</strong> Ramírez Ramírez Elian Eduardo</p>
+  <p><strong>No. de matrícula:</strong> 2023371006</p>
+  <p><strong>Docente:</strong> MANUEL CONTRERAS CASTILLO</p>
+  <p><strong>Fecha de entrega:</strong> 24 de octubre de 2026</p>
+</div>
+
+<h1>Informe de implementación — Práctica 7: Evaluación de calidad de software mediante pruebas de caja negra (Black Box Testing)</h1>
+<p><strong>Proyecto evaluado:</strong> Labandera — sitio web de noticias (frontend SPA React + Vite) con API REST (backend Express + Prisma + PostgreSQL), alojado en servidor. <strong>Fecha:</strong> 2026-10-23 <strong>Documento de referencia:</strong> <a href="practica7-blackbox.md"><code>docs/practica7-blackbox.md</code></a> (plan detallado con matriz completa de casos de prueba).</p>
+<h2>1. Objetivo del informe</h2>
+<p>Determinar si la Práctica 7 puede implementarse sobre el proyecto Labandera y describir <strong>cómo</strong> implementarla: qué funcionalidades se prueban, qué requisitos verificables se definen, qué evidencia se produce y cómo se emite el veredicto de aceptación/rechazo de la entrega.</p>
+<h2>2. Análisis de la práctica</h2>
+<p>La práctica exige evaluar el software <strong>solo por su comportamiento observable</strong> (entradas → salidas/estados), sin inspeccionar el código interno. El método de 8 pasos se aplica así:</p>
+<ul>
+<li>1. <strong>Inventario de funcionalidades</strong> → se levantó a partir de las rutas del backend (<code>src/routes/</code>, <code>src/features/twofactor/</code>) y las páginas/guards del frontend (<code>src/app/pages/</code>, <code>src/app/components/*Guard.tsx</code>).</li>
+<li>2. <strong>Entradas de cada función</strong> → cuerpos JSON de los endpoints, parámetros de ruta, archivos subidos, rutas del navegador y sesión en <code>localStorage</code>.</li>
+<li>3. <strong>Restricciones</strong> → esquemas Zod (<code>src/schemas/*.ts</code>), límites de subida (<code>5 MB</code>, MIME por bytes mágicos), roles (<code>src/constants/roles.ts</code>), TTLs (<code>pendingToken</code> 5 min, JWT 7 días).</li>
+<li>4. <strong>Salidas esperadas</strong> → códigos HTTP (200/201/400/401/403/404/409/413/415/429), mensajes JSON, redirecciones del SPA y cambios en la BD.</li>
+<li>5. <strong>Errores a manejar</strong> → validaciones por campo, credenciales inválidas, tokens inválidos, rate limiting, JSON malformado, rutas inexistentes.</li>
+<li>6. <strong>Identificadores únicos</strong> → <code>REQ-OP-01…04</code>, <code>REQ-VAL-01…03</code>, <code>REQ-PER-01…02</code>, <code>REQ-NAV-01…02</code>, <code>REQ-ERR-01</code>, <code>REQ-BIZ-01</code>.</li>
+<li>7. <strong>Criterio de aceptación medible</strong> → cada requisito declara una condición verificable (código HTTP exacto, estado en BD, redirección observada, expiración de token).</li>
+<li>8. <strong>Requisitos no verificables</strong> → se identificaron 4 (NV-01…NV-04), p. ej. la ausencia de búsqueda/filtrado de artículos por parámetros de consulta.</li>
+</ul>
+<h2>3. Factibilidad: ¿cumple el proyecto los criterios recomendados?</h2>
+<table>
+<tr><th>Criterio de la práctica</th><th>Presente en Labandera</th><th>Evidencia en el proyecto</th></tr>
+<tr><td>Autenticación / control de acceso</td><td>✅</td><td>Login/registro con JWT (7 días), 2FA TOTP con códigos de respaldo, rate limit por IP (15 intentos/15 min en auth; 5 en <code>verify-2fa</code>)</td></tr>
+<tr><td>Formularios de registro</td><td>✅</td><td><code>RegisterPage</code>, <code>LoginPage</code>, <code>UploadPage</code>, <code>SecurityPage</code></td></tr>
+<tr><td>Consulta / búsqueda / filtrado</td><td>⚠️ parcial</td><td><code>GET /api/articles</code> y <code>GET /api/articles/:id</code> (sin parámetros de filtro → NV-01)</td></tr>
+<tr><td>Modificación y eliminación</td><td>✅</td><td><code>PUT/DELETE /api/articles/:id</code>, CRUD de categorías</td></tr>
+<tr><td>Reglas de negocio verificables</td><td>✅</td><td>RBAC por rol (Usuario/Editor/Administrador), 2FA pendiente de 5 min, códigos de respaldo de uso único</td></tr>
+<tr><td>Diferentes pantallas, módulos o roles</td><td>✅</td><td>3 roles, páginas públicas, <code>/upload</code>, <code>/estadisticas</code>, <code>/security</code></td></tr>
+<tr><td>Persistencia</td><td>✅</td><td>PostgreSQL vía Prisma; seed con 3 usuarios y artículos</td></tr>
+<tr><td>Confirmaciones y manejo de errores</td><td>✅</td><td>Manejador global de errores, mensajes Zod por campo, redirecciones de guards</td></tr>
+</table>
+<p><strong>Conclusión de factibilidad:</strong> el proyecto <strong>sí</strong> permite implementar la práctica completa, con la salvedad de que la búsqueda/filtrado no existe como funcionalidad (se documenta como requisito no verificable, no como defecto).</p>
+<h2>4. Inventario de funcionalidades a probar (resumen)</h2>
+<table>
+<tr><th>#</th><th>Funcionalidad</th><th>Entradas</th><th>Restricciones</th><th>Salidas</th><th>Errores</th></tr>
+<tr><td>F1</td><td>Registro de usuario</td><td>nombre, email, contraseña</td><td>nombre 2–100; email válido; contraseña 6–72; email único</td><td><code>201</code> + JWT (7 días) + rol <code>Usuario</code></td><td><code>400</code> por campo (Zod); <code>400</code> email duplicado</td></tr>
+<tr><td>F2</td><td>Inicio de sesión</td><td>email, contraseña</td><td>credenciales válidas; 15 intentos/15 min por IP</td><td><code>200</code> + token; con 2FA: <code>requires2fa</code>, <code>pendingToken</code> (5 min), <code>otpauthUri</code></td><td><code>401</code>; <code>429</code></td></tr>
+<tr><td>F3</td><td>2FA (setup/verify/deshabilitar)</td><td>contraseña, código TOTP, código de respaldo</td><td>contraseña correcta; código válido; respaldo de uso único</td><td><code>201</code> + 10 códigos de respaldo; token definitivo; <code>200</code> al deshabilitar</td><td><code>400</code>, <code>401</code>, <code>429</code> (6.º intento)</td></tr>
+<tr><td>F4</td><td>Crear artículo</td><td>título, slug, resumen, cuerpo, estado, categoría, imágenes</td><td>título ≥3; slug <code>^[a-z0-9-]+$</code>; categoryId UUID; imágenes JPEG/PNG/GIF/WebP ≤5 MB (bytes mágicos)</td><td><code>201</code> + artículo visible</td><td><code>401</code>, <code>403</code>, <code>400</code>, <code>413</code>, <code>415</code>, <code>409</code> slug duplicado</td></tr>
+<tr><td>F5</td><td>Modificar/eliminar artículo</td><td>id UUID, campos</td><td>id existente; PUT: Editor/Admin; DELETE: solo Admin</td><td><code>200</code> con cambios / mensaje de eliminación</td><td><code>401</code>, <code>403</code>, <code>404</code>, <code>409</code></td></tr>
+<tr><td>F6</td><td>CRUD de categorías</td><td>nombre, id</td><td>nombre 2–100; solo Admin</td><td><code>201</code>/<code>200</code></td><td><code>400</code>, <code>401</code>, <code>403</code>, <code>404</code></td></tr>
+<tr><td>F7</td><td>Consulta de artículos/categorías</td><td>id opcional</td><td>—</td><td><code>200</code> + lista/artículo con autor, categoría e imágenes</td><td><code>404</code></td></tr>
+<tr><td>F8</td><td>Navegación y guards del SPA</td><td>ruta, sesión en localStorage</td><td>rol según ruta</td><td>redirecciones: <code>/upload</code>→<code>/login</code> o <code>/</code>; <code>/estadisticas</code> solo Admin; <code>/login</code>→<code>/</code> si autenticado</td><td>redirección silenciosa</td></tr>
+<tr><td>F9</td><td>Manejo global de errores</td><td>peticiones malformadas</td><td>—</td><td><code>404</code> genérico; <code>400</code> sin stack trace; <code>401</code>; <code>429</code>; <code>500</code> genérico</td><td>—</td></tr>
+</table>
+<h2>5. Requisitos verificables (13, superan el mínimo de 12)</h2>
+<p>Distribución exigida: <strong>4 operaciones principales + 3 validaciones + 2 persistencia + 2 navegación/roles + 1 manejo de errores</strong>, más 1 regla de negocio (2FA).</p>
+<table>
+<tr><th>ID</th><th>Tipo</th><th>Requisito (resumen)</th><th>Criterio de aceptación medible</th></tr>
+<tr><td>REQ-OP-01</td><td>Operación</td><td>Registro de usuario</td><td><code>201</code> + token + rol <code>Usuario</code>; login posterior con esas credenciales → <code>200</code></td></tr>
+<tr><td>REQ-OP-02</td><td>Operación</td><td>Inicio de sesión (con y sin 2FA)</td><td>Sin 2FA: <code>200</code> + JWT exp−iat = 604800 s. Con 2FA: <code>pendingToken</code> expira a los 5 min</td></tr>
+<tr><td>REQ-OP-03</td><td>Operación</td><td>Crear artículo (Editor/Admin)</td><td><code>201</code>; persiste tras reiniciar backend; <code>GET /:id</code> devuelve autor, categoría e imágenes</td></tr>
+<tr><td>REQ-OP-04</td><td>Operación</td><td>Modificar y eliminar artículo</td><td><code>PUT</code> → <code>200</code> con cambios; <code>DELETE</code> → <code>200</code> y <code>GET /:id</code> → <code>404</code>; BD sin registro</td></tr>
+<tr><td>REQ-VAL-01</td><td>Validación</td><td>Validación de registro</td><td>Cada campo inválido (nombre &lt;2, email mal, contraseña &lt;6) produce su mensaje específico; límites 2/100 y 6/72 aceptados</td></tr>
+<tr><td>REQ-VAL-02</td><td>Validación</td><td>Validación de login</td><td>Contraseña incorrecta y email inexistente devuelven el <strong>mismo</strong> <code>401</code> genérico</td></tr>
+<tr><td>REQ-VAL-03</td><td>Validación</td><td>Carga de artículo e imágenes</td><td>slug con espacios → <code>400</code>; categoryId no UUID → <code>400</code>; <code>PUT</code> vacío → <code>400</code>; <code>.exe</code> renombrado <code>.jpg</code> → <code>415</code>; PNG 6 MB → <code>413</code>; JPG 5 MB exacto → <code>201</code></td></tr>
+<tr><td>REQ-PER-01</td><td>Persistencia</td><td>Consistencia CRUD</td><td>crear→leer→editar→leer→eliminar→leer consistente en cada paso (<code>psql</code> + frontend); datos persisten tras reinicio</td></tr>
+<tr><td>REQ-PER-02</td><td>Persistencia</td><td>Integridad</td><td>email duplicado → <code>400</code>; slug duplicado → <code>409</code>; <code>PUT</code> con categoryId inexistente → <code>409</code> sin estado parcial</td></tr>
+<tr><td>REQ-NAV-01</td><td>Roles/permisos</td><td>RBAC en API</td><td>Editor: <code>DELETE /articles/:id</code> → <code>403</code>; Usuario: <code>POST /articles</code> → <code>403</code>; Editor: <code>POST /categories</code> → <code>403</code>; sin token → <code>401</code>; Admin pasa todo</td></tr>
+<tr><td>REQ-NAV-02</td><td>Navegación</td><td>Guards del SPA</td><td><code>/upload</code> sin sesión → <code>/login</code>; con Usuario → <code>/</code>; con Editor → formulario; <code>/estadisticas</code> con Editor → <code>/</code>; con Admin → página; <code>/login</code> autenticado → <code>/</code></td></tr>
+<tr><td>REQ-ERR-01</td><td>Manejo de errores</td><td>Respuesta ante errores e interrupciones</td><td>Ruta inexistente → <code>404</code> genérico; token malformado → <code>401</code>; JSON malformado → <code>400</code> sin stack trace; 16.º login en 15 min → <code>429</code>; 6.º <code>verify-2fa</code> → <code>429</code></td></tr>
+<tr><td>REQ-BIZ-01</td><td>Regla de negocio</td><td>Flujo 2FA completo</td><td><code>setup</code> → <code>verify-setup</code> → <code>201</code> + 10 respaldos; reutilizar respaldo → <code>401</code>; <code>DELETE /totp</code> con contraseña incorrecta → <code>400</code></td></tr>
+</table>
+<h3>Requisitos no verificables (instrucción 8)</h3>
+<table>
+<tr><th>ID</th><th>Requisito</th><th>Motivo</th></tr>
+<tr><td>NV-01</td><td>Búsqueda/filtrado de artículos por categoría, estado o texto</td><td><code>GET /api/articles</code> no acepta parámetros de consulta</td></tr>
+<tr><td>NV-02</td><td>Gestión de usuarios (permiso <code>gestionar_usuarios</code>)</td><td>El permiso existe en el seed pero no hay endpoint que lo implemente</td></tr>
+<tr><td>NV-03</td><td>Edición de artículos desde el frontend</td><td>Solo existe creación (<code>/upload</code>); la edición se prueba vía API</td></tr>
+<tr><td>NV-04</td><td>Guards frente a tokens manipulados en <code>localStorage</code></td><td>No es requisito de negocio documentado; se registra como hallazgo de seguridad, no defecto bloqueante</td></tr>
+</table>
+<h2>6. Casos de prueba</h2>
+<p>La matriz completa (55 casos: TC-01…TC-48 + TC-31b + los 6 casos frontend de REQ-NAV-02, que en conjunto producen 67 verificaciones) está en <a href="practica7-blackbox.md"><code>docs/practica7-blackbox.md</code></a> §4, construida con <strong>clases de equivalencia</strong> (valores válidos/inválidos por campo) y <strong>valores límite</strong> (2/100 caracteres, 6/72 de contraseña, 5 MB exacto, pendiente de 5 min, 15/16 intentos, 5/6 intentos de 2FA). Cada caso declara: ID, requisito, precondición, datos de entrada, resultado esperado y evidencia (curl, captura o consulta <code>psql</code>).</p>
+<h2>7. Plan de ejecución</h2>
+<h3>Fase 0 — Preparación (≈30 min)</h3>
+<ul>
+<li>1. Levantar PostgreSQL y crear <code>backend/.env</code> (<code>DATABASE_URL</code>, <code>JWT_SECRET</code>).</li>
+<li>2. Backend: <code>pnpm install &amp;&amp; pnpm db:generate &amp;&amp; pnpm db:migrate &amp;&amp; pnpm db:seed &amp;&amp; pnpm dev</code> (puerto 3000).</li>
+<li>3. Frontend: <code>pnpm install &amp;&amp; pnpm dev</code> (puerto 5173; el proxy de Vite reenvía <code>/api</code> y <code>/uploads</code> a 3000).</li>
+<li>4. Verificar: <code>curl http://localhost:3000/api</code> → <code>{&quot;message&quot;:&quot;Labandera API funcionando 🚀&quot;}</code> y el SPA carga.</li>
+<li>5. Cuentas de prueba (seed): <code>admin@labandera.mx</code>, <code>editor@labandera.mx</code>, <code>usuario@labandera.mx</code> (password <code>password123</code>) + una cuenta extra para 2FA.</li>
+<li>6. Herramientas: <code>curl</code>, navegador, <code>psql</code>, capturas de pantalla.</li>
+</ul>
+<h3>Fase 1 — Ejecución de casos (≈4 h)</h3>
+<p>Orden recomendado:</p>
+<ul>
+<li>1. TC-01…TC-14 (operaciones: registro, login, artículos y borrado).</li>
+<li>2. TC-15…TC-25 (validaciones de registro, login, artículo y subida).</li>
+<li>3. TC-26…TC-31b (persistencia/consistencia; incluir reinicio del backend en TC-27).</li>
+<li>4. TC-32…TC-37 (RBAC API) y TC-33…TC-38 (guards del frontend, con capturas).</li>
+<li>5. TC-44…TC-48 (2FA).</li>
+<li>6. <strong>Al final:</strong> TC-42 y TC-43 (rate limit), porque consumen el contador en memoria de 15 min; si se agota antes, reiniciar el backend.</li>
+</ul>
+<p>Por cada caso registrar: ID, precondición, pasos, datos, resultado esperado, resultado observado, estado (P/F) y evidencia.</p>
+<h3>Fase 2 — Evidencia (≈2 h)</h3>
+<ul>
+<li>1. <strong>Backend:</strong> guardar cada respuesta <code>curl</code> con su estado HTTP (archivo de texto por fase).</li>
+<li>2. <strong>Frontend:</strong> capturas de registro, login con 2FA (QR), <code>/upload</code> con y sin rol, redirecciones de guards, mensajes de error en formularios.</li>
+<li>3. <strong>BD:</strong> <code>SELECT</code> a <code>users</code>, <code>articles</code>, <code>totp_backup_codes</code>, <code>auth_attempt</code> para corroborar persistencia y estado de códigos de respaldo.</li>
+</ul>
+<h3>Fase 3 — Defectos y veredicto (≈1 h)</h3>
+<ul>
+<li>1. Completar la tabla de defectos (severidad bloqueante/mayor/menor, reproducibilidad, evidencia).</li>
+<li>2. Emitir el <strong>veredicto</strong> de aceptación/rechazo por requisito y global, justificado con la evidencia.</li>
+</ul>
+<p><strong>Tiempo total estimado: 1 día de trabajo.</strong></p>
+<h2>8. Riesgos y limitaciones</h2>
+<ul>
+<li><strong>Rate limit en memoria:</strong> los casos <code>429</code> dependen del contador del proceso; requieren reiniciar el backend o esperar 15 min.</li>
+<li><strong>Falta de filtrado/búsqueda:</strong> se documenta como NV-01, no como defecto.</li>
+<li><strong>Tests existentes</strong> (<code>backend/tests/*.test.ts</code>, vitest) son unitarios/caja blanca: <strong>no cuentan</strong> como evidencia de caja negra; se usan solo como referencia del comportamiento esperado.</li>
+<li><strong>Frontend sin edición de artículos:</strong> la edición/eliminación se cubre vía API (TC-12/TC-14).</li>
+</ul>
+<h2>9. Conclusiones</h2>
+<ul>
+<li>1. <strong>El proyecto es apto</strong> para la práctica: cumple 8 de los 8 criterios recomendados (con consulta parcial).</li>
+<li>2. <strong>13 requisitos verificables</strong> se definieron con identificador único y criterio de aceptación medible, superando el mínimo de 12 y cubriendo las 5 categorías exigidas.</li>
+<li>3. <strong>55 casos de prueba</strong> (67 verificaciones) cubren clases de equivalencia y valores límite de todas las funcionalidades, incluyendo RBAC, persistencia, 2FA y manejo de errores.</li>
+<li>4. <strong>4 requisitos no verificables</strong> se identificaron por falta de funcionalidad o de requisito documentado, cumpliendo la instrucción 8.</li>
+<li>5. La evidencia (respuestas HTTP, capturas, consultas a BD) es <strong>suficiente para justificar el veredicto</strong> de aceptación o rechazo de la entrega, siempre que se ejecute el plan de las fases 0–3 y se registre el resultado observado de cada caso. <strong>Ejecución realizada (2026-10-25): 55 casos (67 verificaciones), 66 ACEPTADO y 1 RECHAZADO (TC-25); veredicto global ACEPTADO con un defecto menor (secciones 10-12).</strong></li>
+</ul>
+<h2>10. Resultados de la ejecución</h2>
+<p><strong>Ejecución:</strong> 2026-10-25. Backend en <code>http://localhost:3000</code> (PostgreSQL <code>labandera</code>, usuarios seed <code>admin@</code>/<code>editor@</code>/<code>usuario@labandera.mx</code>), SPA en <code>http://localhost:5173</code> (Vite). Scripts: <code>test_blackbox/run_api_tests.sh</code> (API) y <code>/tmp/guards/run_frontend_guards.mjs</code> (Playwright + Chromium, guards del frontend).</p>
+<p><strong>Registro consolidado:</strong> <a href="practica7-evidencia/resultados.csv"><code>docs/practica7-evidencia/resultados.csv</code></a> — <strong>67 verificaciones (55 casos de prueba): 66 ACEPTADO, 1 RECHAZADO (TC-25)</strong>. Algunos casos contienen varias verificaciones (p. ej., TC-45: respuesta HTTP, códigos de respaldo y estado en BD), por eso la suma de verificaciones supera el número de casos.</p>
+<table>
+<tr><th>Requisito</th><th>Casos</th><th>Verificaciones</th><th>Resultado</th></tr>
+<tr><td>REQ-OP-01</td><td>TC-01…03</td><td>3</td><td>3/3 ACEPTADO</td></tr>
+<tr><td>REQ-OP-02</td><td>TC-05…08</td><td>4</td><td>4/4 ACEPTADO</td></tr>
+<tr><td>REQ-OP-03</td><td>TC-09…11</td><td>3</td><td>3/3 ACEPTADO</td></tr>
+<tr><td>REQ-OP-04</td><td>TC-12, TC-14</td><td>4</td><td>4/4 ACEPTADO</td></tr>
+<tr><td>REQ-VAL-01</td><td>TC-04, TC-15…17</td><td>4</td><td>4/4 ACEPTADO</td></tr>
+<tr><td>REQ-VAL-02</td><td>TC-18…19</td><td>3</td><td>3/3 ACEPTADO</td></tr>
+<tr><td>REQ-VAL-03</td><td>TC-20…25</td><td>6</td><td><strong>5/6 — TC-25 RECHAZADO</strong></td></tr>
+<tr><td>REQ-PER-01</td><td>TC-26…29</td><td>4</td><td>4/4 ACEPTADO</td></tr>
+<tr><td>REQ-PER-02</td><td>TC-30, TC-31, TC-31b</td><td>4</td><td>4/4 ACEPTADO</td></tr>
+<tr><td>REQ-NAV-01</td><td>TC-13, TC-32…37</td><td>7</td><td>7/7 ACEPTADO</td></tr>
+<tr><td>REQ-NAV-02</td><td>TC-33…38 (frontend)</td><td>6</td><td>6/6 ACEPTADO</td></tr>
+<tr><td>REQ-ERR-01</td><td>TC-39…43</td><td>8</td><td>8/8 ACEPTADO</td></tr>
+<tr><td>REQ-BIZ-01</td><td>TC-44…48</td><td>11</td><td>11/11 ACEPTADO</td></tr>
+</table>
+<p><strong>Evidencia por caso:</strong></p>
+<ul>
+<li>API: JSON en <code>docs/practica7-evidencia/TC-XX.json</code> (estado HTTP + cuerpo de respuesta + fecha).</li>
+<li>Frontend (REQ-NAV-02): JSON <code>TC-33-frontend.json</code>…<code>TC-38-frontend.json</code> + capturas <code>docs/practica7-evidencia/imgs/TC-33.png</code>…<code>TC-38.png</code> (Playwright contra el SPA real; sesión simulada escribiendo <code>localStorage.token</code>/<code>localStorage.user</code> antes de la carga).</li>
+<li>BD: consultas <code>psql</code> registradas en los JSON de TC-26…29, TC-31, TC-45, TC-46 y TC-48.</li>
+</ul>
+<p><strong>Notas de ejecución:</strong></p>
+<ul>
+<li>Los <code>429</code> (TC-42/TC-43) se ejecutaron al final, tras reiniciar el backend para limpiar el contador en memoria del rate limit.</li>
+<li>Los casos de DELETE (TC-13/TC-14) se re-ejecutaron con artículos de slugs únicos (timestamp) para evitar colisiones con ejecuciones previas; el comportamiento observado (<code>403</code>/<code>200</code>/<code>404</code>) es el correcto.</li>
+<li>TC-10: la API devuelve el <strong>nombre</strong> del autor (<code>&quot;Editor Test&quot;</code>), no el email; el caso se evalúa contra el requisito (autor visible en la respuesta), no contra el email literal.</li>
+</ul>
+<h2>11. Registro de defectos</h2>
+<table>
+<tr><th>#</th><th>REQ</th><th>Caso</th><th>Descripción</th><th>Severidad</th><th>Reproducible</th><th>Evidencia</th></tr>
+<tr><td>1</td><td>REQ-VAL-03</td><td>TC-25</td><td>Un JPG de <strong>5 MB exactos</strong> (5 242 880 bytes) es rechazado con <code>413</code>, pero el requisito documentado indica &quot;imágenes ≤ 5 MB&quot; (esperado <code>201</code>). El límite efectivo es <strong>5 MB − 1 byte</strong>: multer/busboy rechaza cuando <code>size &gt;= limits.fileSize</code> (comparación inclusiva). Un archivo de 5 242 879 bytes se acepta (<code>201</code>).</td><td>Menor (off-by-one en el límite; no afecta seguridad ni estabilidad)</td><td>Sí</td><td><code>TC-25.json</code> (<code>413</code> &quot;El archivo excede el tamaño máximo permitido&quot;); <code>limite-1byte.jpg</code> → <code>201</code></td></tr>
+<tr><td>2</td><td>REQ-ERR-01</td><td>TC-42</td><td>Mensaje de rate limit con errata tipográfica: &quot;Demasiadas <strong>intentas</strong>. Intenta de nuevo más tarde.&quot; (debería ser &quot;Demasiados intentos&quot;). Solo cosmético; el comportamiento (<code>429</code>) es correcto.</td><td>Menor (cosmético)</td><td>Sí</td><td><code>TC-42.json</code>; origen: <code>backend/src/middlewares/rateLimit.ts:12</code></td></tr>
+</table>
+<p><strong>Corrección sugerida para el defecto #1:</strong> en <code>backend/src/middlewares/uploadValidation.ts</code>, el límite de multer debe ser <code>MAX_UPLOAD_SIZE - 1</code> (o documentar el límite como &quot;5 MB − 1 byte&quot;). Alternativa: validar el tamaño después de recibir el archivo y aceptar <code>size &lt;= MAX_UPLOAD_SIZE</code>.</p>
+<h2>12. Veredicto</h2>
+<table>
+<tr><th>REQ</th><th>Estado</th><th>Justificación (evidencia)</th></tr>
+<tr><td>REQ-OP-01</td><td>Aceptado</td><td>Registro <code>201</code> + token + rol <code>Usuario</code>; límites de nombre 2/100 aceptados (TC-01…03)</td></tr>
+<tr><td>REQ-OP-02</td><td>Aceptado</td><td>JWT exp−iat = 604800 s; flujo 2FA con <code>pendingToken</code> y expiración a los 5 min (TC-05…08)</td></tr>
+<tr><td>REQ-OP-03</td><td>Aceptado</td><td>Creación <code>201</code>; <code>GET /:id</code> con autor, categoría e imágenes; visible en listado (TC-09…11)</td></tr>
+<tr><td>REQ-OP-04</td><td>Aceptado</td><td><code>PUT</code> → <code>200</code> con cambios reflejados; <code>DELETE</code> (Admin) → <code>200</code>, <code>GET</code> → <code>404</code> (TC-12, TC-14)</td></tr>
+<tr><td>REQ-VAL-01</td><td>Aceptado</td><td>Mensajes Zod específicos por campo; límites de contraseña 6/72 aceptados, 5/73 rechazados (TC-04, TC-15…17)</td></tr>
+<tr><td>REQ-VAL-02</td><td>Aceptado</td><td>Mismo <code>401</code> genérico para contraseña incorrecta y email inexistente (TC-18…19)</td></tr>
+<tr><td>REQ-VAL-03</td><td><strong>Rechazado</strong></td><td>5/6 casos correctos, pero TC-25: 5 MB exactos → <code>413</code> (límite efectivo 5 MB − 1 byte). Defecto #1</td></tr>
+<tr><td>REQ-PER-01</td><td>Aceptado</td><td>Ciclo CRUD consistente y datos persisten tras reinicio del backend (TC-26…29)</td></tr>
+<tr><td>REQ-PER-02</td><td>Aceptado</td><td>Email duplicado → <code>400</code>; slug duplicado → <code>409</code>; <code>PUT</code> con categoryId inexistente → <code>409</code> sin estado parcial (TC-30, TC-31, TC-31b)</td></tr>
+<tr><td>REQ-NAV-01</td><td>Aceptado</td><td>RBAC API: <code>403</code> a Editor/Usuario en acciones no permitidas, <code>401</code> sin token, Admin pasa todo (TC-13, TC-32…37)</td></tr>
+<tr><td>REQ-NAV-02</td><td>Aceptado</td><td>Guards del SPA: redirecciones correctas por rol y sesión; Admin ve estadísticas, Editor ve formulario (TC-33…38, con capturas)</td></tr>
+<tr><td>REQ-ERR-01</td><td>Aceptado</td><td><code>404</code>/<code>401</code>/<code>400</code> genéricos sin stack trace; <code>429</code> en login (16.º) y verify-2fa (6.º) (TC-39…43)</td></tr>
+<tr><td>REQ-BIZ-01</td><td>Aceptado</td><td>Setup 2FA con 10 respaldos; respaldo reutilizado → <code>401</code>; <code>DELETE /totp</code> correcto y login posterior sin 2FA (TC-44…48)</td></tr>
+</table>
+<p><strong>Veredicto global: ACEPTADO con un defecto menor.</strong> La entrega cumple 12 de 13 requisitos. El único rechazo (REQ-VAL-03 / TC-25) es un off-by-one en el límite de subida de imágenes (5 MB exactos → <code>413</code>), de severidad menor, reproducible y de corrección trivial. El defecto #2 (errata &quot;intentas&quot;) es cosmético y no altera el veredicto.</p>
+<h2>Anexo A — Evidencia de la ejecución</h2><p>Registro consolidado de las 67 verificaciones (55 casos de prueba) — 66 ACEPTADO, 1 RECHAZADO (TC-25). Archivo original: <code>docs/practica7-evidencia/resultados.csv</code>.</p><table><tr><th>Caso</th><th>Requisito</th><th>Descripción</th><th>Esperado</th><th>Observado</th><th>Veredicto</th></tr><tr><td>TC-01</td><td>REQ-OP-01</td><td>Registro válido: 201 + token + rol Usuario</td><td>201|token+Usuario</td><td>201|token+Usuario</td><td>ACEPTADO</td></tr><tr><td>TC-02</td><td>REQ-OP-01</td><td>Registro con nombre de 2 caracteres (límite mín.)</td><td>201</td><td>201</td><td>ACEPTADO</td></tr><tr><td>TC-03</td><td>REQ-OP-01</td><td>Registro con nombre de 100 caracteres (límite máx.)</td><td>201</td><td>201</td><td>ACEPTADO</td></tr><tr><td>TC-04</td><td>REQ-VAL-01</td><td>Registro con nombre de 101 caracteres</td><td>400</td><td>400</td><td>ACEPTADO</td></tr><tr><td>TC-05</td><td>REQ-OP-02</td><td>Login admin: exp-iat del JWT</td><td>604800</td><td>604800</td><td>ACEPTADO</td></tr><tr><td>TC-09</td><td>REQ-OP-03</td><td>Editor crea artículo válido</td><td>201</td><td>201</td><td>ACEPTADO</td></tr><tr><td>TC-10</td><td>REQ-OP-03</td><td>GET artículo: autor es editor</td><td>Editor Test</td><td>Editor Test</td><td>ACEPTADO</td></tr><tr><td>TC-11</td><td>REQ-OP-03</td><td>Artículo visible en GET /api/articles</td><td>1</td><td>1</td><td>ACEPTADO</td></tr><tr><td>TC-12</td><td>REQ-OP-04</td><td>Editor actualiza título y publicado</td><td>200</td><td>200</td><td>ACEPTADO</td></tr><tr><td>TC-12</td><td>REQ-OP-04</td><td>GET posterior refleja cambios</td><td>Artículo modificado en caja negra|false</td><td>Artículo modificado en caja negra|false</td><td>ACEPTADO</td></tr><tr><td>TC-13</td><td>REQ-NAV-01</td><td>Editor intenta DELETE de artículo</td><td>403</td><td>403</td><td>ACEPTADO</td></tr><tr><td>TC-14</td><td>REQ-OP-04</td><td>Admin elimina artículo</td><td>200</td><td>200</td><td>ACEPTADO</td></tr><tr><td>TC-14</td><td>REQ-OP-04</td><td>GET del artículo eliminado</td><td>404</td><td>404</td><td>ACEPTADO</td></tr><tr><td>TC-15</td><td>REQ-VAL-01</td><td>Registro con 3 campos inválidos: mensajes por campo (name, email, password)</td><td>3</td><td>3</td><td>ACEPTADO</td></tr><tr><td>TC-16</td><td>REQ-VAL-01</td><td>Registro con pass de 6 y 72 caracteres (límites)</td><td>201|201</td><td>201|201</td><td>ACEPTADO</td></tr><tr><td>TC-17</td><td>REQ-VAL-01</td><td>Registro con pass de 5 y 73 caracteres</td><td>400|400</td><td>400|400</td><td>ACEPTADO</td></tr><tr><td>TC-18</td><td>REQ-VAL-02</td><td>Login con contraseña incorrecta</td><td>401</td><td>401</td><td>ACEPTADO</td></tr><tr><td>TC-18</td><td>REQ-VAL-02</td><td>Mismo mensaje que TC-18 (no revela cuál campo falló)</td><td>Credenciales inválidas</td><td>Credenciales inválidas</td><td>ACEPTADO</td></tr><tr><td>TC-19</td><td>REQ-VAL-02</td><td>Login con email inexistente</td><td>401</td><td>401</td><td>ACEPTADO</td></tr><tr><td>TC-20</td><td>REQ-VAL-03</td><td>Slug con espacios</td><td>400</td><td>400</td><td>ACEPTADO</td></tr><tr><td>TC-21</td><td>REQ-VAL-03</td><td>categoryId no UUID</td><td>400</td><td>400</td><td>ACEPTADO</td></tr><tr><td>TC-22</td><td>REQ-VAL-03</td><td>PUT con body vacío {}</td><td>400</td><td>400</td><td>ACEPTADO</td></tr><tr><td>TC-23</td><td>REQ-VAL-03</td><td>fake.jpg</td><td>415</td><td>415</td><td>ACEPTADO</td></tr><tr><td>TC-24</td><td>REQ-VAL-03</td><td>grande.png</td><td>413</td><td>413</td><td>ACEPTADO</td></tr><tr style="background:#f8d7da"><td>TC-25</td><td>REQ-VAL-03</td><td>limite.jpg</td><td>201</td><td>413</td><td>RECHAZADO</td></tr><tr><td>TC-26</td><td>REQ-PER-01</td><td>Crear -&gt; fila en BD</td><td>1</td><td>1</td><td>ACEPTADO</td></tr><tr><td>TC-27</td><td>REQ-PER-01</td><td>GET tras reiniciar backend (datos persisten)</td><td>200</td><td>200</td><td>ACEPTADO</td></tr><tr><td>TC-28</td><td>REQ-PER-01</td><td>PUT -&gt; BD refleja cambio</td><td>Título persistencia editado</td><td>Título persistencia editado</td><td>ACEPTADO</td></tr><tr><td>TC-29</td><td>REQ-PER-01</td><td>DELETE -&gt; fila desaparece de BD</td><td>0</td><td>0</td><td>ACEPTADO</td></tr><tr><td>TC-30</td><td>REQ-PER-02</td><td>Crear artículo con slug ya existente</td><td>409</td><td>409</td><td>ACEPTADO</td></tr><tr><td>TC-31</td><td>REQ-PER-02</td><td>PUT con categoryId UUID inexistente</td><td>409</td><td>409</td><td>ACEPTADO</td></tr><tr><td>TC-31</td><td>REQ-PER-02</td><td>BD sin estado parcial (categoryId no cambió)</td><td>ed571bb9-a529-4833-b1c4-65ce74443e16</td><td>ed571bb9-a529-4833-b1c4-65ce74443e16</td><td>ACEPTADO</td></tr><tr><td>TC-32</td><td>REQ-NAV-01</td><td>Usuario intenta crear artículo</td><td>403</td><td>403</td><td>ACEPTADO</td></tr><tr><td>TC-33</td><td>REQ-NAV-01</td><td>Editor intenta crear categoría</td><td>403</td><td>403</td><td>ACEPTADO</td></tr><tr><td>TC-34</td><td>REQ-NAV-01</td><td>POST /api/articles sin token</td><td>401</td><td>401</td><td>ACEPTADO</td></tr><tr><td>TC-35</td><td>REQ-NAV-01</td><td>Admin crea categoría</td><td>201</td><td>201</td><td>ACEPTADO</td></tr><tr><td>TC-36</td><td>REQ-NAV-01</td><td>Admin edita categoría</td><td>200</td><td>200</td><td>ACEPTADO</td></tr><tr><td>TC-37</td><td>REQ-NAV-01</td><td>Editor intenta editar categoría</td><td>403</td><td>403</td><td>ACEPTADO</td></tr><tr><td>TC-39</td><td>REQ-ERR-01</td><td>GET ruta inexistente</td><td>404</td><td>404</td><td>ACEPTADO</td></tr><tr><td>TC-39</td><td>REQ-ERR-01</td><td>Mensaje de ruta</td><td>Ruta no encontrada</td><td>Ruta no encontrada</td><td>ACEPTADO</td></tr><tr><td>TC-40</td><td>REQ-ERR-01</td><td>Bearer token malformado en ruta protegida</td><td>401</td><td>401</td><td>ACEPTADO</td></tr><tr><td>TC-41</td><td>REQ-ERR-01</td><td>Body JSON malformado</td><td>400</td><td>400</td><td>ACEPTADO</td></tr><tr><td>TC-41</td><td>REQ-ERR-01</td><td>Sin stack trace en respuesta</td><td>sin</td><td>sin</td><td>ACEPTADO</td></tr><tr><td>TC-44</td><td>REQ-BIZ-01</td><td>Setup 2FA: devuelve otpauthUri y QR</td><td>200</td><td>200</td><td>ACEPTADO</td></tr><tr><td>TC-45</td><td>REQ-BIZ-01</td><td>Verify-setup con código válido</td><td>201</td><td>201</td><td>ACEPTADO</td></tr><tr><td>TC-45</td><td>REQ-BIZ-01</td><td>Códigos de respaldo emitidos</td><td>10</td><td>10</td><td>ACEPTADO</td></tr><tr><td>TC-45</td><td>REQ-BIZ-01</td><td>Códigos de respaldo en BD</td><td>10</td><td>10</td><td>ACEPTADO</td></tr><tr><td>TC-06</td><td>REQ-OP-02</td><td>Login con 2FA: requires2fa + pendingToken</td><td>true|no-vacío</td><td>true|no-vacío</td><td>ACEPTADO</td></tr><tr><td>TC-07</td><td>REQ-OP-02</td><td>Verify-2fa con código válido: token definitivo</td><td>200</td><td>200</td><td>ACEPTADO</td></tr><tr><td>TC-08</td><td>REQ-OP-02</td><td>Verify-2fa con pendingToken vencido</td><td>401</td><td>401</td><td>ACEPTADO</td></tr><tr><td>TC-46</td><td>REQ-BIZ-01</td><td>Verify-2fa con código de respaldo (1.º uso)</td><td>200</td><td>200</td><td>ACEPTADO</td></tr><tr><td>TC-46</td><td>REQ-BIZ-01</td><td>Código de respaldo reutilizado</td><td>401</td><td>401</td><td>ACEPTADO</td></tr><tr><td>TC-46</td><td>REQ-BIZ-01</td><td>BD marca respaldo como usado</td><td>1</td><td>1</td><td>ACEPTADO</td></tr><tr><td>TC-47</td><td>REQ-BIZ-01</td><td>DELETE /totp con contraseña incorrecta</td><td>400</td><td>400</td><td>ACEPTADO</td></tr><tr><td>TC-48</td><td>REQ-BIZ-01</td><td>DELETE /totp con contraseña correcta</td><td>200</td><td>200</td><td>ACEPTADO</td></tr><tr><td>TC-48</td><td>REQ-BIZ-01</td><td>Login posterior sin 2FA</td><td>false</td><td>false</td><td>ACEPTADO</td></tr><tr><td>TC-48</td><td>REQ-BIZ-01</td><td>BD: totpEnabled</td><td>f</td><td>f</td><td>ACEPTADO</td></tr><tr><td>TC-42</td><td>REQ-ERR-01</td><td>16.º login fallido en 15 min</td><td>429</td><td>429</td><td>ACEPTADO</td></tr><tr><td>TC-42</td><td>REQ-ERR-01</td><td>Mensaje de límite</td><td>Demasiadas intentas. Intenta de nuevo más tarde.</td><td>Demasiadas intentas. Intenta de nuevo más tarde.</td><td>ACEPTADO</td></tr><tr><td>TC-43</td><td>REQ-ERR-01</td><td>6.º verify-2fa fallido en 15 min</td><td>429</td><td>429</td><td>ACEPTADO</td></tr><tr><td>TC-33</td><td>REQ-NAV-02</td><td>Sin sesión abre /upload</td><td>redirige a /login</td><td>/login</td><td>ACEPTADO</td></tr><tr><td>TC-34</td><td>REQ-NAV-02</td><td>Sesión Usuario abre /upload</td><td>redirige a /</td><td>/</td><td>ACEPTADO</td></tr><tr><td>TC-35</td><td>REQ-NAV-02</td><td>Sesión Editor abre /upload</td><td>muestra formulario de artículo</td><td>/upload</td><td>ACEPTADO</td></tr><tr><td>TC-36</td><td>REQ-NAV-02</td><td>Sesión Editor abre /estadisticas</td><td>redirige a /</td><td>/</td><td>ACEPTADO</td></tr><tr><td>TC-37</td><td>REQ-NAV-02</td><td>Sesión Admin abre /estadisticas</td><td>muestra página de estadísticas</td><td>/estadisticas</td><td>ACEPTADO</td></tr><tr><td>TC-38</td><td>REQ-NAV-02</td><td>Autenticado abre /login</td><td>redirige a /</td><td>/</td><td>ACEPTADO</td></tr><tr><td>TC-31b</td><td>REQ-PER-02</td><td>Registro con email ya existente</td><td>400</td><td>400</td><td>ACEPTADO</td></tr></table><h3>Evidencia por caso (archivos)</h3><ul><li>API: JSON en <code>docs/practica7-evidencia/TC-XX.json</code> (estado HTTP + cuerpo de respuesta + fecha), 48 archivos.</li><li>Frontend (REQ-NAV-02): JSON <code>TC-33-frontend.json</code>…<code>TC-38-frontend.json</code> + capturas <code>imgs/TC-33.png</code>…<code>imgs/TC-38.png</code> (Playwright/Chromium contra el SPA en <code>http://localhost:5173</code>).</li><li>BD: consultas <code>psql</code> registradas en los JSON de TC-26…29, TC-31, TC-45, TC-46 y TC-48.</li><li>Scripts de ejecución: <code>test_blackbox/run_api_tests.sh</code> (API) y <code>/tmp/guards/run_frontend_guards.mjs</code> (frontend).</li></ul><h3>Capturas del frontend (REQ-NAV-02)</h3><p><img src="file:///home/renyam/Documentos/Labandera/docs/practica7-evidencia/imgs/TC-33.png" style="max-width: 100%;"/><br/><em>TC-33: captura del guard del frontend.</em></p><p><img src="file:///home/renyam/Documentos/Labandera/docs/practica7-evidencia/imgs/TC-34.png" style="max-width: 100%;"/><br/><em>TC-34: captura del guard del frontend.</em></p><p><img src="file:///home/renyam/Documentos/Labandera/docs/practica7-evidencia/imgs/TC-35.png" style="max-width: 100%;"/><br/><em>TC-35: captura del guard del frontend.</em></p><p><img src="file:///home/renyam/Documentos/Labandera/docs/practica7-evidencia/imgs/TC-36.png" style="max-width: 100%;"/><br/><em>TC-36: captura del guard del frontend.</em></p><p><img src="file:///home/renyam/Documentos/Labandera/docs/practica7-evidencia/imgs/TC-37.png" style="max-width: 100%;"/><br/><em>TC-37: captura del guard del frontend.</em></p><p><img src="file:///home/renyam/Documentos/Labandera/docs/practica7-evidencia/imgs/TC-38.png" style="max-width: 100%;"/><br/><em>TC-38: captura del guard del frontend.</em></p>
+</body></html>
